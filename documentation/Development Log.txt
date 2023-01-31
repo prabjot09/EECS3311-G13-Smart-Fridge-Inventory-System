@@ -1,0 +1,7 @@
+First Meeting: January 31st 2023 - 40min
+
+* spoke about creation of class diagram and general flow of the program
+* Talked about GUI implementation
+* Spoke about design philosophies, and how we can future proof our code
+* Began preliminary divvying up of the work
+
