@@ -5,3 +5,12 @@ First Meeting: January 31st 2023 - 40min
 * Spoke about design philosophies, and how we can future proof our code
 * Began preliminary divvying up of the work
 
+Meeting 2: February 1st 2023 - 30min
+* Reviewed an initial UI design and defined app's usage patterns
+* Reviewed an initial 3-layer architecture plan for app
+* Identified required additions for the app UI (add window for new items)
+  and potential modifications to the architecture to better reflect software 
+  design principles. These draft documents are uploaded on Github.
+* Discussed potential implementations of persistence storage for different data
+  based on the requirements of the data to be stored.
+* Discussed a potential plan to divide development work by classes.
