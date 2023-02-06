@@ -14,3 +14,11 @@ Meeting 2: February 1st 2023 - 30min
 * Discussed potential implementations of persistence storage for different data
   based on the requirements of the data to be stored.
 * Discussed a potential plan to divide development work by classes.
+
+Meeting 3: Feburary 4th 2023 - 40min
+*Discussed improvements to architecture
+*Discussed how we will implement our designs
+*Discussed potential changes towards the inital UI design
+*Set a timeline in place for iteration 1
+*Clarified responsibilites 
+*Discussed potential future features in later iterations as well as its compatability and thoughts on its general implementation 
