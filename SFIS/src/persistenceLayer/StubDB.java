@@ -29,7 +29,9 @@ public class StubDB implements DB {
 		
 	}
 
-	
+	public void updateFridge(Fridge fridge) {
+		FridgeDB.setFridge(fridge);
+	}
 
 
 
