@@ -1,6 +1,8 @@
 package domainLayer;
 
 
+import java.util.List;
+
 import persistenceLayer.StubDB;
 
 public class DBProxy {
@@ -22,9 +24,12 @@ public class DBProxy {
 	
 	
 	
-	//public void loadFridge(Fridge fridge) {
-	//	return fridge;
-//	}
+	public List<StoredItem> loadItems() 
+		{
+		
+		return stubDB.loadItems();
+		
+		}
 	
 
 	public void addItem(FridgeItem item) {

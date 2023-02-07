@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import domainLayer.StoredItem;
 
 public class FridgeDatabase {
-	private ArrayList<FridgeItem> FridgeDB = new ArrayList<FridgeItem>();
+	private ArrayList<StoredItem> FridgeDB = new ArrayList<StoredItem>();
 	
 	public void setFridge(Fridge fridge) {
 		FridgeDB = fridge;
@@ -17,7 +17,7 @@ public class FridgeDatabase {
 		
 	}
 	
-	public ArrayList<FridgeItem> loadItems() {
+	public ArrayList<StoredItem> loadItems() {
 	return FridgeDB;
 		
 	}

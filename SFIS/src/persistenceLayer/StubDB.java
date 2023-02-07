@@ -1,6 +1,7 @@
 package persistenceLayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import domainLayer.FoodItem;
 
@@ -24,8 +25,9 @@ public class StubDB implements DB {
 		
 	}
 
-	public void loadItems() {
-		FridgeDB.loadItems();
+	public List<StoredItem> loadItems() {
+		
+		return FridgeDB.loadItems();
 		
 	}
 
