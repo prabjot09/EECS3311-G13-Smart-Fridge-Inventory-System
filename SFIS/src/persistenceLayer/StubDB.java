@@ -8,38 +8,29 @@ import domainLayer.StoredItem;
 
 
 public class StubDB implements DB {
-	//initialize DB by creating an arraylist of fridge items as well as our initial fridge.
-	private static ArrayList<StoredItem> fridgeDB = new ArrayList<StoredItem>();
 	
-	
-	//Addition of our base items to the DB
-	
-	
-	//Simple return method for our initial Fridge
-	public ArrayList<StoredItem> getDB() {
-		
-		return fridgeDB;
-	}
-	
-	
-	
-	public String findMatchingFoods(String name) {
-		
-		return null;
-	}
+	ItemDatabase ItemDB = new ItemDatabase();
+	FridgeDatabase FridgeDB = new FridgeDatabase();
 
 	
-	public  void addItem(StoredItem item) {
-		
-		fridgeDB.add(item);
+	
+	public ArrayList<String> findMatchingFoods(String name) {
+		return ItemDB.findMatchingFoods(name);
+	}
+
+	public void addItem(StoredItem item) {
+		FridgeDB.addItem(item);
+		ItemDB.getDB().add(item.getFoodItem().getName());
 		
 	}
 
-	
 	public void loadItems() {
-		// TODO Auto-generated method stub
+		FridgeDB.loadItems();
 		
 	}
+
+	
+
 
 
 
