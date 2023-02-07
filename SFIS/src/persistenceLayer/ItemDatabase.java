@@ -21,8 +21,8 @@ public class ItemDatabase {
 				holdMatch.add(name);
 			}
 		}
-		if (holdMatch.get(0) != null) {
-		return holdMatch;
+		if (holdMatch.size() != 0) {
+			return holdMatch;
 		}
 		else
 		{
