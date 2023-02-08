@@ -8,7 +8,7 @@ public class ItemDatabase {
 	public ItemDatabase() {
 		ItemDB.add("Milk - 3 Bags");
 		ItemDB.add("Juice - Carton");
-		ItemDB.add("Eggs - Dozen");
+		ItemDB.add("Eggs - Single");
 		ItemDB.add("Butter - Sticks");
 	}
 	

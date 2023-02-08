@@ -14,19 +14,22 @@ public class DBProxy {
 		stubDB = new StubDB();
 	}
 	
-	private static DBProxy getInstance() {
+	public static DBProxy getInstance() {
 		if (DB == null) {
 			DB = new DBProxy(); 
-		}
+			}
 		
-		return DB;
-	}
+			return DB;
+		}
 	
 	
 	
-	public List<? extends StoredItem> loadItems() {
+	public List<? extends StoredItem> loadItems() 
+		{
+		
 		return stubDB.loadItems();
-	}
+		
+		}
 	
 
 	public void addItem(FridgeItem item) {
@@ -36,6 +39,10 @@ public class DBProxy {
 	
 	public void updateFridge(Fridge fridge) {
 		stubDB.updateFridge(fridge);
+	}
+	
+	public List<String> findItemDBItems(String name){
+		return stubDB.findMatchingFoods(name);
 	}
 	
 }
