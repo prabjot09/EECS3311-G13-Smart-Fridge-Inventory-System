@@ -6,8 +6,14 @@ public class Fridge implements Inventory {
 	private List<FridgeItem> fridgeItems;
 
 	public Fridge(List<FridgeItem> fridgeItems) {
-		//loop over fridgeItems
-		this.fridgeItems = fridgeItems; //change this
+	    this.fridgeItems = new ArrayList<FridgeItem>();
+	    for (FridgeItem item : fridgeItems) {
+	        FridgeItem newItem = new FridgeItem();
+	        newItem.setFoodItem(new FoodItem());
+	        newItem.getFoodItem().setName(item.getFoodItem().getName());
+	        newItem.setStockableItem(item.getStockableItem());
+	        this.fridgeItems.add(newItem);
+	    }
 	}
 
 	@Override
