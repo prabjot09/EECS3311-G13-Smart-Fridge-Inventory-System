@@ -22,3 +22,9 @@ Meeting 3: Feburary 4th 2023 - 40min
 *Set a timeline in place for iteration 1
 *Clarified responsibilites 
 *Discussed potential future features in later iterations as well as its compatability and thoughts on its general implementation 
+
+Meeting 4: February 6th 2023 - 1h 15min
+* Began implementation of basic application design
+* Chose to follow MVC model for GUI development to follow Observer Software Design Pattern (for better interactivity with user)
+* Division of code amongst team members by assigning implementation of different layers (to rely on abstraction of each others' code so we don't need to know how each member implemented their code).
+* Assigning developer tasks for remaining implementation.
