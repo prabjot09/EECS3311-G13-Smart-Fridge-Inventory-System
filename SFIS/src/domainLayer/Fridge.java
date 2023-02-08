@@ -15,6 +15,21 @@ public class Fridge implements Inventory {
 	        this.fridgeItems.add(newItem);
 	    }
 	}
+	
+	public List<FridgeItem> getFridgeItems() {
+	    return fridgeItems;
+	}
+
+	public void setFridgeItems(List<FridgeItem> fridgeItems) {
+		this.fridgeItems = new ArrayList<FridgeItem>();
+	    for (FridgeItem item : fridgeItems) {
+	        FridgeItem newItem = new FridgeItem();
+	        newItem.setFoodItem(new FoodItem());
+	        newItem.getFoodItem().setName(item.getFoodItem().getName());
+	        newItem.setStockableItem(item.getStockableItem());
+	        this.fridgeItems.add(newItem);
+	    }
+	}
 
 	@Override
 	public List<FridgeItem> search(String name) {
