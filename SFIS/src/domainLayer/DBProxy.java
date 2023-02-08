@@ -17,19 +17,16 @@ public class DBProxy {
 	private static DBProxy getInstance() {
 		if (DB == null) {
 			DB = new DBProxy(); 
-			}
-		
-			return DB;
 		}
-	
-	
-	
-	public List<StoredItem> loadItems() 
-		{
 		
+		return DB;
+	}
+	
+	
+	
+	public List<? extends StoredItem> loadItems() {
 		return stubDB.loadItems();
-		
-		}
+	}
 	
 
 	public void addItem(FridgeItem item) {

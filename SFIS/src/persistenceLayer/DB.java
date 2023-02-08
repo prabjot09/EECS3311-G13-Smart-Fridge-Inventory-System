@@ -10,7 +10,7 @@ public interface DB {
 	
 	public ArrayList<String> findMatchingFoods(String name);
 	public void addItem(StoredItem item);
-	public List<StoredItem> loadItems();
+	public List<? extends StoredItem> loadItems();
 	public void updateFridge(Fridge fridge);
 	
 }

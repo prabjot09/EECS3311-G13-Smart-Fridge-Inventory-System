@@ -5,6 +5,7 @@ import java.util.List;
 
 import domainLayer.FoodItem;
 import domainLayer.Fridge;
+import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
 
 
@@ -20,11 +21,11 @@ public class StubDB implements DB {
 	}
 
 	public void addItem(StoredItem item) {
-		FridgeDB.addItem(item);
+		FridgeDB.addItem((FridgeItem) item);
 		ItemDB.getDB().add(item.getFoodItem().getName());
 	}
 
-	public List<StoredItem> loadItems() {
+	public List<? extends StoredItem> loadItems() {
 		return FridgeDB.loadItems();
 	}
 

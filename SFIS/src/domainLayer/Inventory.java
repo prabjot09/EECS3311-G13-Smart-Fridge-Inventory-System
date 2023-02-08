@@ -3,7 +3,7 @@ package domainLayer;
 import java.util.*;
 
 public interface Inventory {
-	List<FridgeItem> search(String name);
-	void add(FridgeItem item);
-	void remove(FridgeItem item);
+	List<? extends StoredItem> search(String name);
+	void add(StoredItem item);
+	void remove(StoredItem item);
 }

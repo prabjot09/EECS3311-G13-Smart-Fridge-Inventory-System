@@ -1,6 +1,6 @@
 package domainLayer;
 
-class FridgeItem extends StoredItem{
+public class FridgeItem extends StoredItem{
 	
 	@Override
 	public void executeIncrement(int val) {

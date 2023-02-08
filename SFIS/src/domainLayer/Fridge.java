@@ -51,13 +51,13 @@ public class Fridge implements Inventory {
 	}
 
 	@Override
-	public void add(FridgeItem item) {
-		fridgeItems.add(item);
+	public void add(StoredItem item) {
+		fridgeItems.add((FridgeItem) item);
 	}
 
 	@Override
-	public void remove(FridgeItem item) {
-		fridgeItems.remove(item);
+	public void remove(StoredItem item) {
+		fridgeItems.remove((FridgeItem) item);
 	}
 }
 

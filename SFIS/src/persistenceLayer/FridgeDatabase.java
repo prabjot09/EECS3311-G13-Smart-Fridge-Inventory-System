@@ -1,23 +1,24 @@
 package persistenceLayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import domainLayer.Fridge;
-import domainLayer.StoredItem;
+import domainLayer.FridgeItem;
 
 public class FridgeDatabase {
-	private ArrayList<StoredItem> FridgeDB = new ArrayList<StoredItem>();
+	private List<FridgeItem> FridgeDB = new ArrayList<FridgeItem>();
 	
 	public void setFridge(Fridge fridge) {
 		FridgeDB = fridge.getFridgeItems();
 	}
 	
 	
-	public void addItem(StoredItem item) {
+	public void addItem(FridgeItem item) {
 		FridgeDB.add(item);
 	}
 	
-	public ArrayList<StoredItem> loadItems() {
+	public List<FridgeItem> loadItems() {
 		return FridgeDB;
 	}
 }
