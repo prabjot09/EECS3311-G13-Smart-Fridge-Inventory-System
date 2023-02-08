@@ -17,6 +17,14 @@ public class Fridge implements Inventory {
 	}
 	
 	public List<FridgeItem> getFridgeItems() {
+		List<FridgeItem> fridgeItems = new ArrayList<FridgeItem>();
+	    for (FridgeItem item : this.fridgeItems) {
+	        FridgeItem newItem = new FridgeItem();
+	        newItem.setFoodItem(new FoodItem());
+	        newItem.getFoodItem().setName(item.getFoodItem().getName());
+	        newItem.setStockableItem(item.getStockableItem());
+	        fridgeItems.add(newItem);
+	    }
 	    return fridgeItems;
 	}
 
