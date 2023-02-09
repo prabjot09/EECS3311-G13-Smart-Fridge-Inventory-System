@@ -54,7 +54,7 @@ public class Fridge implements Inventory {
 	public void add(StoredItem item) throws Exception {
 		String inputItemName = item.getFoodItem().getName();
 		for (StoredItem itemsInFridge : fridgeItems) {
-			if (inputItemName.equalsIgnoreCase(itemsInFridge.getFoodName().getName())) {
+			if (inputItemName.equalsIgnoreCase(itemsInFridge.getFoodItem().getName())) {
 				throw new Exception("Item already exists within fridge");
 			}
 		}
