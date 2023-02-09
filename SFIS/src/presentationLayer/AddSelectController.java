@@ -49,7 +49,7 @@ public class AddSelectController implements ActionListener{
 	public void addHandler() {
 		String selectedItem = this.addSelectView.getItemChosen();
 		if (selectedItem == null) {
-			System.out.println("Please select an item from the list");
+			JOptionPane.showMessageDialog(null, "Please select an item from the list", "Notice", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
@@ -58,7 +58,7 @@ public class AddSelectController implements ActionListener{
 		try {
 			amount = Integer.parseInt(amountString);
 		} catch (Exception e) {
-			System.out.println("Please specify an integer amount");
+			JOptionPane.showMessageDialog(null, "Please specify an integer amount", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
