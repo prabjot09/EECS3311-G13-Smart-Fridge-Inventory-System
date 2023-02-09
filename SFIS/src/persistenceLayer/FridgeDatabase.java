@@ -11,7 +11,7 @@ import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
 
 public class FridgeDatabase {
-	private List<FridgeItem> FridgeDB = new ArrayList<FridgeItem>();
+	private List<StoredItem> FridgeDB = new ArrayList<StoredItem>();
 	
 	
 	public FridgeDatabase() {
@@ -55,7 +55,7 @@ public class FridgeDatabase {
 		FridgeDB.add(item);
 	}
 	
-	public List<? extends StoredItem> loadItems() {
+	public List<StoredItem> loadItems() {
 		return FridgeDB;
 	}
 }

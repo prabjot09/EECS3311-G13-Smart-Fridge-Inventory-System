@@ -24,7 +24,7 @@ public class DBProxy {
 	
 	
 	
-	public List<? extends StoredItem> loadItems() 
+	public List<StoredItem> loadItems() 
 		{
 		
 		return stubDB.loadItems();

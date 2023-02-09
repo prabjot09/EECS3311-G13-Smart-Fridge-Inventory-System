@@ -25,7 +25,7 @@ public class StubDB implements DB {
 		ItemDB.getDB().add(item.getFoodItem().getName());
 	}
 
-	public List<? extends StoredItem> loadItems() {
+	public List<StoredItem> loadItems() {
 		return FridgeDB.loadItems();
 	}
 

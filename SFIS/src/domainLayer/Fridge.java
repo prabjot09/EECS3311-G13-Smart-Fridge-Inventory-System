@@ -3,11 +3,11 @@ package domainLayer;
 import java.util.*;
 
 public class Fridge implements Inventory {
-	private List<FridgeItem> fridgeItems;
+	private List<StoredItem> fridgeItems = new ArrayList<StoredItem>();
 
-	public Fridge(List<FridgeItem> fridgeItems) {
-	    this.fridgeItems = new ArrayList<FridgeItem>();
-	    for (FridgeItem item : fridgeItems) {
+	public Fridge(List<StoredItem> items) {
+	    this.fridgeItems = new ArrayList<StoredItem>();
+	    for (StoredItem item : items) {
 	        FridgeItem newItem = new FridgeItem();
 	        newItem.setFoodItem(new FoodItem());
 	        newItem.getFoodItem().setName(item.getFoodItem().getName());
@@ -16,9 +16,9 @@ public class Fridge implements Inventory {
 	    }
 	}
 	
-	public List<FridgeItem> getFridgeItems() {
-		List<FridgeItem> fridgeItems = new ArrayList<FridgeItem>();
-	    for (FridgeItem item : this.fridgeItems) {
+	public List<StoredItem> getFridgeItems() {
+		List<StoredItem> fridgeItems = new ArrayList<StoredItem>();
+	    for (StoredItem item : this.fridgeItems) {
 	        FridgeItem newItem = new FridgeItem();
 	        newItem.setFoodItem(new FoodItem());
 	        newItem.getFoodItem().setName(item.getFoodItem().getName());
@@ -28,9 +28,9 @@ public class Fridge implements Inventory {
 	    return fridgeItems;
 	}
 
-	public void setFridgeItems(List<FridgeItem> fridgeItems) {
-		this.fridgeItems = new ArrayList<FridgeItem>();
-	    for (FridgeItem item : fridgeItems) {
+	public void setFridgeItems(List<? extends StoredItem> fridgeItems) {
+		this.fridgeItems = new ArrayList<StoredItem>();
+	    for (StoredItem item : fridgeItems) {
 	        FridgeItem newItem = new FridgeItem();
 	        newItem.setFoodItem(new FoodItem());
 	        newItem.getFoodItem().setName(item.getFoodItem().getName());
@@ -40,9 +40,9 @@ public class Fridge implements Inventory {
 	}
 
 	@Override
-	public List<FridgeItem> search(String name) {
-	    List<FridgeItem> foundFrigeItems = new ArrayList<FridgeItem>();
-	    for (FridgeItem item : fridgeItems) {
+	public List<StoredItem> search(String name) {
+	    List<StoredItem> foundFrigeItems = new ArrayList<StoredItem>();
+	    for (StoredItem item : fridgeItems) {
 	        if (item.getFoodItem().getName().contains(name)) {
 	            foundFrigeItems.add(item);
 	        }
