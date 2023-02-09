@@ -1,24 +1,22 @@
 package domainLayer;
 
-public class DiscreteStockableItem implements StockableItem {
-	private int amount;
+public class DiscreteStockableItem extends StockableItem {
 	
 	public DiscreteStockableItem() {
 		
 	}
 	
 	public DiscreteStockableItem(int amount) {
-		this.amount = amount;
+		this.setStock(amount);
 	}
 	
 	@Override
 	public void increment(int val) {
-		this.amount += val;		
+		this.setStock(this.getStock() + val);		
 	}
 
 	@Override
 	public void decrement(int val) {
-		this.amount -= val;		
+		this.setStock(this.getStock() - val);		
 	}
-	
 }

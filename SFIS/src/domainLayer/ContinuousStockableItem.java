@@ -1,24 +1,25 @@
 package domainLayer;
 
-public class ContinuousStockableItem implements StockableItem {
-	private int amount;
+public class ContinuousStockableItem extends StockableItem {
 	
 	public ContinuousStockableItem() {
 		
 	}
 	
 	public ContinuousStockableItem(int amount) {
-		this.amount = amount;
+		int floorAmt = Math.max(0, amount);
+		int cielAmt = Math.min(100, floorAmt);
+		this.setStock(cielAmt);
 	}
 	
 	@Override
 	public void increment(int val) {
-		this.amount = Math.min(this.amount + val, 100);
+		this.setStock(Math.min(this.getStock() + val, 100));
 	}
 
 	@Override
 	public void decrement(int val) {
-		this.amount = Math.max(this.amount - val, 0);
+		this.setStock(Math.max(this.getStock() - val, 0));
 		
 	}
 
