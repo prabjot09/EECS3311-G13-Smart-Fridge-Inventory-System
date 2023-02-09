@@ -8,7 +8,7 @@ import persistenceLayer.StubDB;
 public class DBProxy {
 	private static DBProxy DB = null;
 	
-	public StubDB stubDB;
+	private StubDB stubDB;
 	
 	private DBProxy() {
 		stubDB = new StubDB();

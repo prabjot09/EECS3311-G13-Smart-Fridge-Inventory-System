@@ -18,18 +18,15 @@ public class ItemDatabase {
 	
 	public ArrayList<String> findMatchingFoods(String name) {
 		
+		String searchLowercase = name.toLowerCase();
 		ArrayList<String> holdMatch = new ArrayList<String>();
 		
 		for (int x = 0; x < ItemDB.size(); x++) {
-			if (ItemDB.get(x).contains(name)) {
-				holdMatch.add(name);
+			if (ItemDB.get(x).toLowerCase().contains(searchLowercase)) {
+				holdMatch.add(ItemDB.get(x));
 			}
 		}
-		if (holdMatch.size() != 0) {
-			return holdMatch;
-		}
-		else {
-			return null;
-		}
+
+		return holdMatch;
 	}
 }

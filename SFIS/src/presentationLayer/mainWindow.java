@@ -29,7 +29,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	  private JPanel searchPanel;
 	  private JLabel titleLabel;
 	  private JTextField search;
-	  private JList list;
+	  private JList<String> list;
 	  private JButton addButton;
 	  private DBProxy db;
 	public mainWindow(DBProxy db) {
@@ -75,7 +75,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	    	fridgeList.addElement(inv.getFridgeItems().get(x).getFoodItem().getName() + ": " + 
 	        inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
 	    }
-	    JList<String> list = new JList<>(fridgeList);
+	    list = new JList<String>(fridgeList);
 	    list.setBackground(Color.gray);
 	    list.setFont(new Font("Arial", Font.BOLD, 24));
 	    list.setPreferredSize(new Dimension(800,500));
@@ -97,7 +97,21 @@ public class mainWindow extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		new addWindow(db);
+		new AddWindowController(db, this);
 	}
 	
+	public void refreshList() {
+		List<StoredItem> items = this.db.loadItems();
+		Fridge inv = new Fridge(items);
+		
+		DefaultListModel<String> fridgeList = new DefaultListModel<String>();
+	    for (int x = 0; x < inv.getFridgeItems().size(); x++) {
+	    	fridgeList.addElement(inv.getFridgeItems().get(x).getFoodItem().getName() + ": " + 
+	        inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
+	    }
+	    
+	    this.list.setModel(fridgeList);
+	    System.out.println(items.size());
+	    this.list.revalidate();
+	}
 }
