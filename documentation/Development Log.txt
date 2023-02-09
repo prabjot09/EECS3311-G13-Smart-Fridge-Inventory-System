@@ -28,3 +28,12 @@ Meeting 4: February 6th 2023 - 1h 15min
 * Chose to follow MVC model for GUI development to follow Observer Software Design Pattern (for better interactivity with user)
 * Division of code amongst team members by assigning implementation of different layers (to rely on abstraction of each others' code so we don't need to know how each member implemented their code).
 * Assigning developer tasks for remaining implementation.
+
+Developer Tasks
+
+Abdirahman Farah
+*Tasks chosen: Implementation of stub database, main GUI window, some backend search add and remove implementations
+*Related user stories: Adding and removing items, compressed view layout, food item search
+*Expected dev times: Add 7 days, Remove 8 days, View 6 days, Search 8 days
+*Above user stories were split with others in the group, leaving me with half the amount for each.
+*Actual dev times: Search 5 days, Add 2 days, Remove 2 days, View 3 days
