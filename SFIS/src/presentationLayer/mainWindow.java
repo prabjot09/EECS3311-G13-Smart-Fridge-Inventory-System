@@ -30,14 +30,16 @@ public class mainWindow extends JFrame implements ActionListener{
 	  private JLabel titleLabel;
 	  private JTextField search;
 	  private JList<String> list;
-	  private JButton addButton;
+	  private JButton addButton, searchButton;
 	  private JScrollPane scroll;
 	  private DBProxy db;
+	  private DefaultListModel<String> fridgeList;
+	  private Fridge inv;
 	public mainWindow(DBProxy db) {
 	    // create our jframe as usual
 		this.db = db;
 		List<StoredItem> items = db.loadItems();
-		Fridge inv = new Fridge(items);
+		inv = new Fridge(items);
 			
 		inv.setFridgeItems(db.loadItems());
 		panel = new JPanel();
@@ -55,7 +57,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	    searchPanel.setBounds(0,100,1000,500);
 	    panel.add(titleLabel);
 	    
-	    search = new JTextField("Find Item in Fridge");
+	    search = new JTextField();
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
 	    search.setBackground(Color.gray);
 	    search.setBounds(0,100,300,500);
@@ -64,14 +66,23 @@ public class mainWindow extends JFrame implements ActionListener{
 	    searchPanel.add(search);
 	    jframe.add(searchPanel);
 	    
+	    
+	    searchButton = new JButton("Search");
+	    searchButton.addActionListener(this);
+	    searchButton.setPreferredSize(new Dimension(100,50));
+	    searchPanel.add(searchButton);
+	    
+	    
 	    addButton = new JButton("+");
 	    addButton.addActionListener(this);
 	    addButton.setPreferredSize(new Dimension(50,50));
 	    searchPanel.add(addButton);
 	    
+	   
 	    
 	    
-	    DefaultListModel<String> fridgeList = new DefaultListModel<String>();
+	    
+	    fridgeList = new DefaultListModel<String>();
 	    for (int x = 0; x < inv.getFridgeItems().size(); x++) {
 	    	fridgeList.addElement(inv.getFridgeItems().get(x).getFoodItem().getName() + ": " + 
 	        inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
@@ -97,12 +108,37 @@ public class mainWindow extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if (e.getSource() == addButton) {
 		new AddWindowController(db, this);
+		}
+		
+		if (e.getSource() == searchButton) {		
+			mainSearchHandler();
+		}
 	}
+	
+	
+	public void mainSearchHandler() {
+		String searchString = search.getText();
+		DefaultListModel<String> updatedFridgeList = new DefaultListModel<String>();
+		 for (int x = 0; x < inv.getFridgeItems().size(); x++) {
+			 if (inv.getFridgeItems().get(x).getFoodItem().getName().toLowerCase().contains(searchString.toLowerCase())) {
+				 updatedFridgeList.addElement(inv.getFridgeItems().get(x).getFoodItem().getName() 
+				 + ": " + inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
+			 }
+		 }
+		
+		 this.list.setModel(updatedFridgeList);
+		
+		 this.list.revalidate();
+		 this.scroll.revalidate();
+		 
+	}
+	
 	
 	public void refreshList() {
 		List<StoredItem> items = this.db.loadItems();
-		Fridge inv = new Fridge(items);
+		this.inv = new Fridge(items);
 		
 		DefaultListModel<String> fridgeList = new DefaultListModel<String>();
 	    for (int x = 0; x < inv.getFridgeItems().size(); x++) {
