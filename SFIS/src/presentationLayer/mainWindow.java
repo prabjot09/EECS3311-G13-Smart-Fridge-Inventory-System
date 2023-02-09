@@ -119,6 +119,8 @@ public class mainWindow extends JFrame implements ActionListener{
 	
 	
 	public void mainSearchHandler() {
+		//We want to ensure we can search our JList, and let it return to its former state if the search is cleared.
+		//We do this by passing our inventory and using .contains to add eveyrthing that matches to our JList 
 		String searchString = search.getText();
 		DefaultListModel<String> updatedFridgeList = new DefaultListModel<String>();
 		 for (int x = 0; x < inv.getFridgeItems().size(); x++) {

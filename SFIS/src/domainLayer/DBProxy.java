@@ -13,7 +13,7 @@ public class DBProxy {
 	private DBProxy() {
 		stubDB = new StubDB();
 	}
-	
+	//Our proxy, ensuring we only get 1 instance of our DB
 	public static DBProxy getInstance() {
 		if (DB == null) {
 			DB = new DBProxy(); 

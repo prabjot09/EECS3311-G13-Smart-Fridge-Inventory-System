@@ -15,6 +15,7 @@ public class FridgeDatabase {
 	
 	
 	public FridgeDatabase() {
+		//Fridge items we isntataite at runtime
 		FridgeItem firstFI = new FridgeItem();
 		FoodItem firstFoI = new FoodItem();
 		firstFoI.setName("Milk - 3 Bags");

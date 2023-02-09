@@ -6,6 +6,7 @@ public class ItemDatabase {
 	private ArrayList<String> ItemDB = new ArrayList<String>();
 
 	public ItemDatabase() {
+		//Simple items we instatiate at runtime
 		ItemDB.add("Milk - 3 Bags");
 		ItemDB.add("Juice - Carton");
 		ItemDB.add("Eggs - Single");
