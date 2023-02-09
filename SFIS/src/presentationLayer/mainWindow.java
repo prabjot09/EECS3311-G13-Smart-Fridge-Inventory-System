@@ -72,7 +72,8 @@ public class mainWindow extends JFrame implements ActionListener{
 	    
 	    DefaultListModel<String> fridgeList = new DefaultListModel<String>();
 	    for (int x = 0; x < inv.getFridgeItems().size(); x++) {
-	    	fridgeList.addElement(inv.getFridgeItems().get(x).getFoodItem().getName());
+	    	fridgeList.addElement(inv.getFridgeItems().get(x).getFoodItem().getName() + ": " + 
+	        inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
 	    }
 	    JList<String> list = new JList<>(fridgeList);
 	    list.setBackground(Color.gray);
