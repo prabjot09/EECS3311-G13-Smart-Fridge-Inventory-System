@@ -16,9 +16,9 @@ import domainLayer.StockableItem;
 import domainLayer.StoredItem;
 
 public class AddSelectController implements ActionListener{
-	AddSelectView addSelectView;
-	mainWindow homeView;
-	DBProxy database;
+	private AddSelectView addSelectView;
+	private mainWindow homeView;
+	private DBProxy database;
 	
 	public AddSelectController(DBProxy database, addWindow addWindowView, mainWindow homeView) {
 		this.addSelectView = new AddSelectView(database, this);
@@ -71,7 +71,6 @@ public class AddSelectController implements ActionListener{
 		item.setStockableItem(stock);
 		
 		this.database.addItem(item);
-		System.out.println(this.database.loadItems().size());
 		this.homeView.refreshList();
 	}
 }

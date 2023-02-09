@@ -19,7 +19,7 @@ import javax.swing.JRadioButton;
 import domainLayer.DBProxy;
 
 public class addWindow extends JFrame {
-	JPanel addMethodPanel;
+	private JPanel addMethodPanel;
 	
 	public addWindow(DBProxy db, ActionListener listener) {		
 		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
@@ -34,11 +34,12 @@ public class addWindow extends JFrame {
 	    titleLabel.setForeground(Color.white);
 	    titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 	    panel.add(titleLabel);
+	    panel.setMaximumSize(new Dimension(panel.getMaximumSize().width, panel.getPreferredSize().height));
 	    
 	    JPanel selectionPanel = new JPanel();
 	    BoxLayout selectionLayout = new BoxLayout(selectionPanel, BoxLayout.Y_AXIS);
 	    selectionPanel.setLayout(selectionLayout);
-	    selectionPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
+	    selectionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	    selectionPanel.setBackground(Color.black);
 	    this.add(selectionPanel);
 	    
@@ -74,11 +75,9 @@ public class addWindow extends JFrame {
 	}
 	
 	public void setAddingMethod(JPanel method) {
+		
 		if (this.addMethodPanel.getComponentCount() == 1) {
-			JPanel addMethodPanel = new JPanel();
-			addMethodPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		    addMethodPanel.setBackground(Color.black);
-		    this.addMethodPanel = addMethodPanel;
+			this.addMethodPanel.remove(this.addMethodPanel.getComponent(0));
 		}
 		
 		this.addMethodPanel.add(method);

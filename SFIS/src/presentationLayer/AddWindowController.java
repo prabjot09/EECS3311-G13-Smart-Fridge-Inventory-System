@@ -9,10 +9,10 @@ import javax.swing.JRadioButton;
 import domainLayer.DBProxy;
 
 public class AddWindowController implements ActionListener{
-	addWindow addWindowView;
-	mainWindow homeView;
-	DBProxy database;
-	ActionListener addSelectController;
+	private addWindow addWindowView;
+	private mainWindow homeView;
+	private DBProxy database;
+	private ActionListener addMethodController;
 	
 	public AddWindowController(DBProxy database, mainWindow homeView) {
 		this.addWindowView = new addWindow(database, this);
@@ -25,15 +25,14 @@ public class AddWindowController implements ActionListener{
 		try {
 			JRadioButton button = (JRadioButton) e.getSource();
 			if (button.getName() == "databaseSelect") {
-				this.addSelectController = new AddSelectController(database, addWindowView, homeView);
-				System.out.println("Create db select");
+				this.addMethodController = new AddSelectController(database, addWindowView, homeView);
 			}
 			else if (button.getName() == "manualSelect") {
-				System.out.println("Create manual select");	
+				this.addMethodController = new AddCreateController(database, addWindowView, homeView);
 			}
 		}
 		catch (Exception exception) {
-			
+			System.out.println(exception.getStackTrace());
 		}
 		
 		
