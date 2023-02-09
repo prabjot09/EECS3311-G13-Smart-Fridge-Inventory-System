@@ -31,6 +31,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	  private JTextField search;
 	  private JList<String> list;
 	  private JButton addButton;
+	  private JScrollPane scroll;
 	  private DBProxy db;
 	public mainWindow(DBProxy db) {
 	    // create our jframe as usual
@@ -78,10 +79,9 @@ public class mainWindow extends JFrame implements ActionListener{
 	    list = new JList<String>(fridgeList);
 	    list.setBackground(Color.gray);
 	    list.setFont(new Font("Arial", Font.BOLD, 24));
-	    list.setPreferredSize(new Dimension(800,500));
+	    list.setPreferredSize(new Dimension(800, 220));
 	    list.setBounds(0,300,1000,500);
-	    JScrollPane scroll = new JScrollPane(list);	    
-	    jframe.add(scroll);
+	    scroll = new JScrollPane(list);	    
 	    searchPanel.add(scroll);
 	    
 	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,7 +111,9 @@ public class mainWindow extends JFrame implements ActionListener{
 	    }
 	    
 	    this.list.setModel(fridgeList);
-	    System.out.println(items.size());
+	    this.list.setPreferredSize(new Dimension(750, 30 * items.size()));;
 	    this.list.revalidate();
+	    this.scroll.revalidate();
+	    
 	}
 }

@@ -52,7 +52,7 @@ public class AddSelectView extends JPanel {
 		JList<String> itemList = new JList<String>();
 		itemList.setBackground(Color.gray);
 		itemList.setFont(new Font("Arial", Font.BOLD, 24));
-		itemList.setPreferredSize(new Dimension(800,500));
+		itemList.setPreferredSize(new Dimension(440, 200));
 		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.matchList = itemList;
 		
@@ -105,6 +105,7 @@ public class AddSelectView extends JPanel {
 		}
 		
 		this.matchList.setModel(listModel);
+		this.matchList.setPreferredSize(new Dimension(440, 30 * matches.size()));
 		this.matchList.revalidate();
 	}
 }
