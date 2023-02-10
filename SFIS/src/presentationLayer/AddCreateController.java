@@ -8,18 +8,19 @@ import javax.swing.JButton;
 import domainLayer.DBProxy;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
+import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
 
 public class AddCreateController implements ActionListener {
-	private DBProxy database;
 	private mainWindow homeView;
 	private AddCreateView addCreateView;
+	private Fridge fridge;
 
-	public AddCreateController(DBProxy database, addWindow addWindowView, mainWindow homeView) {
-		this.addCreateView = new AddCreateView(database, this);
-		this.database = database;
+	public AddCreateController(addWindow addWindowView, mainWindow homeView, Fridge fridge) {
+		this.addCreateView = new AddCreateView(this);
 		this.homeView = homeView;
+		this.fridge = fridge;
 		
 		addWindowView.setAddingMethod(addCreateView);
 	}
@@ -58,7 +59,7 @@ public class AddCreateController implements ActionListener {
 		item.setFoodItem(itemDesc);
 		item.setStockableItem(stock);
 		
-		this.database.addItem(item);
+		this.fridge.add(item);
 		this.homeView.refreshList();
 		
 		

@@ -7,17 +7,19 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 
 import domainLayer.DBProxy;
+import domainLayer.Fridge;
 
 public class AddWindowController implements ActionListener{
 	private addWindow addWindowView;
 	private mainWindow homeView;
-	private DBProxy database;
+	private Fridge fridge;
+	
 	private ActionListener addMethodController;
 	
-	public AddWindowController(DBProxy database, mainWindow homeView) {
-		this.addWindowView = new addWindow(database, this);
-		this.database = database;
+	public AddWindowController(mainWindow homeView) {
+		this.addWindowView = new addWindow(this);
 		this.homeView = homeView;
+		this.fridge = homeView.getFridge();
 	}
 
 	@Override
@@ -25,10 +27,10 @@ public class AddWindowController implements ActionListener{
 		try {
 			JRadioButton button = (JRadioButton) e.getSource();
 			if (button.getName() == "databaseSelect") {
-				this.addMethodController = new AddSelectController(database, addWindowView, homeView);
+				this.addMethodController = new AddSelectController(addWindowView, homeView, this.fridge);
 			}
 			else if (button.getName() == "manualSelect") {
-				this.addMethodController = new AddCreateController(database, addWindowView, homeView);
+				this.addMethodController = new AddCreateController(addWindowView, homeView, this.fridge);
 			}
 		}
 		catch (Exception exception) {

@@ -8,18 +8,15 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import domainLayer.DBProxy;
 
 public class AddCreateView extends JPanel{
 	private JTextField nameField;
 	private JTextField amountField;
-	private JList<String> matchList;
 
-	public AddCreateView(DBProxy database, ActionListener listener) {
+	public AddCreateView(ActionListener listener) {
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(overallLayout);
 		
