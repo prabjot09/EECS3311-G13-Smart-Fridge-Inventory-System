@@ -28,7 +28,7 @@ public class AddCreateView extends JPanel{
 		nameField.setFont(new Font("Arial", Font.PLAIN, 16));
 		nameField.setBackground(Color.gray);
 		nameField.setBounds(0,100,300,500);
-		nameField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+	    nameField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		nameField.setPreferredSize(new Dimension(300,50));
 	    this.nameField = nameField;
 	    inputPanel.add(nameField);
@@ -37,7 +37,7 @@ public class AddCreateView extends JPanel{
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    amountField.setBackground(Color.gray);
 		amountField.setBounds(0,100,300,500);
-		amountField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+	    amountField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		amountField.setPreferredSize(new Dimension(300,50));
 	    this.amountField = amountField;
 	    inputPanel.add(amountField);

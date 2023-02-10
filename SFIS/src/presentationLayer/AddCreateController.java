@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import domainLayer.DBProxy;
 import domainLayer.DiscreteStockableItem;
@@ -38,7 +39,7 @@ public class AddCreateController implements ActionListener {
 	public void addHandler() {
 		String itemName = this.addCreateView.getItemName();
 		if (itemName.equals("Item Name") || itemName.equals("")) {
-			System.out.println("Please enter a valid name.");
+			JOptionPane.showMessageDialog(null, "Please enter a valid name", "Warning", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		
@@ -47,7 +48,7 @@ public class AddCreateController implements ActionListener {
 		try {
 			amount = Integer.parseInt(amountStr);
 		} catch (Exception e) {
-			System.out.println("Please enter a valid integer quantity");
+			JOptionPane.showMessageDialog(null, "Please specify an integer amount", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
@@ -59,7 +60,14 @@ public class AddCreateController implements ActionListener {
 		item.setFoodItem(itemDesc);
 		item.setStockableItem(stock);
 		
-		this.fridge.add(item);
+		try {
+			this.fridge.add(item);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		this.homeView.refreshList();
 		
 		

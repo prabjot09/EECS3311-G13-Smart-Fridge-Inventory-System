@@ -16,10 +16,10 @@ public class AddWindowController implements ActionListener{
 	
 	private ActionListener addMethodController;
 	
-	public AddWindowController(mainWindow homeView) {
+	public AddWindowController(mainWindow homeView, Fridge inv) {
 		this.addWindowView = new addWindow(this);
 		this.homeView = homeView;
-		this.fridge = homeView.getFridge();
+		this.fridge = inv;
 	}
 
 	@Override

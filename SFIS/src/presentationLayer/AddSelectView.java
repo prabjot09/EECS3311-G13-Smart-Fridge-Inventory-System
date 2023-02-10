@@ -36,7 +36,7 @@ public class AddSelectView extends JPanel {
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
 	    search.setBackground(Color.gray);
 	    search.setBounds(0,100,300,500);
-	    search.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+	    search.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 	    search.setPreferredSize(new Dimension(300,50));
 	    this.searchField = search;
 	    searchPanel.add(search);
@@ -68,7 +68,7 @@ public class AddSelectView extends JPanel {
 		JTextField amountField = new JTextField("Quantity");
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    amountField.setBackground(Color.gray);
-	    amountField.setBorder(BorderFactory.createEmptyBorder());
+	    amountField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 	    amountField.setPreferredSize(new Dimension(100, 50));
 	    this.amountField = amountField;
 	    addPanel.add(amountField);

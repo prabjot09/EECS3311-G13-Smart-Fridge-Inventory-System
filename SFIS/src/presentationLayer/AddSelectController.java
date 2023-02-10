@@ -72,7 +72,14 @@ public class AddSelectController implements ActionListener{
 		item.setFoodItem(itemDesc);
 		item.setStockableItem(stock);
 		
-		this.fridge.add(item);
+		try {
+			this.fridge.add(item);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		this.homeView.refreshList();
 	}
 }

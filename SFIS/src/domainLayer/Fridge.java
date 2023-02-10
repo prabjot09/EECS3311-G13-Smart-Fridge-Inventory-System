@@ -58,7 +58,9 @@ public class Fridge implements Inventory {
 				throw new Exception("Item already exists within fridge");
 			}
 		}
-		fridgeItems.add((FridgeItem) item);
+		FridgeItem thisItem = (FridgeItem) item;
+		fridgeItems.add(thisItem);
+		DBProxy.getInstance().addItem(thisItem);
 	}
 
 	@Override

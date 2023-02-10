@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -33,16 +34,13 @@ public class mainWindow extends JFrame implements ActionListener{
 	  private JList<String> list;
 	  private JButton addButton, searchButton,incButton,decButton;
 	  private JScrollPane scroll;
-	  private DBProxy db;
 	  private DefaultListModel<String> fridgeList;
 	  private Fridge inv;
-	public mainWindow(DBProxy db) {
+	public mainWindow() {
 	    // create our jframe as usual
-		this.db = db;
-		List<StoredItem> items = db.loadItems();
+		List<StoredItem> items = DBProxy.getInstance().loadItems();
 		inv = new Fridge(items);
 			
-		inv.setFridgeItems(db.loadItems());
 		panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 	    panel.setBackground(Color.black);
@@ -62,7 +60,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
 	    search.setBackground(Color.gray);
 	    search.setBounds(0,100,300,500);
-	    search.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+	    search.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 	    search.setPreferredSize(new Dimension(300,50));
 	    searchPanel.add(search);
 	    jframe.add(searchPanel);
@@ -124,7 +122,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
-		new AddWindowController(db, this);
+		new AddWindowController(this, inv);
 		}
 		
 		if (e.getSource() == searchButton) {		
@@ -141,6 +139,8 @@ public class mainWindow extends JFrame implements ActionListener{
 							 + ": " + inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
 				}
 			}
+			DBProxy.getInstance().updateFridge(inv);
+			//this.list.setModel(this.fridgeList);
 			
 		}
 		
@@ -154,11 +154,12 @@ public class mainWindow extends JFrame implements ActionListener{
 						return;
 					}
 					inv.getFridgeItems().get(x).executeDecrement(1);
-					 fridgeList.set(x,inv.getFridgeItems().get(x).getFoodItem().getName() 
+					fridgeList.set(x,inv.getFridgeItems().get(x).getFoodItem().getName() 
 							 + ": " + inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
 				}
 			}
-			
+			//this.list.setModel(this.fridgeList);
+			DBProxy.getInstance().updateFridge(inv);			
 		}
 	}
 	
@@ -175,6 +176,7 @@ public class mainWindow extends JFrame implements ActionListener{
 			 }
 		 }
 		
+		 this.fridgeList = updatedFridgeList;
 		 this.list.setModel(updatedFridgeList);
 		
 		 this.list.revalidate();
@@ -184,13 +186,12 @@ public class mainWindow extends JFrame implements ActionListener{
 	
 	
 	public void refreshList() {
-		List<StoredItem> items = this.db.loadItems();
-		this.inv = new Fridge(items);
+		List<StoredItem> items = this.inv.getFridgeItems();
 		int x = inv.getFridgeItems().size() - 1;
 		
 	    
-	    	fridgeList.add(fridgeList.size(), inv.getFridgeItems().get(x).getFoodItem().getName() + ": " + 
-	        inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
+	    fridgeList.add(fridgeList.size(), inv.getFridgeItems().get(x).getFoodItem().getName() + ": " + 
+	    inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
 	    
 	    
 	    this.list.setModel(fridgeList);

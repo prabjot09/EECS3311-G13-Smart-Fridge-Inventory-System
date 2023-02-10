@@ -1,17 +1,9 @@
 package appLayer;
 
-import domainLayer.DBProxy;
-import domainLayer.StoredItem;
-// import domainLayer.Fridge;
-// import domainLayer.Inventory
+import presentationLayer.mainWindow;
 
 public class App {
-	public static void main(String[] args) {
-		// DBProxy db = DBProxy.getInstance();
-		
-		// List<StoredItem> items = db.loadItems();
-		// Inventory inv = new Fridge(items);
-		
-		
+	public static void main(String[] args) {		
+		new mainWindow();
 	}
 }
