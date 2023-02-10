@@ -49,3 +49,9 @@ Karim Jaouhar
 * Related User Stories: Adding and Removing Items From Fridge
 * Expected Dev Times: Fridge class (4 days), FridgeItem class (3 days), inventoryInterface(1 day), GUI Design (2)
 * Actual Dev Times: Fridge class (3 days), FridgeItem class (2 days), inventoryInterface(1 day), GUI Design (3)
+
+Eric Cha
+*Tasks Chosen: GUI (failed to implement and group members had to take over), some light checks and touchups on existing implementations 
+*Related User Stories: compressed view layout (failed to implement and group members had to take over)
+*Expected Dev Times: view 6 days (failed to implement and group members had to take over), others n/a
+*Actual Dev Times: view 3 days (failed to implement and group members had to take over), others 1 day
