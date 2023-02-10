@@ -129,16 +129,22 @@ public class mainWindow extends JFrame implements ActionListener{
 			mainSearchHandler();
 		}
 		
-		if (e.getSource() == incButton) {		
+		if (e.getSource() == incButton) {	
 			String incHolder = (fridgeList.getElementAt(list.getSelectedIndex()));
 			String incer = incHolder.substring(0, incHolder.indexOf(":"));
+			search.setText("");
+			mainSearchHandler();
 			for (int x = 0; x < inv.getFridgeItems().size(); x++) {
 				if (inv.getFridgeItems().get(x).getFoodItem().getName().toLowerCase().contains(incer.toLowerCase())) {
 					inv.getFridgeItems().get(x).executeIncrement(1);
 					 fridgeList.set(x,inv.getFridgeItems().get(x).getFoodItem().getName() 
 							 + ": " + inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
+					 this.list.setSelectedIndex(x);
+					 return;
+					 
 				}
 			}
+			
 			DBProxy.getInstance().updateFridge(inv);
 			//this.list.setModel(this.fridgeList);
 			
@@ -158,7 +164,7 @@ public class mainWindow extends JFrame implements ActionListener{
 							 + ": " + inv.getFridgeItems().get(x).getStockableItem().getStock() + " units");
 				}
 			}
-			//this.list.setModel(this.fridgeList);
+			this.list.revalidate();
 			DBProxy.getInstance().updateFridge(inv);			
 		}
 	}
