@@ -37,3 +37,9 @@ Abdirahman Farah
 *Expected dev times: Add 7 days, Remove 8 days, View 6 days, Search 8 days
 *Above user stories were split with others in the group, leaving me with half the amount for each.
 *Actual dev times: Search 5 days, Add 2 days, Remove 2 days, View 3 days
+
+Prabjot Dhaliwal
+* Task Chosen: Implementing StockableItem and StoredItem interface and concrete subclasses, adding item GUI window.
+* Related User Stories: Adding items from selected list, manually adding user-defined items, incrementing/decrementing item quanities.
+* Expected Dev Times: Add (6 days), Remove (2 days), View (5 days)
+* Actual Dev Times: Add (5 days), Remove (1 day), View (3 days)
