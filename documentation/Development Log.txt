@@ -43,3 +43,9 @@ Prabjot Dhaliwal
 * Related User Stories: Adding items from selected list, manually adding user-defined items, incrementing/decrementing item quanities.
 * Expected Dev Times: Add (6 days), Remove (2 days), View (5 days)
 * Actual Dev Times: Add (5 days), Remove (1 day), View (3 days)
+
+Karim Jaouhar
+* Tasks Chosen: Implement Fridge class, inventory inferface, and Fridge Item Class. And Create Iteration 1 UI Design
+* Related User Stories: Adding and Removing Items From Fridge
+* Expected Dev Times: Fridge class (4 days), FridgeItem class (3 days), inventoryInterface(1 day), GUI Design (2)
+* Actual Dev Times: Fridge class (3 days), FridgeItem class (2 days), inventoryInterface(1 day), GUI Design (3)
