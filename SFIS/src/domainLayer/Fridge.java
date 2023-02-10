@@ -28,7 +28,7 @@ public class Fridge implements Inventory {
 	    return fridgeItems;
 	}
 
-	public void setFridgeItems(List<? extends StoredItem> fridgeItems) {
+	public void setFridgeItems(List<StoredItem> fridgeItems) {
 		this.fridgeItems = new ArrayList<StoredItem>();
 	    for (StoredItem item : fridgeItems) {
 	        FridgeItem newItem = new FridgeItem();

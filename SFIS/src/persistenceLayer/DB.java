@@ -8,9 +8,9 @@ import domainLayer.StoredItem;
 
 public interface DB {
 	//Simple interface that contains our common DB methods
-	public ArrayList<String> findMatchingFoods(String name);
+	public List<String> findMatchingFoods(String name);
 	public void addItem(StoredItem item);
-	public List<? extends StoredItem> loadItems();
+	public List<StoredItem> loadItems();
 	public void updateFridge(Fridge fridge);
 	
 }

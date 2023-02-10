@@ -4,11 +4,12 @@ package domainLayer;
 import java.util.List;
 
 import persistenceLayer.StubDB;
+import persistenceLayer.DB;
 
 public class DBProxy {
 	private static DBProxy DB = null;
 	
-	private StubDB stubDB;
+	private DB stubDB;
 	
 	private DBProxy() {
 		stubDB = new StubDB();
@@ -17,19 +18,15 @@ public class DBProxy {
 	public static DBProxy getInstance() {
 		if (DB == null) {
 			DB = new DBProxy(); 
-			}
-		
-			return DB;
 		}
+		return DB;
+	}
 	
 	
 	
-	public List<StoredItem> loadItems() 
-		{
-		
+	public List<StoredItem> loadItems() {
 		return stubDB.loadItems();
-		
-		}
+	}
 	
 
 	public void addItem(FridgeItem item) {
