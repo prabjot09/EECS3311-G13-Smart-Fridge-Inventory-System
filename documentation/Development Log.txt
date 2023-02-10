@@ -37,3 +37,21 @@ Abdirahman Farah
 *Expected dev times: Add 7 days, Remove 8 days, View 6 days, Search 8 days
 *Above user stories were split with others in the group, leaving me with half the amount for each.
 *Actual dev times: Search 5 days, Add 2 days, Remove 2 days, View 3 days
+
+Prabjot Dhaliwal
+* Task Chosen: Implementing StockableItem and StoredItem interface and concrete subclasses, adding item GUI window.
+* Related User Stories: Adding items from selected list, manually adding user-defined items, incrementing/decrementing item quanities.
+* Expected Dev Times: Add (6 days), Remove (2 days), View (5 days)
+* Actual Dev Times: Add (5 days), Remove (1 day), View (3 days)
+
+Karim Jaouhar
+* Tasks Chosen: Implement Fridge class, inventory inferface, and Fridge Item Class. And Create Iteration 1 UI Design
+* Related User Stories: Adding and Removing Items From Fridge
+* Expected Dev Times: Fridge class (4 days), FridgeItem class (3 days), inventoryInterface(1 day), GUI Design (2)
+* Actual Dev Times: Fridge class (3 days), FridgeItem class (2 days), inventoryInterface(1 day), GUI Design (3)
+
+Eric Cha
+*Tasks Chosen: GUI (failed to implement and group members had to take over), some light checks and touchups on existing implementations 
+*Related User Stories: compressed view layout (failed to implement and group members had to take over)
+*Expected Dev Times: view 6 days (failed to implement and group members had to take over), others n/a
+*Actual Dev Times: view 3 days (failed to implement and group members had to take over), others 1 day
