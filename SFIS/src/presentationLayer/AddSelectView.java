@@ -24,7 +24,7 @@ public class AddSelectView extends JPanel {
 	private JTextField amountField;
 	private JList<String> matchList;
 	
-	public AddSelectView(DBProxy database, ActionListener listener) {
+	public AddSelectView(ActionListener listener) {
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(overallLayout);
 		

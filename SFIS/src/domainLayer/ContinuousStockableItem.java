@@ -10,6 +10,7 @@ public class ContinuousStockableItem extends StockableItem {
 		int floorAmt = Math.max(0, amount);
 		int cielAmt = Math.min(100, floorAmt);
 		this.setStock(cielAmt);
+		this.setMax(100);
 	}
 	
 	@Override

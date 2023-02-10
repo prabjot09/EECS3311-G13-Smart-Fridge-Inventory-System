@@ -21,7 +21,7 @@ import domainLayer.DBProxy;
 public class addWindow extends JFrame {
 	private JPanel addMethodPanel;
 	
-	public addWindow(DBProxy db, ActionListener listener) {		
+	public addWindow(ActionListener listener) {		
 		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
 		this.getContentPane().setLayout(overallLayout);
 		

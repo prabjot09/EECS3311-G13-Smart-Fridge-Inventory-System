@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import domainLayer.DBProxy;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
+import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
 import domainLayer.StoredItem;
@@ -19,12 +20,12 @@ import domainLayer.StoredItem;
 public class AddSelectController implements ActionListener{
 	private AddSelectView addSelectView;
 	private mainWindow homeView;
-	private DBProxy database;
+	private Fridge fridge;
 	
-	public AddSelectController(DBProxy database, addWindow addWindowView, mainWindow homeView) {
-		this.addSelectView = new AddSelectView(database, this);
-		this.database = database;
+	public AddSelectController(addWindow addWindowView, mainWindow homeView, Fridge fridge) {
+		this.addSelectView = new AddSelectView(this);
 		this.homeView = homeView;
+		this.fridge = fridge;
 		
 		addWindowView.setAddingMethod(addSelectView);
 	}
@@ -42,7 +43,7 @@ public class AddSelectController implements ActionListener{
 	
 	public void searchHandler() {
 		String searchString = this.addSelectView.getSearchField();
-		List<String> matches = database.findItemDBItems(searchString);
+		List<String> matches = DBProxy.getInstance().findItemDBItems(searchString);
 		
 		this.addSelectView.displayMatches(matches);
 	}
@@ -71,7 +72,7 @@ public class AddSelectController implements ActionListener{
 		item.setFoodItem(itemDesc);
 		item.setStockableItem(stock);
 		
-		this.database.addItem(item);
+		this.fridge.add(item);
 		this.homeView.refreshList();
 	}
 }
