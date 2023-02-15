@@ -29,7 +29,7 @@ Meeting 4: February 6th 2023 - 1h 15min
 * Division of code amongst team members by assigning implementation of different layers (to rely on abstraction of each others' code so we don't need to know how each member implemented their code).
 * Assigning developer tasks for remaining implementation.
 
-Developer Tasks
+Iteration 1 Developer Tasks
 
 Abdirahman Farah
 *Tasks chosen: Implementation of stub database, main GUI window, some backend search add and remove implementations
@@ -55,3 +55,13 @@ Eric Cha
 *Related User Stories: compressed view layout (failed to implement and group members had to take over)
 *Expected Dev Times: view 6 days (failed to implement and group members had to take over), others n/a
 *Actual Dev Times: view 3 days (failed to implement and group members had to take over), others 1 day
+
+Meeting 5: February 13, 2023 - 1h
+* Defined detailed user stories for iteration 2 and assigned their priorities and costs.
+* Reviewed and discussed the application developed by Group 12 which we are the clients for.
+* Drafted a list of features that we would like to see added to Group 12's application.
+* Outlined key tasks to finish in the week:
+  * GUI Features missing from Iteration 1 (Remove item, expressive view layout toggle)
+  * Implementation of real Database and designing persistent storage
+  * Testing for Domain logic
+  * Refactoring clunky design of GUI to fit design patterns better
