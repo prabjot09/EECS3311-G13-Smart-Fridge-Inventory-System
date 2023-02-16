@@ -1,3 +1,5 @@
+ITERATION 1 START
+
 First Meeting: January 31st 2023 - 40min
 
 * spoke about creation of class diagram and general flow of the program
@@ -56,6 +58,9 @@ Eric Cha
 *Expected Dev Times: view 6 days (failed to implement and group members had to take over), others n/a
 *Actual Dev Times: view 3 days (failed to implement and group members had to take over), others 1 day
 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ITERATION 2 START
+
 Meeting 5: February 13, 2023 - 1h
 * Defined detailed user stories for iteration 2 and assigned their priorities and costs.
 * Reviewed and discussed the application developed by Group 12 which we are the clients for.
@@ -65,3 +70,16 @@ Meeting 5: February 13, 2023 - 1h
   * Implementation of real Database and designing persistent storage
   * Testing for Domain logic
   * Refactoring clunky design of GUI to fit design patterns better
+
+Meeting with Client Team: February 16, 2023 - 15 min
+* Bug Found: Incrementing item will increment all items that contain the same name.
+* Allow the user to add items without opening new window, or close 'Add Item Window' after an item is added. (To reduce clutter)
+* Clear input text field after it has been submitted, to allow user to easily enter in new input.
+* Allow the user to see all items in the DB immediately, rather than have to search themselves to see a list.
+
+Meeting with Dev Team (as Client): February 16, 2023 - 30 min
+* Design Problem: Create app for both librarian admin and users, or just users
+* Contradictory Planning: Both selling and borrowing books
+* Suggested Features to implement listed in the following document: https://docs.google.com/document/d/1ZaxJnpQ-Yp6XRaxLBqMg2T5EU32Zh_2dO_4kNkW1Dd0/edit#
+* Discussed reconsidering order of user stories in iteration 2/3 to prioritize key features such as borrowing books
+
