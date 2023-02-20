@@ -14,10 +14,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-import domainLayer.DBProxy;
 
 public class AddSelectView extends JPanel {
 	private JTextField searchField;
