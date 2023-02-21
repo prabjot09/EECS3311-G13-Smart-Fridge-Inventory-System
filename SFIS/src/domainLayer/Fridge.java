@@ -3,27 +3,19 @@ package domainLayer;
 import java.util.*;
 
 public class Fridge implements Inventory {
-	private List<StoredItem> fridgeItems = new ArrayList<StoredItem>();
+	private List<StoredItem> fridgeItems;
 
 	public Fridge(List<StoredItem> items) {
 	    this.fridgeItems = new ArrayList<StoredItem>();
 	    for (StoredItem item : items) {
-	        FridgeItem newItem = new FridgeItem();
-	        newItem.setFoodItem(new FoodItem());
-	        newItem.getFoodItem().setName(item.getFoodItem().getName());
-	        newItem.setStockableItem(item.getStockableItem());
-	        this.fridgeItems.add(newItem);
+	        this.fridgeItems.add(item);
 	    }
 	}
 	
 	public List<StoredItem> getFridgeItems() {
 		List<StoredItem> fridgeItems = new ArrayList<StoredItem>();
 	    for (StoredItem item : this.fridgeItems) {
-	        FridgeItem newItem = new FridgeItem();
-	        newItem.setFoodItem(new FoodItem());
-	        newItem.getFoodItem().setName(item.getFoodItem().getName());
-	        newItem.setStockableItem(item.getStockableItem());
-	        fridgeItems.add(newItem);
+	        fridgeItems.add(item);
 	    }
 	    return fridgeItems;
 	}
@@ -31,11 +23,7 @@ public class Fridge implements Inventory {
 	public void setFridgeItems(List<StoredItem> fridgeItems) {
 		this.fridgeItems = new ArrayList<StoredItem>();
 	    for (StoredItem item : fridgeItems) {
-	        FridgeItem newItem = new FridgeItem();
-	        newItem.setFoodItem(new FoodItem());
-	        newItem.getFoodItem().setName(item.getFoodItem().getName());
-	        newItem.setStockableItem(item.getStockableItem());
-	        this.fridgeItems.add(newItem);
+	        this.fridgeItems.add(item);
 	    }
 	}
 
@@ -43,8 +31,8 @@ public class Fridge implements Inventory {
 	public List<StoredItem> search(String name) {
 	    List<StoredItem> foundFrigeItems = new ArrayList<StoredItem>();
 	    for (StoredItem item : fridgeItems) {
-	        if (item.getFoodItem().getName().contains(name)) {
-	            foundFrigeItems.add(item);
+	        if (item.getFoodItem().getName().toLowerCase().contains(name.toLowerCase())) {
+	            foundFrigeItems.add(new FridgeItem((FridgeItem) item));
 	        }
 	    }
 	    return foundFrigeItems;
@@ -58,9 +46,9 @@ public class Fridge implements Inventory {
 				throw new Exception("Item already exists within fridge");
 			}
 		}
+		
 		FridgeItem thisItem = (FridgeItem) item;
 		fridgeItems.add(thisItem);
-		DBProxy.getInstance().addItem(thisItem);
 	}
 
 	@Override

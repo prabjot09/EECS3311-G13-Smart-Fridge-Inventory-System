@@ -67,7 +67,7 @@ public class AddCreateController implements ActionListener {
 			return;
 		}
 		
-		this.homeView.refreshList();
+		this.homeView.addNewItem();
 		
 		
 	}

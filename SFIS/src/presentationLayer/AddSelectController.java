@@ -80,6 +80,6 @@ public class AddSelectController implements ActionListener{
 			return;
 		}
 		
-		this.homeView.refreshList();
+		this.homeView.addNewItem();
 	}
 }

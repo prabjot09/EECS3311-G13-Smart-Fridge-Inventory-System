@@ -22,4 +22,9 @@ public abstract class StoredItem {
 	public void setStockableItem(StockableItem stock) {
 		this.stock = stock;
 	}
+	
+	public String getDescription() {
+		String desc = this.foodDescription.getName() + ": " + this.stock.getStock() + " units";
+		return desc;
+	}
 }

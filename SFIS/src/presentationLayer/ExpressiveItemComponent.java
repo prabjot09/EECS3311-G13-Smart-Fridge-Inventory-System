@@ -1,0 +1,167 @@
+package presentationLayer;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+
+import domainLayer.DiscreteStockableItem;
+import domainLayer.FoodItem;
+import domainLayer.FridgeItem;
+import domainLayer.StockableItem;
+import domainLayer.StoredItem;
+
+public class ExpressiveItemComponent extends JPanel implements ActionListener{
+	private JLabel name;
+	private JLabel quantity;
+	private JProgressBar quantityVisual;
+	private StoredItem itemObj;
+	
+	private JButton incButton;
+	private JButton decButton;
+	private JButton delButton;
+	
+	private ExpressiveView view;
+	
+	public static void main(String[] args) {
+		JPanel lay = new JPanel();
+		lay.setLayout(new BoxLayout(lay, BoxLayout.Y_AXIS));
+		
+		for (int i = 0; i < 6; i++) {
+			FridgeItem item = new FridgeItem();
+			FoodItem fItem = new FoodItem();
+			fItem.setName("a - " + i);
+			item.setFoodItem(fItem);
+			item.setStockableItem(new DiscreteStockableItem(3));
+			item.getStockableItem().setMax(4);
+			ExpressiveItemComponent a = new ExpressiveItemComponent(item, null);
+			
+			lay.add(a);			
+		}
+		
+		JFrame jframe = new JFrame("Hi");
+		jframe.add(lay);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    jframe.getContentPane().setBackground(Color.black);
+	    jframe.setPreferredSize(new Dimension(600, 600));
+	    jframe.pack();
+	    jframe.setLocationRelativeTo(null);
+	    jframe.setVisible(true);
+	    
+	    
+	}
+	
+	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveView view) {	
+		this.itemObj = itemObj;
+		this.view = view;
+		
+		
+		this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+	    this.setBackground(Color.BLACK);
+	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	    
+	    JPanel upperPanel = new JPanel();
+	    upperPanel.setLayout(new BorderLayout());
+	    upperPanel.setBackground(Color.BLACK);
+	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 20, 5));
+	    this.add(upperPanel);
+	    
+	    JPanel infoPanel = new JPanel();
+	    infoPanel.setBackground(Color.black);
+	    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+	    upperPanel.add(infoPanel, BorderLayout.LINE_START);
+	    
+	    name = new JLabel("Name: " + itemObj.getFoodItem().getName());
+	    name.setForeground(Color.white);
+	    name.setFont(new Font("Arial", Font.BOLD, 24));
+	    infoPanel.add(name);
+	    
+	    quantity = new JLabel("Quantity: " + itemObj.getStockableItem().getStock());
+	    quantity.setForeground(Color.white);
+	    quantity.setFont(new Font("Arial", Font.BOLD, 24));
+	    infoPanel.add(quantity);
+	    
+	    delButton = new JButton("Remove");
+	    delButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    delButton.addActionListener(this);
+	    upperPanel.add(delButton, BorderLayout.LINE_END);
+	    
+	    
+	    
+	    JPanel quantityPanel = new JPanel();
+	    quantityPanel.setBackground(Color.black);
+	    quantityPanel.setLayout(new GridBagLayout());
+	    GridBagConstraints c = new GridBagConstraints();
+	    this.add(quantityPanel);
+	    	    
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c.weightx = 1.0;
+	    quantityVisual = new JProgressBar(SwingConstants.HORIZONTAL);
+	    quantityVisual.setStringPainted(true);
+	    quantityVisual.setForeground(Color.BLUE);
+	    StockableItem stock = this.itemObj.getStockableItem();
+	    int percentQuantity = (stock.getStock() * 100) / stock.getMax();
+	    quantityVisual.setValue(percentQuantity);
+	    quantityPanel.add(quantityVisual, c);
+	    
+	    c.weightx = 0.06;
+	    c.weighty = 1.0;
+	    c.insets = new Insets(0, 12, 0, 0);
+	    incButton = new JButton("+");
+	    incButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    incButton.addActionListener(this);
+	    quantityPanel.add(incButton, c);
+	    
+	    decButton = new JButton("-");
+	    decButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    decButton.addActionListener(this);
+	    quantityPanel.add(decButton, c);	    
+	}
+	
+	public void updateLabel() {
+		name.setText("Name: " + itemObj.getFoodItem().getName());
+		quantity.setText("Quantity: " + itemObj.getStockableItem().getStock());
+		
+		StockableItem stock = this.itemObj.getStockableItem();
+	    int percentQuantity = (stock.getStock() * 100) / stock.getMax();
+	    quantityVisual.setValue(percentQuantity);
+		
+		this.revalidate();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton clicked = (JButton) e.getSource();
+		
+		if (clicked == incButton) {
+			this.itemObj.getStockableItem().increment(1);
+			this.updateLabel();
+		}
+		else if (clicked == decButton) {
+			this.itemObj.getStockableItem().decrement(1);
+			this.updateLabel();
+		}
+		else if (clicked == delButton) {
+			view.removeItem(this);
+		}
+		
+	}
+	
+	public StoredItem getItemObj() {
+		return this.itemObj;
+	}
+}
