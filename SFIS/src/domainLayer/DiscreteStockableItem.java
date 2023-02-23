@@ -1,6 +1,7 @@
 package domainLayer;
 
 public class DiscreteStockableItem extends StockableItem {
+	private static final int INCREMENT = 1;
 	
 	public DiscreteStockableItem() {
 		
@@ -12,14 +13,20 @@ public class DiscreteStockableItem extends StockableItem {
 	}
 	
 	@Override
-	public void increment(int val) {
-		this.setStock(this.getStock() + val);	
+	public void increment() {
+		this.setStock(this.getStock() + INCREMENT);	
 		
 		this.setMax(Math.max(this.getStock(), this.getMax()));
 	}
 
 	@Override
-	public void decrement(int val) {
-		this.setStock(Math.max(0, this.getStock() - val));		
+	public void decrement() {
+		this.setStock(Math.max(0, this.getStock() - INCREMENT));		
+	}
+	
+	@Override
+	public String getDescription() {
+		String desc = "" + this.getStock() + " units";
+		return desc;
 	}
 }

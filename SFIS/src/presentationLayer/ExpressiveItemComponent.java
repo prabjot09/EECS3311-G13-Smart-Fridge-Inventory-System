@@ -148,11 +148,11 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		JButton clicked = (JButton) e.getSource();
 		
 		if (clicked == incButton) {
-			this.itemObj.getStockableItem().increment(1);
+			this.itemObj.executeIncrement();;
 			this.updateLabel();
 		}
 		else if (clicked == decButton) {
-			this.itemObj.getStockableItem().decrement(1);
+			this.itemObj.executeDecrement();;
 			this.updateLabel();
 		}
 		else if (clicked == delButton) {

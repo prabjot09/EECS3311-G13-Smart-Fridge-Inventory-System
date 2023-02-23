@@ -4,8 +4,8 @@ public abstract class StoredItem {
 	private FoodItem foodDescription;
 	private StockableItem stock;
 	
-	public abstract void executeIncrement(int val);
-	public abstract void executeDecrement(int val);
+	public abstract void executeIncrement();
+	public abstract void executeDecrement();
 	
 	public FoodItem getFoodItem() {
 		return this.foodDescription;
@@ -24,7 +24,7 @@ public abstract class StoredItem {
 	}
 	
 	public String getDescription() {
-		String desc = this.foodDescription.getName() + ": " + this.stock.getStock() + " units";
+		String desc = this.foodDescription.getName() + ": " + this.stock.getDescription();
 		return desc;
 	}
 }

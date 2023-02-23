@@ -12,15 +12,15 @@ public class FridgeItem extends StoredItem{
 	}
 	
 	@Override
-	public void executeIncrement(int val) {
+	public void executeIncrement() {
 		StockableItem stock = getStockableItem();
-		stock.increment(val);
+		stock.increment();
 	}
 
 	@Override
-	public void executeDecrement(int val) {
+	public void executeDecrement() {
 		StockableItem stock = getStockableItem();
-		stock.decrement(val);
+		stock.decrement();
 	}
 
 }

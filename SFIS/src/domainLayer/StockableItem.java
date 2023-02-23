@@ -4,8 +4,9 @@ public abstract class StockableItem {
 	private int amount;
 	private int maxAmount;
 	
-	public abstract void increment(int val);
-	public abstract void decrement(int val);
+	public abstract void increment();
+	public abstract void decrement();
+	public abstract String getDescription();
 	
 	public int getStock() {
 		return this.amount;

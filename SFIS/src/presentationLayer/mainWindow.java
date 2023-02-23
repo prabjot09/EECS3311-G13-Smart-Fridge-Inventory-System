@@ -163,7 +163,7 @@ public class mainWindow extends JFrame implements ActionListener{
 		}
 		else if (e.getSource() == incButton) {	
 			int itemIndex = list.getSelectedIndex();
-			this.displayItems.get(itemIndex).executeIncrement(1);
+			this.displayItems.get(itemIndex).executeIncrement();
 			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 			
@@ -177,7 +177,7 @@ public class mainWindow extends JFrame implements ActionListener{
 				return;
 			}
 			
-			this.displayItems.get(itemIndex).executeDecrement(1);
+			this.displayItems.get(itemIndex).executeDecrement();
 			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
