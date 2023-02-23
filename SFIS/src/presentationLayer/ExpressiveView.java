@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
@@ -47,6 +49,8 @@ public class ExpressiveView extends JPanel {
 			this.remove(scroll);
 			
 		listView = new JPanel();
+		listView.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		listView.setBackground(new Color(20, 20, 20));
 		listView.setLayout(new BoxLayout(listView, BoxLayout.Y_AXIS));
 		
 		for (StoredItem item: items) {
@@ -55,6 +59,8 @@ public class ExpressiveView extends JPanel {
 		}
 		
 		scroll = new JScrollPane(listView);
+		scroll.setViewportBorder(BorderFactory.createEmptyBorder(10, 2, 15, 2));
+		scroll.setBackground(listView.getBackground());
 		this.add(scroll);
 		this.revalidate();
 	}

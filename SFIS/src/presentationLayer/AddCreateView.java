@@ -4,12 +4,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import domainLayer.FoodItem;
 
 
 public class AddCreateView extends JPanel{
@@ -22,7 +28,19 @@ public class AddCreateView extends JPanel{
 		
 		JPanel inputPanel = new JPanel();
 		inputPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
 		inputPanel.setBackground(Color.black);
+		this.add(inputPanel);
+	    
+		JPanel namePanel = new JPanel();
+		namePanel.setBackground(Color.black);
+		inputPanel.add(namePanel);
+		
+		JLabel nameLabel = new JLabel("Item Name: ");
+	    nameLabel.setForeground(Color.white);
+	    nameLabel.setFont(new Font("Arial", Font.BOLD, 24));
+	    nameLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+	    namePanel.add(nameLabel);
 	    
 		JTextField nameField = new JTextField("Item Name");
 		nameField.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -31,7 +49,11 @@ public class AddCreateView extends JPanel{
 	    nameField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		nameField.setPreferredSize(new Dimension(300,50));
 	    this.nameField = nameField;
-	    inputPanel.add(nameField);
+	    namePanel.add(nameField);
+	    
+	    JPanel amountPanel = new JPanel();
+	    amountPanel.setBackground(Color.black);
+	    inputPanel.add(amountPanel);
 	    
 	    JTextField amountField = new JTextField("Amount Remaining");
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -40,8 +62,18 @@ public class AddCreateView extends JPanel{
 	    amountField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		amountField.setPreferredSize(new Dimension(300,50));
 	    this.amountField = amountField;
-	    inputPanel.add(amountField);
-	    this.add(inputPanel);
+	    amountPanel.add(amountField);
+	    
+	    FoodItem.StockType[] typeVals = FoodItem.StockType.values();
+	    String[] values = new String[1 + typeVals.length];
+	    values[0] = "Amount Type";
+	    for (int i = 0; i < typeVals.length; i++) {
+	    	values[i+1] = typeVals[i].toString();
+	    }
+	    JComboBox typeDropDown = new JComboBox(values);
+	    typeDropDown.setFont(new Font("Arial", Font.PLAIN, 16));
+	    typeDropDown.setPreferredSize(new Dimension(300,50));
+	    amountPanel.add(typeDropDown);
 	    
 	    JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

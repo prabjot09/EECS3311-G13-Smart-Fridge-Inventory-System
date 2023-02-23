@@ -70,29 +70,29 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		this.view = view;
 		
 		
-		this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-	    this.setBackground(Color.BLACK);
+		this.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(50, 50, 50)));
+	    this.setBackground(new Color(20, 20, 20));
 	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	    
 	    JPanel upperPanel = new JPanel();
 	    upperPanel.setLayout(new BorderLayout());
-	    upperPanel.setBackground(Color.BLACK);
-	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 20, 5));
+	    upperPanel.setBackground(this.getBackground());
+	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 	    this.add(upperPanel);
 	    
 	    JPanel infoPanel = new JPanel();
-	    infoPanel.setBackground(Color.black);
+	    infoPanel.setBackground(this.getBackground());
 	    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 	    upperPanel.add(infoPanel, BorderLayout.LINE_START);
 	    
 	    name = new JLabel("Name: " + itemObj.getFoodItem().getName());
 	    name.setForeground(Color.white);
-	    name.setFont(new Font("Arial", Font.BOLD, 24));
+	    name.setFont(new Font("Arial", Font.BOLD, 18));
 	    infoPanel.add(name);
 	    
 	    quantity = new JLabel("Quantity: " + itemObj.getStockableItem().getStock());
 	    quantity.setForeground(Color.white);
-	    quantity.setFont(new Font("Arial", Font.BOLD, 24));
+	    quantity.setFont(new Font("Arial", Font.BOLD, 18));
 	    infoPanel.add(quantity);
 	    
 	    delButton = new JButton("Remove");
@@ -103,7 +103,8 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    
 	    
 	    JPanel quantityPanel = new JPanel();
-	    quantityPanel.setBackground(Color.black);
+	    quantityPanel.setBackground(this.getBackground());
+	    quantityPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 	    quantityPanel.setLayout(new GridBagLayout());
 	    GridBagConstraints c = new GridBagConstraints();
 	    this.add(quantityPanel);

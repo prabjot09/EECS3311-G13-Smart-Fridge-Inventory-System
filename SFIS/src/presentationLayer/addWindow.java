@@ -32,7 +32,7 @@ public class addWindow extends JFrame {
 	    
 	    JLabel titleLabel = new JLabel("Add New Item");
 	    titleLabel.setForeground(Color.white);
-	    titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
 	    panel.add(titleLabel);
 	    panel.setMaximumSize(new Dimension(panel.getMaximumSize().width, panel.getPreferredSize().height));
 	    
