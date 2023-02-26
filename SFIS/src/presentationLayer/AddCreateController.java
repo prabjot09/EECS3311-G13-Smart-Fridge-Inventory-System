@@ -11,6 +11,7 @@ import domainLayer.FoodItem;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
+import domainLayer.StockableItemFactory;
 
 public class AddCreateController implements ActionListener {
 	private mainWindow homeView;
@@ -27,7 +28,14 @@ public class AddCreateController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton clicked = (JButton) e.getSource();
+		JButton clicked;
+		
+		try {
+			clicked = (JButton) e.getSource();
+		} catch (Exception exception) {
+			System.out.println(exception.getStackTrace());
+			return;
+		}
 		
 		if (clicked.getText() == "Add") {
 			this.addHandler();
@@ -35,11 +43,11 @@ public class AddCreateController implements ActionListener {
 
 	}
 	
-	public void addHandler() {
+	public boolean validateInput() {
 		String itemName = this.addCreateView.getItemName();
 		if (itemName.equals("Item Name") || itemName.equals("")) {
 			JOptionPane.showMessageDialog(null, "Please enter a valid name", "Warning", JOptionPane.WARNING_MESSAGE);
-			return;
+			return false;
 		}
 		
 		String amountStr = this.addCreateView.getAmount();
@@ -48,12 +56,28 @@ public class AddCreateController implements ActionListener {
 			amount = Integer.parseInt(amountStr);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Please specify an integer amount", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		
+		int amountType = this.addCreateView.getAmountTypeIndex();
+		if (amountType == 0) {
+			JOptionPane.showMessageDialog(null, "Please specify the amount type", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	public void addHandler() {
+		if (this.validateInput() == false)
+			return;
+		
 		FoodItem itemDesc = new FoodItem();
-		itemDesc.setName(itemName);
-		StockableItem stock = new DiscreteStockableItem(amount);
+		itemDesc.setName(this.addCreateView.getItemName());
+		int amountType = this.addCreateView.getAmountTypeIndex() - 1;
+		int amount = Integer.parseInt(this.addCreateView.getAmount());
+		StockableItem stock = StockableItemFactory.createStockableItem(amountType, amount);
 		
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);
@@ -68,8 +92,6 @@ public class AddCreateController implements ActionListener {
 		}
 		
 		this.homeView.addNewItem();
-		
-		
 	}
 
 }

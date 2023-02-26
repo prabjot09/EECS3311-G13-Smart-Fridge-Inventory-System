@@ -219,20 +219,21 @@ public class mainWindow extends JFrame implements ActionListener{
 	
 	public void generateList() {
 		DefaultListModel<String> updatedFridgeList = new DefaultListModel<String>();
-		 for (StoredItem item: this.displayItems) {
-			 updatedFridgeList.addElement(item.getDescription());
-		 }
+		for (StoredItem item: this.displayItems) {
+			updatedFridgeList.addElement(item.getDescription());
+		}
 		 
-		 this.fridgeList = updatedFridgeList;
-		 this.list.setModel(updatedFridgeList);
-		 this.list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
-		 this.list.revalidate();
+		this.fridgeList = updatedFridgeList;
+		this.list.setModel(updatedFridgeList);
+		this.list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
+		this.list.revalidate();
 		 
-		 this.compressedView.revalidate();
+		this.compressedView.revalidate();
 	}
 	
 	public void addNewItem() {
 		int itemIndex = inv.getFridgeItems().size() - 1;
+		displayItems.add(inv.getFridgeItems().get(itemIndex));
 	    fridgeList.addElement(inv.getFridgeItems().get(itemIndex).getDescription());
 	    
 	    list.setModel(fridgeList);

@@ -90,7 +90,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    name.setFont(new Font("Arial", Font.BOLD, 18));
 	    infoPanel.add(name);
 	    
-	    quantity = new JLabel("Quantity: " + itemObj.getStockableItem().getStock());
+	    quantity = new JLabel("Quantity: " + itemObj.getStockableItem().getDescription());
 	    quantity.setForeground(Color.white);
 	    quantity.setFont(new Font("Arial", Font.BOLD, 18));
 	    infoPanel.add(quantity);

@@ -3,7 +3,21 @@ package domainLayer;
 public class FoodItem {
 	public enum StockType {
 		CONTINUOUS,
-		DISCRETE
+		DISCRETE;
+		
+		@Override
+		public String toString() {
+			switch (this) {
+			case CONTINUOUS:
+				return "Volumetric Item";
+
+			case DISCRETE:
+				return "Unit-based Item";
+			
+			default:
+				return "";
+			}
+		}
 	}
 	
 	public enum CreationType {

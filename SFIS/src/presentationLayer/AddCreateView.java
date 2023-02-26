@@ -21,6 +21,7 @@ import domainLayer.FoodItem;
 public class AddCreateView extends JPanel{
 	private JTextField nameField;
 	private JTextField amountField;
+	private JComboBox amountTypeField;
 
 	public AddCreateView(ActionListener listener) {
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -55,6 +56,19 @@ public class AddCreateView extends JPanel{
 	    amountPanel.setBackground(Color.black);
 	    inputPanel.add(amountPanel);
 	    
+	    
+	    FoodItem.StockType[] typeVals = FoodItem.StockType.values();
+	    String[] values = new String[1 + typeVals.length];
+	    values[0] = "Amount Type";
+	    for (int i = 0; i < typeVals.length; i++) {
+	    	values[i+1] = typeVals[i].toString();
+	    }
+	    JComboBox<String> typeDropDown = new JComboBox<String>(values);
+	    typeDropDown.setFont(new Font("Arial", Font.PLAIN, 16));
+	    typeDropDown.setPreferredSize(new Dimension(300,50));
+	    this.amountTypeField = typeDropDown;
+	    amountPanel.add(typeDropDown);
+	    
 	    JTextField amountField = new JTextField("Amount Remaining");
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    amountField.setBackground(Color.gray);
@@ -63,17 +77,6 @@ public class AddCreateView extends JPanel{
 		amountField.setPreferredSize(new Dimension(300,50));
 	    this.amountField = amountField;
 	    amountPanel.add(amountField);
-	    
-	    FoodItem.StockType[] typeVals = FoodItem.StockType.values();
-	    String[] values = new String[1 + typeVals.length];
-	    values[0] = "Amount Type";
-	    for (int i = 0; i < typeVals.length; i++) {
-	    	values[i+1] = typeVals[i].toString();
-	    }
-	    JComboBox typeDropDown = new JComboBox(values);
-	    typeDropDown.setFont(new Font("Arial", Font.PLAIN, 16));
-	    typeDropDown.setPreferredSize(new Dimension(300,50));
-	    amountPanel.add(typeDropDown);
 	    
 	    JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -96,5 +99,8 @@ public class AddCreateView extends JPanel{
 		return this.amountField.getText();
 	}
 	
+	public int getAmountTypeIndex() {
+		return this.amountTypeField.getSelectedIndex();
+	}
 	
 }
