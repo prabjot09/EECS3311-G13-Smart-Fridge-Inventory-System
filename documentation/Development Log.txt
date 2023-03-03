@@ -83,3 +83,7 @@ Meeting with Dev Team (as Client): February 16, 2023 - 30 min
 * Suggested Features to implement listed in the following document: https://docs.google.com/document/d/1ZaxJnpQ-Yp6XRaxLBqMg2T5EU32Zh_2dO_4kNkW1Dd0/edit#
 * Discussed reconsidering order of user stories in iteration 2/3 to prioritize key features such as borrowing books
 
+Meeting 6: March 3, 2023 - 1h
+* Delegated tasks regarding feedback from client teams
+* Delegated and clarified about iteration 2 features as well as the plan going forward
+* Set soft deadlines for members 
