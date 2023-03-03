@@ -26,6 +26,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private JList<String> list;
 	private JButton incButton;
 	private JButton decButton;
+	private JButton remButton;
 	private List<StoredItem> displayItems;
 	private DefaultListModel<String> fridgeList;
 
@@ -61,6 +62,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    decButton.setPreferredSize(new Dimension(200,50));
 	    buttonPanel.add(decButton);
 	    
+	    remButton = new JButton("Remove");
+	    remButton.addActionListener(this);
+	    remButton.setPreferredSize(new Dimension(200, 50));
+	    buttonPanel.add(remButton);
+	    
 	    this.generateList(displayItems);
 	}
 	
@@ -81,6 +87,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (list.getSelectedIndex() == -1) {
+			JOptionPane.showMessageDialog(null, "Select an item please!", "Notice", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
 		if (e.getSource() == incButton) {	
 			int itemIndex = list.getSelectedIndex();
 			this.displayItems.get(itemIndex).executeIncrement();
@@ -102,7 +113,16 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.list.revalidate();
 			
 			DBProxy.getInstance().updateFridge(inv);
-		}	
+		}
+		else if (e.getSource() == remButton) {
+			int itemIndex = list.getSelectedIndex();
+			
+			this.inv.remove(this.displayItems.get(itemIndex));
+			this.displayItems.remove(itemIndex);
+			this.fridgeList.remove(itemIndex);
+			
+			DBProxy.getInstance().updateFridge(inv);
+		}
 	}
 	
 	public void addItem(StoredItem item) {
