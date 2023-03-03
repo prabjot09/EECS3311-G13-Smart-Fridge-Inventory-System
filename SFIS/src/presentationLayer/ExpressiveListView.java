@@ -16,7 +16,7 @@ import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.StoredItem;
 
-public class ExpressiveView extends JPanel {
+public class ExpressiveListView extends JPanel implements ListView{
 	
 	Fridge inv;
 	JPanel listView;
@@ -24,7 +24,7 @@ public class ExpressiveView extends JPanel {
 	
 	public static void main(String[] args) {
 		JFrame jframe = new JFrame("Hi");
-		jframe.add(new ExpressiveView(new Fridge(DBProxy.getInstance().loadItems())));
+		jframe.add(new ExpressiveListView(new Fridge(DBProxy.getInstance().loadItems())));
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jframe.getContentPane().setBackground(Color.black);
 	    jframe.setPreferredSize(new Dimension(600, 600));
@@ -33,10 +33,11 @@ public class ExpressiveView extends JPanel {
 	    jframe.setVisible(true);
 	}
 	
-	public ExpressiveView(Fridge inv) {
+	public ExpressiveListView(Fridge inv) {
 		this.inv = inv;
 		
 		this.setLayout(new BorderLayout());
+		this.setPreferredSize(new Dimension(820, 400));
 		
 		scroll = new JScrollPane();
 		this.add(scroll);

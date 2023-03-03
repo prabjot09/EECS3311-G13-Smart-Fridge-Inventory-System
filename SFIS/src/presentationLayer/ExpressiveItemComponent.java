@@ -35,7 +35,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private JButton decButton;
 	private JButton delButton;
 	
-	private ExpressiveView view;
+	private ExpressiveListView view;
 	
 	public static void main(String[] args) {
 		JPanel lay = new JPanel();
@@ -65,7 +65,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    
 	}
 	
-	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveView view) {	
+	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveListView view) {	
 		this.itemObj = itemObj;
 		this.view = view;
 		

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -44,11 +45,13 @@ public class mainWindow extends JFrame implements ActionListener{
 	
 	private JPanel viewPanel;
 	private JPanel compressedView;
-	private ExpressiveView expressiveView;
+	private ExpressiveListView expressiveView;
 	private JButton viewToggler;
 	
 	private ImageIcon compressedIcon;
 	private ImageIcon expressiveIcon;
+	
+	private ListViewManager viewManager;
 	
 	public mainWindow() {
 	    // create our jframe as usual
@@ -107,40 +110,46 @@ public class mainWindow extends JFrame implements ActionListener{
 	    viewToggler.addActionListener(this);
 	    topPanel.add(viewToggler);
 	    
-	    displayItems = inv.getFridgeItems();
-	    list = new JList<String>();
-	    list.setBackground(Color.gray);
-	    list.setFont(new Font("Arial", Font.BOLD, 24));
-	    list.setPreferredSize(new Dimension(800, 220));
-	    list.setBounds(0,300,1000,500);
+//	    displayItems = inv.getFridgeItems();
+//	    list = new JList<String>();
+//	    list.setBackground(Color.gray);
+//	    list.setFont(new Font("Arial", Font.BOLD, 24));
+//	    list.setPreferredSize(new Dimension(800, 220));
+//	    list.setBounds(0,300,1000,500);
+//	    
+//	    JScrollPane compressedList = new JScrollPane(list);
+//	    compressedList.setPreferredSize(new Dimension(820, 220));
+//	    compressedView = new JPanel();
+//	    compressedView.setBackground(Color.black);
+//	    compressedView.setPreferredSize(new Dimension(820, 400));
+//	    compressedView.add(compressedList);
 	    
-	    JScrollPane compressedList = new JScrollPane(list);
-	    compressedList.setPreferredSize(new Dimension(820, 220));
-	    compressedView = new JPanel();
-	    compressedView.setBackground(Color.black);
-	    compressedView.setPreferredSize(new Dimension(820, 400));
-	    compressedView.add(compressedList);
+	    List<ListView> views = new ArrayList<ListView>();
+	    views.add(new CompressedListView(inv));
+	    views.add(new ExpressiveListView(inv));
+	    viewManager = new ListViewManager(views);
 	    
 	    viewPanel = new JPanel();
 	    viewPanel.setBackground(Color.black);
-	    viewPanel.add(compressedView);
+	    viewPanel.setPreferredSize(new Dimension(820, 400));
+	    viewPanel.add((JPanel) viewManager.getCurrentView());
 	    
-	    expressiveView = new ExpressiveView(inv);
-	    expressiveView.setPreferredSize(new Dimension(820, 400));
+//	    expressiveView = new ExpressiveListView(inv);
+//	    expressiveView.setPreferredSize(new Dimension(820, 400));
 	    
 	    searchPanel.add(viewPanel);
 	    
-	    this.generateList();
+//	    this.generateList();
 	    
-	    incButton = new JButton("Increment");
-	    incButton.addActionListener(this);
-	    incButton.setPreferredSize(new Dimension(200,50));
-	    compressedView.add(incButton);
-	    
-	    decButton = new JButton("Decrement");
-	    decButton.addActionListener(this);
-	    decButton.setPreferredSize(new Dimension(200,50));
-	    compressedView.add(decButton);
+//	    incButton = new JButton("Increment");
+//	    incButton.addActionListener(this);
+//	    incButton.setPreferredSize(new Dimension(200,50));
+//	    compressedView.add(incButton);
+//	    
+//	    decButton = new JButton("Decrement");
+//	    decButton.addActionListener(this);
+//	    decButton.setPreferredSize(new Dimension(200,50));
+//	    compressedView.add(decButton);
 	    
 	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jframe.getContentPane().setBackground(Color.black);
@@ -161,49 +170,66 @@ public class mainWindow extends JFrame implements ActionListener{
 		else if (e.getSource() == searchButton) {		
 			mainSearchHandler();
 		}
-		else if (e.getSource() == incButton) {	
-			int itemIndex = list.getSelectedIndex();
-			this.displayItems.get(itemIndex).executeIncrement();
-			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
-			this.list.revalidate();
-			
-			DBProxy.getInstance().updateFridge(inv);
-			
-		}
-		else if (e.getSource() == decButton) {	
-			int itemIndex = list.getSelectedIndex();
-			if (this.displayItems.get(itemIndex).getStockableItem().getStock() < 1) {
-				JOptionPane.showMessageDialog(null, "Item is at 0 stock", "Notice", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			
-			this.displayItems.get(itemIndex).executeDecrement();
-			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
-			this.list.revalidate();
-		}
+//		else if (e.getSource() == incButton) {	
+//			int itemIndex = list.getSelectedIndex();
+//			this.displayItems.get(itemIndex).executeIncrement();
+//			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
+//			this.list.revalidate();
+//			
+//			DBProxy.getInstance().updateFridge(inv);
+//			
+//		}
+//		else if (e.getSource() == decButton) {	
+//			int itemIndex = list.getSelectedIndex();
+//			if (this.displayItems.get(itemIndex).getStockableItem().getStock() < 1) {
+//				JOptionPane.showMessageDialog(null, "Item is at 0 stock", "Notice", JOptionPane.WARNING_MESSAGE);
+//				return;
+//			}
+//			
+//			this.displayItems.get(itemIndex).executeDecrement();
+//			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
+//			this.list.revalidate();
+//		}
 		else if (e.getSource() == viewToggler) {
+			
 			if (viewToggler.getIcon() == compressedIcon) {
 				viewToggler.setIcon(expressiveIcon);
-				
-				this.displayItems = inv.getFridgeItems();
-				this.generateList();
-				
-				viewPanel.remove(expressiveView);
-				viewPanel.add(compressedView);
-				viewPanel.revalidate();
-				viewPanel.repaint();
-				return;
+			} else {
+				viewToggler.setIcon(compressedIcon);
 			}
 			
-			viewToggler.setIcon(compressedIcon);
+			viewPanel.remove((JPanel) viewManager.getCurrentView());
+			viewManager.toggle();
+			viewManager.getCurrentView().generateList(inv.getFridgeItems());
 			
-			this.displayItems = inv.getFridgeItems();
-			expressiveView.generateList(displayItems);
-			
-			viewPanel.remove(compressedView);
-			viewPanel.add(expressiveView);
+			viewPanel.add((JPanel) viewManager.getCurrentView());
 			viewPanel.revalidate();
 			viewPanel.repaint();
+			
+			
+			
+//			if (viewToggler.getIcon() == compressedIcon) {
+//				viewToggler.setIcon(expressiveIcon);
+//				
+//				this.displayItems = inv.getFridgeItems();
+//				this.generateList();
+//				
+//				viewPanel.remove(expressiveView);
+//				viewPanel.add(compressedView);
+//				viewPanel.revalidate();
+//				viewPanel.repaint();
+//				return;
+//			}
+//			
+//			viewToggler.setIcon(compressedIcon);
+//			
+//			this.displayItems = inv.getFridgeItems();
+//			expressiveView.generateList(displayItems);
+//			
+//			viewPanel.remove(compressedView);
+//			viewPanel.add(expressiveView);
+//			viewPanel.revalidate();
+//			viewPanel.repaint();
 		}
 	}
 	
@@ -213,33 +239,37 @@ public class mainWindow extends JFrame implements ActionListener{
 		//We do this by passing our inventory and using .contains to add eveyrthing that matches to our JList 
 		
 		String searchString = search.getText();
-		this.displayItems = inv.search(searchString);
-		this.generateList();
+		List<StoredItem> matchingItems = inv.search(searchString);
+		System.out.println('g');
+		viewManager.setViewLists(matchingItems);
+//		this.generateList();
 	}
 	
 	public void generateList() {
-		DefaultListModel<String> updatedFridgeList = new DefaultListModel<String>();
-		for (StoredItem item: this.displayItems) {
-			updatedFridgeList.addElement(item.getDescription());
-		}
-		 
-		this.fridgeList = updatedFridgeList;
-		this.list.setModel(updatedFridgeList);
-		this.list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
-		this.list.revalidate();
-		 
-		this.compressedView.revalidate();
+//		DefaultListModel<String> updatedFridgeList = new DefaultListModel<String>();
+//		for (StoredItem item: this.displayItems) {
+//			updatedFridgeList.addElement(item.getDescription());
+//		}
+//		 
+//		this.fridgeList = updatedFridgeList;
+//		this.list.setModel(updatedFridgeList);
+//		this.list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
+//		this.list.revalidate();
+//		 
+//		this.compressedView.revalidate();
 	}
 	
 	public void addNewItem() {
 		int itemIndex = inv.getFridgeItems().size() - 1;
-		displayItems.add(inv.getFridgeItems().get(itemIndex));
-	    fridgeList.addElement(inv.getFridgeItems().get(itemIndex).getDescription());
+//		displayItems.add(inv.getFridgeItems().get(itemIndex));
+//	    fridgeList.addElement(inv.getFridgeItems().get(itemIndex).getDescription());
+//	    
+//	    list.setModel(fridgeList);
+//	    list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
+//	    list.revalidate();
 	    
-	    list.setModel(fridgeList);
-	    list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
-	    list.revalidate();
-	    
-	    expressiveView.addItem(inv.getFridgeItems().get(itemIndex));
+		viewManager.addItemToLists(inv.getFridgeItems().get(itemIndex));
+//		compressiveView.
+//	    expressiveView.addItem(inv.getFridgeItems().get(itemIndex));
 	}
 }
