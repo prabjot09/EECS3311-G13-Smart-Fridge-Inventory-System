@@ -17,11 +17,19 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import domainLayer.DBProxy;
+import domainLayer.Fridge;
 
-public class addWindow extends JFrame {
+public class addWindow extends JFrame implements ActionListener{
 	private JPanel addMethodPanel;
+	private mainWindow homeView;
+	private Fridge inv;
 	
-	public addWindow(ActionListener listener) {		
+	private ActionListener addMethodController;
+	
+	public addWindow(mainWindow homeView, Fridge inv) {	
+		this.inv = inv;
+		this.homeView = homeView;
+		
 		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
 		this.getContentPane().setLayout(overallLayout);
 		
@@ -55,8 +63,8 @@ public class addWindow extends JFrame {
 	    selectionPanel.add(fromDbOption);
 	    selectionPanel.add(manualItemOption);
 	    
-	    fromDbOption.addActionListener(listener);
-	    manualItemOption.addActionListener(listener);
+	    fromDbOption.addActionListener(this);
+	    manualItemOption.addActionListener(this);
 	    
 	    JPanel addMethodPanel = new JPanel();
 		addMethodPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -83,6 +91,22 @@ public class addWindow extends JFrame {
 		this.addMethodPanel.add(method);
 		this.addMethodPanel.revalidate();
 		this.repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+			JRadioButton button = (JRadioButton) e.getSource();
+			if (button.getName() == "databaseSelect") {
+				this.addMethodController = new AddSelectController(this, homeView, this.inv);
+			}
+			else if (button.getName() == "manualSelect") {
+				this.addMethodController = new AddCreateController(this, homeView, this.inv);
+			}
+		}
+		catch (Exception exception) {
+			System.out.println(exception.getStackTrace());
+		}
 	}
 
 }

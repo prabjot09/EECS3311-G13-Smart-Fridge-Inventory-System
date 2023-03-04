@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,51 +32,52 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
 
-public class mainWindow extends JFrame implements ActionListener{
-	private JFrame jframe = new JFrame("SFIS");
-	private JPanel panel;
-	private JPanel searchPanel;
-	private JLabel titleLabel;
-	
+public class mainWindow implements ActionListener{	
+	// Input Components
 	private JTextField search;
-	private JList<String> list;
-	private JButton addButton, searchButton,incButton,decButton;
-	private DefaultListModel<String> fridgeList;
+	private JButton addButton, searchButton;
+	
+	// Domain-logic
 	private Fridge inv;
-	private List<StoredItem> displayItems;
 	
+	// Components required to manage the view for item list
 	private JPanel viewPanel;
-	private JPanel compressedView;
-	private ExpressiveListView expressiveView;
 	private JButton viewToggler;
+	private ListViewManager viewManager;
 	
+	// View Toggle Icons
 	private ImageIcon compressedIcon;
 	private ImageIcon expressiveIcon;
 	
-	private ListViewManager viewManager;
+	
 	
 	public mainWindow() {
 	    // create our jframe as usual
 		List<StoredItem> items = DBProxy.getInstance().loadItems();
 		inv = new Fridge(items);
+		
+		JFrame jframe = new JFrame("SFIS");
 			
-		panel = new JPanel();
+		// Title 'Smart Fridge Tracker' Setup
+		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
 	    panel.setBackground(Color.black);
 		jframe.add(panel,BorderLayout.NORTH);
-	
 	    
-	    titleLabel = new JLabel("Smart Fridge Tracker");
+	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
 	    titleLabel.setForeground(Color.white);
 	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
 	    panel.add(titleLabel);
-	    //search and list panel
-	    searchPanel = new JPanel();
+	    
+	    
+	    // START: Search and Item List Panel
+	    JPanel searchPanel = new JPanel();
 	    searchPanel.setBackground(Color.black);
 	    searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.Y_AXIS));
 	    searchPanel.setBounds(0,100,1000,500);
 	    jframe.add(searchPanel);
 	    
+	    // START: Item Search Panel
 	    JPanel topPanel = new JPanel();
 	    topPanel.setBackground(Color.black);
 	    searchPanel.add(topPanel);
@@ -87,18 +90,19 @@ public class mainWindow extends JFrame implements ActionListener{
 	    search.setPreferredSize(new Dimension(300,50));
 	    topPanel.add(search);
 	    
-	    
 	    searchButton = new JButton("Search");
 	    searchButton.addActionListener(this);
 	    searchButton.setPreferredSize(new Dimension(100,50));
 	    topPanel.add(searchButton);
 	    
-	    
+	    // New Item Add Button
 	    addButton = new JButton("+");
 	    addButton.addActionListener(this);
 	    addButton.setPreferredSize(new Dimension(50,50));
 	    topPanel.add(addButton);
+	    // END: Search Panel
 	    
+	    // Set up View Toggler Button
 	    compressedIcon = new ImageIcon("resources/CompressedViewIcon.png");
 	    compressedIcon = new ImageIcon(compressedIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
 	    expressiveIcon = new ImageIcon("resources/ExpressiveViewIcon.png");
@@ -110,21 +114,29 @@ public class mainWindow extends JFrame implements ActionListener{
 	    viewToggler.addActionListener(this);
 	    topPanel.add(viewToggler);
 	    
+	    // Set up the Item List View Panel
 	    List<ListView> views = new ArrayList<ListView>();
 	    views.add(new CompressedListView(inv));
 	    views.add(new ExpressiveListView(inv));
 	    viewManager = new ListViewManager(views);
-	    
 	    viewPanel = new JPanel();
 	    viewPanel.setBackground(Color.black);
 	    viewPanel.setPreferredSize(new Dimension(820, 400));
 	    viewPanel.add((JPanel) viewManager.getCurrentView());
 	    
 	    searchPanel.add(viewPanel);
+	    // END: Search and Item List Panel
 	    
+	    // Update DB when closing the window
 	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    jframe.getContentPane().setBackground(Color.black);
+	    jframe.addWindowListener(new WindowAdapter() {
+	    	@Override
+	    	public void windowClosing(WindowEvent e) {
+	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
+	    	}
+	    });
 	    // set the jframe size and location, and make it visible
+	    jframe.getContentPane().setBackground(Color.black);
 	    jframe.setPreferredSize(new Dimension(1000, 650));
 	    jframe.pack();
 	    jframe.setLocationRelativeTo(null);
@@ -136,7 +148,7 @@ public class mainWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
-			new AddWindowController(this, inv);
+			new addWindow(this, inv);
 		}
 		else if (e.getSource() == searchButton) {		
 			mainSearchHandler();
