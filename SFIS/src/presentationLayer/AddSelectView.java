@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import domainLayer.DBProxy;
+
 
 public class AddSelectView extends JPanel {
 	private JTextField searchField;
@@ -79,9 +81,7 @@ public class AddSelectView extends JPanel {
 		this.add(addPanel);
 		
 		this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    this.setBackground(Color.black);
-	
-		
+	    this.setBackground(Color.black);		
 	}
 	
 	public String getSearchField() {
@@ -105,5 +105,11 @@ public class AddSelectView extends JPanel {
 		this.matchList.setModel(listModel);
 		this.matchList.setPreferredSize(new Dimension(440, 30 * matches.size()));
 		this.matchList.revalidate();
+	}
+
+	public void clearInput() {
+		this.amountField.setText("");
+		this.searchField.setText("");
+		this.displayMatches(DBProxy.getInstance().findItemDBItems(this.getSearchField()));
 	}
 }

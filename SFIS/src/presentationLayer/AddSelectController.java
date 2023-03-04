@@ -48,25 +48,36 @@ public class AddSelectController implements ActionListener{
 		this.addSelectView.displayMatches(matches);
 	}
 	
-	public void addHandler() {
-		String selectedItem = this.addSelectView.getItemChosen();
-		if (selectedItem == null) {
-			JOptionPane.showMessageDialog(null, "Please select an item from the list", "Notice", JOptionPane.WARNING_MESSAGE);
-			return;
+	public boolean validateInput() {
+		String itemName = this.addSelectView.getItemChosen();
+		if (itemName == null) {
+			JOptionPane.showMessageDialog(null, "Please select an item from the list.", "Warning", JOptionPane.WARNING_MESSAGE);
+			return false;
 		}
 		
-		String amountString = this.addSelectView.getAmountField();
-		Integer amount;
+		String amountStr = this.addSelectView.getAmountField();
+		int amount;
 		try {
-			amount = Integer.parseInt(amountString);
+			amount = Integer.parseInt(amountStr);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Please specify an integer amount", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
+		
+		return true;
+	}
+	
+	
+	public void addHandler() {
+		this.validateInput();
+		
+		String selectedItem = this.addSelectView.getItemChosen();		
+		String amountString = this.addSelectView.getAmountField();
+		int amount = Integer.parseInt(amountString);
 		
 		FoodItem itemDesc = new FoodItem();
 		itemDesc.setName(selectedItem);
-		StockableItem stock = new DiscreteStockableItem(amount.intValue());
+		StockableItem stock = new DiscreteStockableItem(amount);
 		
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);
@@ -74,12 +85,12 @@ public class AddSelectController implements ActionListener{
 		
 		try {
 			this.fridge.add(item);
+			this.homeView.addNewItem();
+			this.addSelectView.clearInput();
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
-		this.homeView.addNewItem();
 	}
 }

@@ -85,13 +85,14 @@ public class AddCreateController implements ActionListener {
 		
 		try {
 			this.fridge.add(item);
+			this.homeView.addNewItem();
+			this.addCreateView.clearInput();
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
-		this.homeView.addNewItem();
 	}
 
 }

@@ -102,5 +102,11 @@ public class AddCreateView extends JPanel{
 	public int getAmountTypeIndex() {
 		return this.amountTypeField.getSelectedIndex();
 	}
+
+	public void clearInput() {
+		this.amountField.setText("");
+		this.nameField.setText("");
+		this.amountTypeField.setSelectedIndex(0);
+	}
 	
 }
