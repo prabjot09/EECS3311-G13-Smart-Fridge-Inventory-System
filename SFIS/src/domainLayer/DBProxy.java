@@ -7,39 +7,42 @@ import persistenceLayer.StubDB;
 import persistenceLayer.DB;
 
 public class DBProxy {
-	private static DBProxy DB = null;
+	private static DBProxy DBProxy = null;
 	
-	private DB stubDB;
+	private DB db;
 	
 	private DBProxy() {
-		stubDB = new StubDB();
+
 	}
+	
 	//Our proxy, ensuring we only get 1 instance of our DB
 	public static DBProxy getInstance() {
-		if (DB == null) {
-			DB = new DBProxy(); 
+		if (DBProxy == null) {
+			DBProxy = new DBProxy(); 
 		}
-		return DB;
+		return DBProxy;
 	}
 	
-	
+	public void setDB(DB db) {
+		this.db = db;
+	}
 	
 	public List<StoredItem> loadItems() {
-		return stubDB.loadItems();
+		return db.loadItems();
 	}
 	
 
 	public void addItem(FridgeItem item) {
-		stubDB.addItem(item);
+		db.addItem(item);
 	}
 	
 	
 	public void updateFridge(Fridge fridge) {
-		stubDB.updateFridge(fridge);
+		db.updateFridge(fridge);
 	}
 	
 	public List<String> findItemDBItems(String name){
-		return stubDB.findMatchingFoods(name);
+		return db.findMatchingFoods(name);
 	}
 	
 }

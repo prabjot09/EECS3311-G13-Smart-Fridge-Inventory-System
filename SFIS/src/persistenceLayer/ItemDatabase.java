@@ -11,6 +11,8 @@ public class ItemDatabase {
 		ItemDB.add("Juice - Carton");
 		ItemDB.add("Eggs - Single");
 		ItemDB.add("Butter - Sticks");
+		ItemDB.add("Apples");
+		ItemDB.add("Chocolate - Bars");
 	}
 	
 	public ArrayList<String> getDB() {

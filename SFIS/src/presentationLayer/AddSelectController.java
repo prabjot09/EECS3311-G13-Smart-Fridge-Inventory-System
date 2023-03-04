@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import domainLayer.DBProxy;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
+import domainLayer.FoodItem.CreationType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
@@ -77,6 +78,7 @@ public class AddSelectController implements ActionListener{
 		
 		FoodItem itemDesc = new FoodItem();
 		itemDesc.setName(selectedItem);
+		itemDesc.setCreator(CreationType.PRESET);
 		StockableItem stock = new DiscreteStockableItem(amount);
 		
 		FridgeItem item = new FridgeItem();

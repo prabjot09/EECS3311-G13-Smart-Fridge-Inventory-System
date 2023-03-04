@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
+import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
@@ -75,9 +76,12 @@ public class AddCreateController implements ActionListener {
 		
 		FoodItem itemDesc = new FoodItem();
 		itemDesc.setName(this.addCreateView.getItemName());
+		itemDesc.setCreator(FoodItem.CreationType.USER);
+		
 		int amountType = this.addCreateView.getAmountTypeIndex() - 1;
 		int amount = Integer.parseInt(this.addCreateView.getAmount());
 		StockableItem stock = StockableItemFactory.createStockableItem(amountType, amount);
+		itemDesc.setStockType(StockType.values()[amountType]);
 		
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);
