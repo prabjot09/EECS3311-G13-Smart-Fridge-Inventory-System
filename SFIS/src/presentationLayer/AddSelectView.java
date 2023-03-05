@@ -65,7 +65,7 @@ public class AddSelectView extends JPanel {
 		addPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		addPanel.setBackground(Color.black);
 		
-		JTextField amountField = new JTextField("Quantity");
+		JTextField amountField = new PromptText("Quantity");
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    amountField.setBackground(Color.gray);
 	    amountField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));

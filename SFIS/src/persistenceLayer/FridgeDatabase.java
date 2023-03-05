@@ -6,8 +6,10 @@ import java.util.List;
 import domainLayer.ContinuousStockableItem;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
+import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
 public class FridgeDatabase {
@@ -19,30 +21,36 @@ public class FridgeDatabase {
 		FridgeItem firstFI = new FridgeItem();
 		FoodItem firstFoI = new FoodItem();
 		firstFoI.setName("Milk - 3 Bags");
-		firstFI.setStockableItem(new ContinuousStockableItem(12));
+		firstFoI.setStockType(StockType.values()[0]);
+		firstFI.setStockableItem(StockableItemFactory.createStockableItem(firstFoI.getStockType(), 12));
 		firstFI.setFoodItem(firstFoI);
 		FridgeDB.add(firstFI);
 		
 		FridgeItem secondFI = new FridgeItem();
 		FoodItem secondFoI = new FoodItem();
 		secondFoI.setName("Juice - Carton");
-		secondFI.setStockableItem(new DiscreteStockableItem(1));
+		secondFoI.setStockType(StockType.values()[1]);
+		secondFI.setStockableItem(StockableItemFactory.createStockableItem(secondFoI.getStockType(), 1));
 		secondFI.setFoodItem(secondFoI);
 		FridgeDB.add(secondFI);
 		
 		FridgeItem thirdFI = new FridgeItem();
 		FoodItem thirdFoI = new FoodItem();
 		thirdFoI.setName("Eggs - Single");
-		thirdFI.setStockableItem(new DiscreteStockableItem(12));
+		thirdFoI.setStockType(StockType.values()[1]);
+		thirdFI.setStockableItem(StockableItemFactory.createStockableItem(thirdFoI.getStockType(), 12));
 		thirdFI.setFoodItem(thirdFoI);
 		FridgeDB.add(thirdFI);
 		
 		FridgeItem fourthFI = new FridgeItem();
 		FoodItem fourthFoI = new FoodItem();
 		fourthFoI.setName("Butter - Sticks");
-		fourthFI.setStockableItem(new DiscreteStockableItem(4));
+		fourthFoI.setStockType(StockType.values()[1]);
+		fourthFI.setStockableItem(StockableItemFactory.createStockableItem(fourthFoI.getStockType(), 4));
 		fourthFI.setFoodItem(fourthFoI);
 		FridgeDB.add(fourthFI);
+		
+		
 		
 	}
 	
