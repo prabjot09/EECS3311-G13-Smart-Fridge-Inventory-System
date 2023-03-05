@@ -32,7 +32,7 @@ public class AddSelectView extends JPanel {
 		searchPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 	    searchPanel.setBackground(Color.black);
 	    
-		JTextField search = new JTextField("Find Item in Database");
+		JTextField search = new PromptText("Find Item in Database");
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
 	    search.setBackground(Color.gray);
 	    search.setBounds(0,100,300,500);
