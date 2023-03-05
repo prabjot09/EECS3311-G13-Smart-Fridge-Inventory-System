@@ -1,10 +1,10 @@
 package domainLayer;
 
 public class ContinuousStockableItem extends StockableItem {
-	private static final int INCREMENT = 10;
-	private static final String[] equivalents = {
-			"Empty", "Very Low", "Low", "Half Full", "Mostly Full", "Near Full", "Full"
+	private static final String[] levels = {
+			"Empty", "Almost Empty", "Half Full", "Mostly Full", "Full"
 		};
+	public static final int INCREMENT = 25;
 	
 	public ContinuousStockableItem() {
 		
@@ -34,21 +34,16 @@ public class ContinuousStockableItem extends StockableItem {
 	
 	@Override
 	public String getDescription() {
-		String desc = "" + this.getStock() + "%";
-		return desc;
-	}
-	
-	public String getStringEquivalent() {
-		if (this.getStock() == 0)
-			return equivalents[0];
+		String equivalent = null;
 		
-		for (int i = 1; i < 6; i++) {
-			if (this.getStock() < i*20) {
-				return equivalents[i];
+		for (int i = 0; i < 5; i++) {
+			if (this.getStock() <= i*INCREMENT) {
+				equivalent = levels[i];
+				break;
 			}
 		}
 		
-		return equivalents[equivalents.length - 1];
+		return equivalent;
 	}
 
 }

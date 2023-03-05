@@ -11,6 +11,7 @@ import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.Pair;
 import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
 
@@ -29,19 +30,12 @@ public class AddCreateController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton clicked;
-		
 		try {
-			clicked = (JButton) e.getSource();
-		} catch (Exception exception) {
-			System.out.println(exception.getStackTrace());
-			return;
-		}
-		
-		if (clicked.getText() == "Add") {
+			JButton clicked = (JButton) e.getSource();
 			this.addHandler();
+		} catch (Exception exception) {
+			this.addCreateView.setAmountEntry();
 		}
-
 	}
 	
 	public boolean validateInput() {
@@ -51,18 +45,15 @@ public class AddCreateController implements ActionListener {
 			return false;
 		}
 		
-		String amountStr = this.addCreateView.getAmount();
-		int amount;
-		try {
-			amount = Integer.parseInt(amountStr);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Please specify an integer amount", "Error", JOptionPane.ERROR_MESSAGE);
+		String amountType = this.addCreateView.getAmountType();
+		if (amountType == null) {
+			JOptionPane.showMessageDialog(null, "Please specify the amount type", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
-		int amountType = this.addCreateView.getAmountTypeIndex();
-		if (amountType == 0) {
-			JOptionPane.showMessageDialog(null, "Please specify the amount type", "Error", JOptionPane.ERROR_MESSAGE);
+		Pair<StockType, Integer> amount = this.addCreateView.getAmount();
+		if (amount.getB() == null) {
+			JOptionPane.showMessageDialog(null, "Please specify a valid value", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
@@ -78,10 +69,9 @@ public class AddCreateController implements ActionListener {
 		itemDesc.setName(this.addCreateView.getItemName());
 		itemDesc.setCreator(FoodItem.CreationType.USER);
 		
-		int amountType = this.addCreateView.getAmountTypeIndex() - 1;
-		int amount = Integer.parseInt(this.addCreateView.getAmount());
-		StockableItem stock = StockableItemFactory.createStockableItem(amountType, amount);
-		itemDesc.setStockType(StockType.values()[amountType]);
+		Pair<StockType, Integer> amountData = this.addCreateView.getAmount();
+		StockableItem stock = StockableItemFactory.createStockableItem(amountData.getA(), amountData.getB());
+		itemDesc.setStockType(amountData.getA());
 		
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);

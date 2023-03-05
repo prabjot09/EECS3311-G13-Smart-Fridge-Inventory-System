@@ -4,8 +4,7 @@ import domainLayer.FoodItem.StockType;
 
 public class StockableItemFactory {
 	
-	public static StockableItem createStockableItem(int typeIndex, int amount) {
-		 StockType type = StockType.values()[typeIndex];
+	public static StockableItem createStockableItem(StockType type, int amount) {
 		 if (type == StockType.CONTINUOUS) {
 			 return new ContinuousStockableItem(amount);
 		 }

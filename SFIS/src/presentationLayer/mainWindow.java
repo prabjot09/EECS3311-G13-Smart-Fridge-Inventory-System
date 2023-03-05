@@ -135,6 +135,7 @@ public class mainWindow implements ActionListener{
 	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
 	    	}
 	    });
+	    
 	    // set the jframe size and location, and make it visible
 	    jframe.getContentPane().setBackground(Color.black);
 	    jframe.setPreferredSize(new Dimension(1000, 650));

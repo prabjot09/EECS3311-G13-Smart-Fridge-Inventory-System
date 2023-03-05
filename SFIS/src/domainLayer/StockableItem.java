@@ -23,5 +23,10 @@ public abstract class StockableItem {
 	public void setMax(int val) {
 		this.maxAmount = val;
 	}
+	
+	private int calculatePercent() {
+		int percent = (this.amount * 100) / this.maxAmount;
+		return percent;
+	}
 
 }

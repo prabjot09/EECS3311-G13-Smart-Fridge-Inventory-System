@@ -1,11 +1,15 @@
 package presentationLayer;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,12 +20,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import domainLayer.FoodItem;
-
+import domainLayer.FoodItem.StockType;
+import domainLayer.Pair;
 
 public class AddCreateView extends JPanel{
 	private JTextField nameField;
-	private JTextField amountField;
-	private JComboBox amountTypeField;
+	private JComboBox<String> amountTypeField;
+	
+	private StockInputField amountField;
+	private JPanel amountPanel;
+	
+	private Component amountEntry;
 
 	public AddCreateView(ActionListener listener) {
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -43,7 +52,7 @@ public class AddCreateView extends JPanel{
 	    nameLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 	    namePanel.add(nameLabel);
 	    
-		JTextField nameField = new JTextField("Item Name");
+		JTextField nameField = new JTextField("");
 		nameField.setFont(new Font("Arial", Font.PLAIN, 16));
 		nameField.setBackground(Color.gray);
 		nameField.setBounds(0,100,300,500);
@@ -52,31 +61,19 @@ public class AddCreateView extends JPanel{
 	    this.nameField = nameField;
 	    namePanel.add(nameField);
 	    
-	    JPanel amountPanel = new JPanel();
+	    amountPanel = new JPanel();
 	    amountPanel.setBackground(Color.black);
 	    inputPanel.add(amountPanel);
 	    
+	    String[] values = {"Amount Type", StockType.CONTINUOUS.toString(), StockType.DISCRETE.toString()};
+	    amountTypeField = new JComboBox<String>(values);
+	    amountTypeField.setFont(new Font("Arial", Font.PLAIN, 16));
+	    amountTypeField.setPreferredSize(new Dimension(300,50));
+	    amountTypeField.addActionListener(listener);
+	    amountPanel.add(amountTypeField);
 	    
-	    FoodItem.StockType[] typeVals = FoodItem.StockType.values();
-	    String[] values = new String[1 + typeVals.length];
-	    values[0] = "Amount Type";
-	    for (int i = 0; i < typeVals.length; i++) {
-	    	values[i+1] = typeVals[i].toString();
-	    }
-	    JComboBox<String> typeDropDown = new JComboBox<String>(values);
-	    typeDropDown.setFont(new Font("Arial", Font.PLAIN, 16));
-	    typeDropDown.setPreferredSize(new Dimension(300,50));
-	    this.amountTypeField = typeDropDown;
-	    amountPanel.add(typeDropDown);
-	    
-	    JTextField amountField = new JTextField("Amount Remaining");
-	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
-	    amountField.setBackground(Color.gray);
-		amountField.setBounds(0,100,300,500);
-	    amountField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		amountField.setPreferredSize(new Dimension(300,50));
-	    this.amountField = amountField;
-	    amountPanel.add(amountField);
+	    amountField = new StockInputField();
+	    amountEntry = null;
 	    
 	    JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -95,18 +92,37 @@ public class AddCreateView extends JPanel{
 		return this.nameField.getText();
 	}
 	
-	public String getAmount() {
-		return this.amountField.getText();
+	public Pair<StockType, Integer> getAmount() {
+		String selectedType = (String) amountTypeField.getSelectedItem();
+		return this.amountField.getAmountValue(selectedType);
 	}
 	
-	public int getAmountTypeIndex() {
-		return this.amountTypeField.getSelectedIndex();
+	public String getAmountType() {
+		if (this.amountTypeField.getSelectedIndex() == 0)
+			return null;
+		
+		return (String) this.amountTypeField.getSelectedItem();
 	}
 
 	public void clearInput() {
-		this.amountField.setText("");
+		this.amountField.clear();
 		this.nameField.setText("");
 		this.amountTypeField.setSelectedIndex(0);
+	}
+	
+	public void setAmountEntry() {
+		if (amountEntry != null) 
+			amountPanel.remove(amountEntry);
+		
+		String amountType = (String) amountTypeField.getSelectedItem();
+		amountEntry = amountField.getAmountField(amountType);
+		
+		if (amountEntry != null) {
+			amountPanel.add(amountEntry);
+		}
+		
+		amountPanel.revalidate();
+		amountPanel.repaint();
 	}
 	
 }

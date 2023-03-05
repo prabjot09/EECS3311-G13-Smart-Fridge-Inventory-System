@@ -135,7 +135,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	
 	public void updateLabel() {
 		name.setText("Name: " + itemObj.getFoodItem().getName());
-		quantity.setText("Quantity: " + itemObj.getStockableItem().getStock());
+		quantity.setText("Quantity: " + itemObj.getStockableItem().getDescription());
 		
 		StockableItem stock = this.itemObj.getStockableItem();
 	    int percentQuantity = (stock.getStock() * 100) / stock.getMax();
@@ -149,11 +149,11 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		JButton clicked = (JButton) e.getSource();
 		
 		if (clicked == incButton) {
-			this.itemObj.executeIncrement();;
+			this.itemObj.executeIncrement();
 			this.updateLabel();
 		}
 		else if (clicked == decButton) {
-			this.itemObj.executeDecrement();;
+			this.itemObj.executeDecrement();
 			this.updateLabel();
 		}
 		else if (clicked == delButton) {
