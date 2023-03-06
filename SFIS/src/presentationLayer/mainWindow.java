@@ -49,6 +49,8 @@ public class mainWindow implements ActionListener{
 	private ImageIcon compressedIcon;
 	private ImageIcon expressiveIcon;
 	
+	//frame
+	private JFrame jframe;
 	
 	
 	public mainWindow() {
@@ -56,7 +58,7 @@ public class mainWindow implements ActionListener{
 		List<StoredItem> items = DBProxy.getInstance().loadItems();
 		inv = new Fridge(items);
 		
-		JFrame jframe = new JFrame("SFIS");
+		jframe = new JFrame("SFIS");
 			
 		// Title 'Smart Fridge Tracker' Setup
 		JPanel panel = new JPanel();
@@ -150,6 +152,7 @@ public class mainWindow implements ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
 			new addWindow(this, inv);
+			jframe.setVisible(false);
 		}
 		else if (e.getSource() == searchButton) {		
 			mainSearchHandler();
@@ -189,5 +192,10 @@ public class mainWindow implements ActionListener{
 	public void addNewItem() {
 		int itemIndex = inv.getFridgeItems().size() - 1;
 		viewManager.addItemToLists(inv.getFridgeItems().get(itemIndex));
+	}
+	
+	//makes frame visible
+	public void makeVisible() {
+		jframe.setVisible(true);
 	}
 }

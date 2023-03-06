@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -25,6 +27,9 @@ public class addWindow extends JFrame implements ActionListener{
 	private Fridge inv;
 	
 	private ActionListener addMethodController;
+	
+	//back button
+	private JButton backButton;
 	
 	public addWindow(mainWindow homeView, Fridge inv) {	
 		this.inv = inv;
@@ -56,6 +61,11 @@ public class addWindow extends JFrame implements ActionListener{
 	    JRadioButton manualItemOption = new JRadioButton("Create your own item.");
 	    manualItemOption.setName("manualSelect");
 	    
+	    //back button
+	    backButton = new JButton("Back");
+	    backButton.addActionListener(this);
+	    this.add(backButton);
+	    
 	    ButtonGroup grp = new ButtonGroup();
 	    grp.add(fromDbOption);
 	    grp.add(manualItemOption);
@@ -72,7 +82,14 @@ public class addWindow extends JFrame implements ActionListener{
 	    this.add(addMethodPanel);
 	    this.addMethodPanel = addMethodPanel;
 	    
-	    this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	    //dispose on close while also opening mainwindow on close
+	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    this.addWindowListener(new WindowAdapter() {
+	    	@Override
+	    	public void windowClosing(WindowEvent e) {
+	    		homeView.makeVisible();
+	    	}
+	    });
 	    this.getContentPane().setBackground(Color.black);
 	    // set the jframe size and location, and make it visible
 	    this.setPreferredSize(new Dimension(1000, 600));
@@ -96,6 +113,11 @@ public class addWindow extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
+			//Back button operation
+			if (e.getSource() == backButton) {
+				homeView.makeVisible();
+				this.dispose();
+			}
 			JRadioButton button = (JRadioButton) e.getSource();
 			if (button.getName() == "databaseSelect") {
 				this.addMethodController = new AddSelectController(this, homeView, this.inv);
