@@ -54,7 +54,7 @@ public class RealDB implements DB {
 			Connection con = DriverManager.getConnection(url,user,password);
 			Statement createState = con.createStatement();
 			createState.executeUpdate(select);
-			PreparedStatement setupDB = con.prepareStatement(queryInsert);
+			
 			
 			for (int x = 0; x < fridgePop.size(); x++) {
 				addItem(fridgePop.get(x));
@@ -125,7 +125,21 @@ public class RealDB implements DB {
 
 		@Override
 		public void updateFridge(Fridge fridge) {
-			// TODO Auto-generated method stub
+			
+			 StoredItem itemToAdd = fridge.getFridgeItems().get(fridge.getFridgeItems().size() - 1);
+			 try {
+			    Connection con = DriverManager.getConnection(url,user,password);
+				Statement createState = con.createStatement();
+				createState.executeUpdate(select);
+				
+				addItem(itemToAdd);
+				
+					
+			 }
+			 
+			catch ( SQLException e ) {
+				 e . printStackTrace () ;
+			 }
 			
 		}
 }
