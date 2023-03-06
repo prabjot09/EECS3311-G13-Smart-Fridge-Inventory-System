@@ -63,11 +63,11 @@ public class StockInputField {
 	    	continuousValues.add(stock.getDescription());
 	    	continuousValueMap.put(stock.getDescription(), stock.getStock());
 	    }
-	    
 		String[] valuesCopy = new String[continuousValues.size()];
 	    for (int i = 0; i < valuesCopy.length; i++) {
 	    	valuesCopy[i] = continuousValues.get(i);
 	    }
+	    
 	    continuousAmtField = new DropDown<>(valuesCopy);
 	    continuousAmtField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    continuousAmtField.setPreferredSize(new Dimension(300,50));

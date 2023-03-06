@@ -171,7 +171,7 @@ public class mainWindow implements ActionListener{
 		
 		viewPanel.remove((JPanel) viewManager.getCurrentView());
 		viewManager.toggle();
-		viewManager.getCurrentView().generateList(inv.getFridgeItems());
+		viewManager.getCurrentView().generateList(inv.getItems());
 		
 		viewPanel.add((JPanel) viewManager.getCurrentView());
 		viewPanel.revalidate();
@@ -185,13 +185,12 @@ public class mainWindow implements ActionListener{
 		
 		String searchString = search.getText();
 		List<StoredItem> matchingItems = inv.search(searchString);
-		System.out.println('g');
 		viewManager.setViewLists(matchingItems);
 	}
 	
 	public void addNewItem() {
-		int itemIndex = inv.getFridgeItems().size() - 1;
-		viewManager.addItemToLists(inv.getFridgeItems().get(itemIndex));
+		int itemIndex = inv.getItems().size() - 1;
+		viewManager.addItemToLists(inv.getItems().get(itemIndex));
 	}
 	
 	//makes frame visible

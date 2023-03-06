@@ -15,14 +15,13 @@ import domainLayer.StoredItem;
 public class FridgeDatabase {
 	private List<StoredItem> FridgeDB = new ArrayList<StoredItem>();
 	
-	
 	public FridgeDatabase() {
 		//Fridge items we isntataite at runtime
 		FridgeItem firstFI = new FridgeItem();
 		FoodItem firstFoI = new FoodItem();
 		firstFoI.setName("Milk - 3 Bags");
 		firstFoI.setStockType(StockType.values()[0]);
-		firstFI.setStockableItem(StockableItemFactory.createStockableItem(firstFoI.getStockType(), 12));
+		firstFI.setStockableItem(StockableItemFactory.createStockableItem(firstFoI.getStockType(), 75));
 		firstFI.setFoodItem(firstFoI);
 		FridgeDB.add(firstFI);
 		
@@ -49,14 +48,11 @@ public class FridgeDatabase {
 		fourthFI.setStockableItem(StockableItemFactory.createStockableItem(fourthFoI.getStockType(), 4));
 		fourthFI.setFoodItem(fourthFoI);
 		FridgeDB.add(fourthFI);
-		
-		
-		
 	}
 	
 	
 	public void setFridge(Fridge fridge) {
-		FridgeDB = fridge.getFridgeItems();
+		FridgeDB = fridge.getItems();
 	}
 	
 	

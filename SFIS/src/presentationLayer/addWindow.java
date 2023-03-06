@@ -117,6 +117,7 @@ public class addWindow extends JFrame implements ActionListener{
 			if (e.getSource() == backButton) {
 				homeView.makeVisible();
 				this.dispose();
+				return;
 			}
 			JRadioButton button = (JRadioButton) e.getSource();
 			if (button.getName() == "databaseSelect") {
@@ -127,7 +128,7 @@ public class addWindow extends JFrame implements ActionListener{
 			}
 		}
 		catch (Exception exception) {
-			System.out.println(exception.getStackTrace());
+			exception.printStackTrace();
 		}
 	}
 

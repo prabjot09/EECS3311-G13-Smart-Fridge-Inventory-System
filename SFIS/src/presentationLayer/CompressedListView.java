@@ -34,7 +34,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		this.inv = inv;
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.displayItems = inv.getFridgeItems();
+		this.displayItems = inv.getItems();
 		
 	    list = new JList<String>();
 	    list.setBackground(Color.gray);
@@ -95,11 +95,9 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		if (e.getSource() == incButton) {	
 			int itemIndex = list.getSelectedIndex();
 			this.displayItems.get(itemIndex).executeIncrement();
+			this.inv.updateItem(this.displayItems.get(itemIndex));
 			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
-			
-			DBProxy.getInstance().updateFridge(inv);
-			
 		}
 		else if (e.getSource() == decButton) {	
 			int itemIndex = list.getSelectedIndex();
@@ -109,19 +107,15 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			}
 			
 			this.displayItems.get(itemIndex).executeDecrement();
+			this.inv.updateItem(this.displayItems.get(itemIndex));
 			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
-			
-			DBProxy.getInstance().updateFridge(inv);
 		}
 		else if (e.getSource() == remButton) {
 			int itemIndex = list.getSelectedIndex();
-			
 			this.inv.remove(this.displayItems.get(itemIndex));
 			this.displayItems.remove(itemIndex);
 			this.fridgeList.remove(itemIndex);
-			
-			DBProxy.getInstance().updateFridge(inv);
 		}
 	}
 	
@@ -133,13 +127,4 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    list.revalidate();
 	}
 	
-	public void removeItem(StoredItem item) {
-		int index = displayItems.indexOf(item);
-		displayItems.remove(index);
-		fridgeList.remove(index);
-		
-		list.setModel(fridgeList);
-	    list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
-	    list.revalidate();		
-	}
 }

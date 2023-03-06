@@ -100,8 +100,6 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    delButton.addActionListener(this);
 	    upperPanel.add(delButton, BorderLayout.LINE_END);
 	    
-	    
-	    
 	    JPanel quantityPanel = new JPanel();
 	    quantityPanel.setBackground(this.getBackground());
 	    quantityPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -115,7 +113,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    quantityVisual.setStringPainted(true);
 	    quantityVisual.setForeground(Color.BLUE);
 	    StockableItem stock = this.itemObj.getStockableItem();
-	    int percentQuantity = (stock.getStock() * 100) / stock.getMax();
+	    int percentQuantity = stock.calculatePercent();
 	    quantityVisual.setValue(percentQuantity);
 	    quantityPanel.add(quantityVisual, c);
 	    
@@ -138,7 +136,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		quantity.setText("Quantity: " + itemObj.getStockableItem().getDescription());
 		
 		StockableItem stock = this.itemObj.getStockableItem();
-	    int percentQuantity = (stock.getStock() * 100) / stock.getMax();
+	    int percentQuantity = stock.calculatePercent();
 	    quantityVisual.setValue(percentQuantity);
 		
 		this.revalidate();
@@ -150,10 +148,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		
 		if (clicked == incButton) {
 			this.itemObj.executeIncrement();
+			view.updateList(itemObj);
 			this.updateLabel();
 		}
 		else if (clicked == decButton) {
 			this.itemObj.executeDecrement();
+			view.updateList(itemObj);
 			this.updateLabel();
 		}
 		else if (clicked == delButton) {

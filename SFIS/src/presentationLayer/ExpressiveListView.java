@@ -42,7 +42,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		scroll = new JScrollPane();
 		this.add(scroll);
 		
-		this.generateList(inv.getFridgeItems());
+		this.generateList(inv.getItems());
 	}
 	
 	public void generateList(List<StoredItem> items) {
@@ -79,6 +79,10 @@ public class ExpressiveListView extends JPanel implements ListView{
 		listView.remove(item);
 		listView.repaint();
 		listView.revalidate();
+	}
+
+	public void updateList(StoredItem itemObj) {
+		inv.updateItem(itemObj);		
 	}
 	
 	
