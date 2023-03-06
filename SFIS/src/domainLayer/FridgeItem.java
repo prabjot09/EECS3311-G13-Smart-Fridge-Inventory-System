@@ -8,7 +8,7 @@ public class FridgeItem extends StoredItem{
 	
 	public FridgeItem(FridgeItem item) {
 		this.setFoodItem(item.getFoodItem());
-		this.setStockableItem(item.getStockableItem());
+		this.setStockableItem(item.getStockableItem().copy());
 	}
 	
 	@Override
@@ -21,6 +21,11 @@ public class FridgeItem extends StoredItem{
 	public void executeDecrement() {
 		StockableItem stock = getStockableItem();
 		stock.decrement();
+	}
+	
+	@Override
+	public FridgeItem copy() {
+		return new FridgeItem(this);
 	}
 
 }

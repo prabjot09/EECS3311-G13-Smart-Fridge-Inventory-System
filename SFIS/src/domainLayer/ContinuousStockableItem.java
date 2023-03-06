@@ -15,6 +15,11 @@ public class ContinuousStockableItem extends StockableItem {
 		this.setMax(100);
 	}
 	
+	public ContinuousStockableItem(ContinuousStockableItem stock) {
+		this.setMax(stock.getMax());
+		this.setStock(stock.getStock());
+	}
+	
 	@Override
 	public void setStock(int val) {
 		int floorAmt = Math.max(0, val);
@@ -44,6 +49,11 @@ public class ContinuousStockableItem extends StockableItem {
 		}
 		
 		return equivalent;
+	}
+
+	@Override
+	public StockableItem copy() {
+		return new ContinuousStockableItem(this);
 	}
 
 }

@@ -66,4 +66,12 @@ public class FoodItem {
 	public void setCreator(CreationType creator) {
 		this.creator = creator;
 	}
+	
+	public boolean matches(FoodItem item) {
+		return this.getName().toLowerCase().contains(item.getName().toLowerCase());
+	}
+	
+	public boolean sameAs(FoodItem item) {
+		return this.getName().equals(item.getName());
+	}
 }

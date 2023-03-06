@@ -12,6 +12,11 @@ public class DiscreteStockableItem extends StockableItem {
 		this.setMax(amount);
 	}
 	
+	public DiscreteStockableItem(DiscreteStockableItem stock) {
+		this.setStock(stock.getStock());
+		this.setMax(stock.getMax());
+	}
+	
 	@Override
 	public void increment() {
 		this.setStock(this.getStock() + INCREMENT);	
@@ -28,5 +33,10 @@ public class DiscreteStockableItem extends StockableItem {
 	public String getDescription() {
 		String desc = "" + this.getStock() + " units";
 		return desc;
+	}
+	
+	@Override
+	public DiscreteStockableItem copy() {
+		return new DiscreteStockableItem(this);
 	}
 }

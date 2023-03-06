@@ -7,6 +7,7 @@ public abstract class StockableItem {
 	public abstract void increment();
 	public abstract void decrement();
 	public abstract String getDescription();
+	public abstract StockableItem copy();
 	
 	public int getStock() {
 		return this.amount;
@@ -24,9 +25,11 @@ public abstract class StockableItem {
 		this.maxAmount = val;
 	}
 	
-	private int calculatePercent() {
+	public int calculatePercent() {
+		if (this.maxAmount == 0)
+			return 0;
+		
 		int percent = (this.amount * 100) / this.maxAmount;
 		return percent;
 	}
-
 }

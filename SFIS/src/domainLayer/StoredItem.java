@@ -6,6 +6,7 @@ public abstract class StoredItem {
 	
 	public abstract void executeIncrement();
 	public abstract void executeDecrement();
+	public abstract StoredItem copy();
 	
 	public FoodItem getFoodItem() {
 		return this.foodDescription;
@@ -26,5 +27,9 @@ public abstract class StoredItem {
 	public String getDescription() {
 		String desc = this.foodDescription.getName() + ": " + this.stock.getDescription();
 		return desc;
+	}
+	
+	public boolean sameItemDescription(StoredItem item) {
+		return this.foodDescription.sameAs(item.getFoodItem());
 	}
 }
