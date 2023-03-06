@@ -18,7 +18,7 @@ public class FavoritesList extends ItemManager{
 				continue;
 			
 			StoredItem copy = this.getItems().get(index).copy();
-			int currentAmount = Math.max(item.getStockableItem().getStock(), copy.getStockableItem().getMax());
+			int currentAmount = Math.min(item.getStockableItem().getStock(), copy.getStockableItem().getMax());
 			copy.getStockableItem().setStock(currentAmount);
 			
 			overlap.add(copy);
