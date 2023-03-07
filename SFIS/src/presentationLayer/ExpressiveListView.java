@@ -14,13 +14,14 @@ import javax.swing.JViewport;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
+import domainLayer.ItemManager;
 import domainLayer.StoredItem;
 
 public class ExpressiveListView extends JPanel implements ListView{
 	
-	Fridge inv;
-	JPanel listView;
-	JScrollPane scroll;
+	private ItemManager inv;
+	private JPanel listView;
+	private JScrollPane scroll;
 	
 	public static void main(String[] args) {
 		JFrame jframe = new JFrame("Hi");

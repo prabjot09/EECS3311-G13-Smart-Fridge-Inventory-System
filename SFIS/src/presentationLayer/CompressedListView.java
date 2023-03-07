@@ -17,11 +17,12 @@ import javax.swing.JScrollPane;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
+import domainLayer.ItemManager;
 import domainLayer.StoredItem;
 
 public class CompressedListView extends JPanel implements ActionListener, ListView{
 	
-	private Fridge inv;
+	private ItemManager inv;
 	private JScrollPane scroll;
 	private JList<String> list;
 	private JButton incButton;
