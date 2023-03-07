@@ -69,7 +69,7 @@ class FavoritesListTest {
 		
 		List<StoredItem> overlap = favorites.itemDifferences(items);
 		
-		assertEquals(overlap.size(), 2, "Correct number of items not returned.");
+		assertEquals(overlap.size(), 3, "Correct number of items not returned.");
 		
 		List<String> matchedItems = new ArrayList<>();
 		for (StoredItem item: overlap) {
@@ -84,10 +84,17 @@ class FavoritesListTest {
 				assertEquals(item.getStockableItem().getStock(), 2, "Item stock not set correctly by itemDifference()");
 				assertEquals(item.getStockableItem().getMax(), 5, "Item max not set correctly by itemDifference()");
 			}
+			else if (item.getFoodItem().getName().equals("Carrots")) {
+				matchedItems.add("Carrots");
+				System.out.println(item.getStockableItem().getStock());
+				assertEquals(item.getStockableItem().getStock(), 9, "Item stock not set correctly by itemDifference()");
+				assertEquals(item.getStockableItem().getMax(), 9, "Item max not set correctly by itemDifference()");
+			}
 		}
 		
 		assertTrue(matchedItems.contains("Chocolate - Bars"), "Misses a matching item");
 		assertTrue(matchedItems.contains("Pizza - Slices"), "Misses a matching item");
+		assertTrue(matchedItems.contains("Carrots"), "Misses a matching item");
 	}
 
 }

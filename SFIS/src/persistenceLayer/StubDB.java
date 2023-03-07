@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domainLayer.FavoritesList;
-import domainLayer.FoodItem;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
@@ -12,8 +11,9 @@ import domainLayer.StoredItem;
 
 public class StubDB implements DB {
 	//We instatiate our stub here to ensure we get one instance of our database when we call our proxy
-	ItemDatabase ItemDB = new ItemDatabase();
-	FridgeDatabase FridgeDB = new FridgeDatabase();
+	ItemStubDB ItemDB = new ItemStubDB();
+	FridgeStubDB FridgeDB = new FridgeStubDB();
+	FavoritesStubDB favoritesDB = new FavoritesStubDB();
 
 	
 	//given a string, we use this code to return a matching food item in our db
@@ -35,13 +35,12 @@ public class StubDB implements DB {
 
 	@Override
 	public List<StoredItem> loadFavoritedItems() {
-		return new ArrayList<StoredItem>();
+		return favoritesDB.loadFavoritedItems();
 	}
 
 	@Override
 	public void updateFavoritedItems(FavoritesList favorites) {
-		// TODO Auto-generated method stub
-		
+		favoritesDB.updateFavoritedItems(favorites);
 	}
 
 

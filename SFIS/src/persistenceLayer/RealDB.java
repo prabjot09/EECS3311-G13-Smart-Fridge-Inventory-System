@@ -19,7 +19,7 @@ import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
 public class RealDB implements DB {
-	FridgeDatabase dbPop = new FridgeDatabase();
+	FridgeStubDB dbPop = new FridgeStubDB();
 	List<StoredItem> fridgePop = dbPop.loadItems();
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";

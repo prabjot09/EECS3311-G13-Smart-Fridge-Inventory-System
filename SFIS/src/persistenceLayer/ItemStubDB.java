@@ -2,10 +2,10 @@ package persistenceLayer;
 
 import java.util.ArrayList;
 
-public class ItemDatabase {
+public class ItemStubDB {
 	private ArrayList<String> ItemDB = new ArrayList<String>();
 
-	public ItemDatabase() {
+	public ItemStubDB() {
 		//Simple items we instatiate at runtime
 		ItemDB.add("Milk - 3 Bags");
 		ItemDB.add("Juice - Carton");

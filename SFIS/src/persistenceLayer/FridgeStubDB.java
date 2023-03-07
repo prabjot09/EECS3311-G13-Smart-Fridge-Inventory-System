@@ -12,10 +12,10 @@ import domainLayer.FridgeItem;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
-public class FridgeDatabase {
+public class FridgeStubDB {
 	private List<StoredItem> FridgeDB = new ArrayList<StoredItem>();
 	
-	public FridgeDatabase() {
+	public FridgeStubDB() {
 		//Fridge items we isntataite at runtime
 		FridgeItem firstFI = new FridgeItem();
 		FoodItem firstFoI = new FoodItem();
