@@ -8,13 +8,26 @@ public class DiscreteStockableItem extends StockableItem {
 	}
 	
 	public DiscreteStockableItem(int amount) {
-		this.setStock(Math.max(amount, 0));
-		this.setMax(amount);
+		this.setStock(amount);
 	}
 	
 	public DiscreteStockableItem(DiscreteStockableItem stock) {
 		this.setStock(stock.getStock());
 		this.setMax(stock.getMax());
+	}
+	
+	@Override
+	public void setStock(int amount) {
+		int amountZeroBound = Math.max(0, amount);
+		super.setStock(amountZeroBound);
+		super.setMax(Math.max(this.getMax(), amountZeroBound));
+	}
+	
+	@Override
+	public void setMax(int amount) {
+		int amountZeroBound = Math.max(0, amount);
+		int amountStockBound = Math.max(this.getStock(), amountZeroBound);
+		super.setMax(amountStockBound);		
 	}
 	
 	@Override

@@ -28,6 +28,11 @@ public class ContinuousStockableItem extends StockableItem {
 	}
 	
 	@Override
+	public void setMax(int val) { 
+		super.setMax(100);
+	}
+	
+	@Override
 	public void increment() {
 		this.setStock(Math.min(this.getStock() + INCREMENT, 100));
 	}
