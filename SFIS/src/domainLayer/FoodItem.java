@@ -72,6 +72,6 @@ public class FoodItem {
 	}
 	
 	public boolean sameAs(FoodItem item) {
-		return this.getName().equals(item.getName());
+		return this.getName().toLowerCase().equals(item.getName().toLowerCase());
 	}
 }
