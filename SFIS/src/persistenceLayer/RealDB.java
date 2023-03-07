@@ -29,7 +29,7 @@ public class RealDB implements DB {
 		"CreationType INT," +
 		"PRIMARY KEY ( name))";
 		 String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?) "
-		 		+ "ON DUPLICATE KEY UPDATE name = ?;";
+		 		+ "ON DUPLICATE KEY UPDATE amount = ?;";
 		 String select = "use SIFSDB";
 		 
 		 public RealDB() {
@@ -99,7 +99,7 @@ public class RealDB implements DB {
 					statement.setString(1,name);
 					statement.setInt(3, amount);
 					statement.setInt(4, creationEnum);
-					statement.setString(5,name);
+					statement.setInt(5,amount);
 					statement.executeUpdate();
 					
 					} 
@@ -125,8 +125,8 @@ public class RealDB implements DB {
 
 		@Override
 		public void updateFridge(Fridge fridge) {
-			
-			 StoredItem itemToAdd = fridge.getFridgeItems().get(fridge.getFridgeItems().size() - 1);
+			for (int x = 0; x < fridge.getItems().size(); x++) {
+			 StoredItem itemToAdd = fridge.getItems().get(x);
 			 try {
 			    Connection con = DriverManager.getConnection(url,user,password);
 				Statement createState = con.createStatement();
@@ -140,6 +140,7 @@ public class RealDB implements DB {
 			catch ( SQLException e ) {
 				 e . printStackTrace () ;
 			 }
-			
+			 
+			}
 		}
 }
