@@ -100,8 +100,31 @@ public class RealDB implements DB {
 
 	@Override
 	public List<String> findMatchingFoods(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> holdMatch = new ArrayList<String>();
+
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			Statement createState = con.createStatement();
+			createState.execute(select);
+
+			ResultSet rs = createState.executeQuery(selectFrom);
+
+			while (rs.next()) {
+
+				String dbName = rs.getString(1);
+				if (dbName.toLowerCase().contains(name)) {
+					holdMatch.add(dbName);
+				}
+
+			}
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return holdMatch;
 	}
 
 	@Override
@@ -146,12 +169,19 @@ public class RealDB implements DB {
 
 	}
 
+	public FoodItem foodItemBuilder(String name, int stockEnum, int creatEnum) {
+		FoodItem item = new FoodItem();
+		item.setName(name);
+		item.setStockType(StockType.values()[stockEnum]);
+		item.setCreator(CreationType.values()[creatEnum]);
+
+		return item;
+	}
+
 	public FridgeItem fridgeItemBuilder(String name, int stockEnum, int amount, int creatEnum) {
-		FoodItem newItem = new FoodItem();
+		FoodItem newItem = foodItemBuilder(name, stockEnum, creatEnum);
 		FridgeItem item = new FridgeItem();
-		newItem.setName(name);
-		newItem.setStockType(StockType.values()[stockEnum]);
-		newItem.setCreator(CreationType.values()[creatEnum]);
+
 		item.setFoodItem(newItem);
 		item.setStockableItem(StockableItemFactory.createStockableItem(newItem.getStockType(), amount));
 
