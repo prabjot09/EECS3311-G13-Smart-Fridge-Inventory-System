@@ -24,6 +24,8 @@ public class RealDB implements DB {
 
 	FridgeStubDB dbPop = new FridgeStubDB();
 	List<StoredItem> fridgePop = dbPop.loadItems();
+	FavoritesStubDB dbfavPop = new FavoritesStubDB();
+	List<StoredItem> favPop = dbfavPop.loadFavoritedItems();
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String user = "root";
@@ -32,10 +34,14 @@ public class RealDB implements DB {
 	String createTable = "Create Table if not exists fridgeitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "PRIMARY KEY ( name))";
 	String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
+	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
+			+ "Amount INT," + "CreationType INT," + "PRIMARY KEY ( name))";
+	String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
 	String selectFrom = "select * from fridgeitem;";
+	String selectFromFav = "select * from favitem;";
 	String updateDrop = "drop table fridgeitem;";
-	
+	String updateFavDrop = "drop table favitem;";
 
 	public RealDB() {
 
@@ -56,6 +62,10 @@ public class RealDB implements DB {
 
 			for (int x = 0; x < fridgePop.size(); x++) {
 				addItem(fridgePop.get(x));
+			}
+			
+			for (int x = 0; x < favPop.size(); x++) {
+				addItem(favPop.get(x));
 			}
 	
 
@@ -85,6 +95,43 @@ public class RealDB implements DB {
 			
 
 			PreparedStatement statement = con.prepareStatement(queryInsert);
+
+			statement.setInt(2, fridgeEnum);
+			statement.setString(1, name);
+			statement.setInt(3, amount);
+			statement.setInt(4, creationEnum);
+			statement.setInt(5, amount);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void addFavItem(StoredItem Fridge) {
+		String name = Fridge.getFoodItem().getName();
+		int fridgeEnum;
+		int creationEnum;
+		int amount = Fridge.getStockableItem().getStock();
+
+		if (Fridge.getFoodItem().getStockType() == StockType.values()[0]) {
+			fridgeEnum = 0;
+		} else {
+			fridgeEnum = 1;
+		}
+
+		if (Fridge.getFoodItem().getCreator() == CreationType.values()[0]) {
+			creationEnum = 0;
+		} else {
+			creationEnum = 1;
+		}
+
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			
+
+			PreparedStatement statement = con.prepareStatement(queryInsertFav);
 
 			statement.setInt(2, fridgeEnum);
 			statement.setString(1, name);
@@ -204,17 +251,62 @@ public class RealDB implements DB {
 		return item;
 
 	}
-
+	
+	
 
 	@Override
 	public List<StoredItem> loadFavoritedItems() {
-		// TODO Auto-generated method stub
-		return null;
+		List<StoredItem> fav = new ArrayList<StoredItem>();
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			Statement createState = con.createStatement();
+			createState.execute(select);
+
+			ResultSet rs = createState.executeQuery(selectFromFav);
+
+			while (rs.next()) {
+
+				String Name = rs.getString(1);
+				int stockEnum = rs.getInt(2);
+				int amount = rs.getInt(3);
+				int creatEnum = rs.getInt(4);
+
+				FridgeItem item = fridgeItemBuilder(Name, stockEnum, amount, creatEnum);
+
+				fav.add(item);
+			}
+
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return fav;
 	}
 
 	@Override
 	public void updateFavoritedItems(FavoritesList favorites) {
-		// TODO Auto-generated method stub
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			Statement createState = con.createStatement();
+	
+	
+
+			createState.executeUpdate(updateFavDrop);
+			createState.executeUpdate(createFavTable);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		for (int x = 0; x < favorites.getItems().size(); x++) {
+			StoredItem itemToAdd = favorites.getItems().get(x);
+
+			addItem(itemToAdd);
+
+		}
 		
 	}
 
