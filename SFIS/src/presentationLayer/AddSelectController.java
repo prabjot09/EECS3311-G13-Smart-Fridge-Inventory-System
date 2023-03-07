@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
@@ -21,12 +22,10 @@ import domainLayer.StoredItem;
 public class AddSelectController implements ActionListener{
 	private AddSelectView addSelectView;
 	private mainWindow homeView;
-	private Fridge fridge;
 	
-	public AddSelectController(addWindow addWindowView, mainWindow homeView, Fridge fridge) {
+	public AddSelectController(addWindow addWindowView, mainWindow homeView) {
 		this.addSelectView = new AddSelectView(this);
 		this.homeView = homeView;
-		this.fridge = fridge;
 		
 		addWindowView.setAddingMethod(addSelectView);
 	}
@@ -86,7 +85,7 @@ public class AddSelectController implements ActionListener{
 		item.setStockableItem(stock);
 		
 		try {
-			this.fridge.add(item);
+			App.getInstance().getInventory().add(item);
 			this.homeView.addNewItem();
 			this.addSelectView.clearInput();
 		}

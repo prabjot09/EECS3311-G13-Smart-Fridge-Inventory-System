@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import domainLayer.FavoritesList;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
@@ -156,6 +157,18 @@ public class RealDB implements DB {
 
 		return item;
 
+	}
+
+	@Override
+	public List<StoredItem> loadFavoritedItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateFavoritedItems(FavoritesList favorites) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -29,9 +29,9 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private JButton decButton;
 	private JButton remButton;
 	private List<StoredItem> displayItems;
-	private DefaultListModel<String> fridgeList;
+	private DefaultListModel<String> stringItemList;
 
-	public CompressedListView(Fridge inv) {
+	public CompressedListView(ItemManager inv) {
 		this.inv = inv;
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -78,9 +78,9 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			updatedFridgeList.addElement(item.getDescription());
 		}
 		 
-		fridgeList = updatedFridgeList;
+		stringItemList = updatedFridgeList;
 		list.setModel(updatedFridgeList);
-		list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
+		list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 		list.revalidate();
 		 
 		revalidate();
@@ -97,7 +97,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			int itemIndex = list.getSelectedIndex();
 			this.displayItems.get(itemIndex).executeIncrement();
 			this.inv.updateItem(this.displayItems.get(itemIndex));
-			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
+			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
 		else if (e.getSource() == decButton) {	
@@ -109,22 +109,22 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			
 			this.displayItems.get(itemIndex).executeDecrement();
 			this.inv.updateItem(this.displayItems.get(itemIndex));
-			this.fridgeList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
+			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
 		else if (e.getSource() == remButton) {
 			int itemIndex = list.getSelectedIndex();
 			this.inv.remove(this.displayItems.get(itemIndex));
 			this.displayItems.remove(itemIndex);
-			this.fridgeList.remove(itemIndex);
+			this.stringItemList.remove(itemIndex);
 		}
 	}
 	
 	public void addItem(StoredItem item) {
 		displayItems.add(item);
-	    fridgeList.addElement(item.getDescription());
-	    list.setModel(fridgeList);
-	    list.setPreferredSize(new Dimension(800, 30 * fridgeList.size()));
+	    stringItemList.addElement(item.getDescription());
+	    list.setModel(stringItemList);
+	    list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 	    list.revalidate();
 	}
 	

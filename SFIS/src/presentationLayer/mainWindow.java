@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
@@ -55,8 +56,7 @@ public class mainWindow implements ActionListener{
 	
 	public mainWindow() {
 	    // create our jframe as usual
-		List<StoredItem> items = DBProxy.getInstance().loadItems();
-		inv = new Fridge(items);
+		inv = App.getInstance().getInventory();
 		
 		jframe = new JFrame("SFIS");
 			
@@ -151,7 +151,7 @@ public class mainWindow implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
-			new addWindow(this, inv);
+			new addWindow(this);
 			jframe.setVisible(false);
 		}
 		else if (e.getSource() == searchButton) {		

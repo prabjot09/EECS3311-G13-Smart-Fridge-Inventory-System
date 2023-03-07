@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import appLayer.App;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
@@ -18,12 +19,10 @@ import domainLayer.StockableItemFactory;
 public class AddCreateController implements ActionListener {
 	private mainWindow homeView;
 	private AddCreateView addCreateView;
-	private Fridge fridge;
 
-	public AddCreateController(addWindow addWindowView, mainWindow homeView, Fridge fridge) {
+	public AddCreateController(addWindow addWindowView, mainWindow homeView) {
 		this.addCreateView = new AddCreateView(this);
 		this.homeView = homeView;
-		this.fridge = fridge;
 		
 		addWindowView.setAddingMethod(addCreateView);
 	}
@@ -78,7 +77,7 @@ public class AddCreateController implements ActionListener {
 		item.setStockableItem(stock);
 		
 		try {
-			this.fridge.add(item);
+			App.getInstance().getInventory().add(item);
 			this.homeView.addNewItem();
 			this.addCreateView.clearInput();
 		}

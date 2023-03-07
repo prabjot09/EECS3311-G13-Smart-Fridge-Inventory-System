@@ -24,15 +24,13 @@ import domainLayer.Fridge;
 public class addWindow extends JFrame implements ActionListener{
 	private JPanel addMethodPanel;
 	private mainWindow homeView;
-	private Fridge inv;
 	
 	private ActionListener addMethodController;
 	
 	//back button
 	private JButton backButton;
 	
-	public addWindow(mainWindow homeView, Fridge inv) {	
-		this.inv = inv;
+	public addWindow(mainWindow homeView) {	
 		this.homeView = homeView;
 		
 		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
@@ -121,10 +119,10 @@ public class addWindow extends JFrame implements ActionListener{
 			}
 			JRadioButton button = (JRadioButton) e.getSource();
 			if (button.getName() == "databaseSelect") {
-				this.addMethodController = new AddSelectController(this, homeView, this.inv);
+				this.addMethodController = new AddSelectController(this, homeView);
 			}
 			else if (button.getName() == "manualSelect") {
-				this.addMethodController = new AddCreateController(this, homeView, this.inv);
+				this.addMethodController = new AddCreateController(this, homeView);
 			}
 		}
 		catch (Exception exception) {

@@ -44,5 +44,12 @@ public class DBProxy {
 	public List<String> findItemDBItems(String name){
 		return db.findMatchingFoods(name);
 	}
+
+	public List<StoredItem> loadFavoritedItems() {
+		return db.loadFavoritedItems();
+	}
 	
+	public void updateFavoritedItems(FavoritesList favorites) {
+		db.updateFavoritedItems(favorites);
+	}
 }

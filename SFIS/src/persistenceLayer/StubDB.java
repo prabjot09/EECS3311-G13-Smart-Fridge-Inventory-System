@@ -3,6 +3,7 @@ package persistenceLayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import domainLayer.FavoritesList;
 import domainLayer.FoodItem;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
@@ -30,6 +31,17 @@ public class StubDB implements DB {
 
 	public void updateFridge(Fridge fridge) {
 		FridgeDB.setFridge(fridge);
+	}
+
+	@Override
+	public List<StoredItem> loadFavoritedItems() {
+		return new ArrayList<StoredItem>();
+	}
+
+	@Override
+	public void updateFavoritedItems(FavoritesList favorites) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

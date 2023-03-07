@@ -34,7 +34,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	    jframe.setVisible(true);
 	}
 	
-	public ExpressiveListView(Fridge inv) {
+	public ExpressiveListView(ItemManager inv) {
 		this.inv = inv;
 		
 		this.setLayout(new BorderLayout());
