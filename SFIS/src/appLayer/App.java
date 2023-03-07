@@ -3,6 +3,7 @@ package appLayer;
 import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
+import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
 import presentationLayer.mainWindow;
 
@@ -18,11 +19,11 @@ public class App {
 	
 	public static void main(String[] args) {
 		app = new App();
-		DBProxy.getInstance().setDB(new StubDB());
+		DBProxy.getInstance().setDB(new RealDB());
 		
 		app.db = DBProxy.getInstance();
 		app.inv = new Fridge(app.db.loadItems());
-		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
+		//app.favorites = new FavoritesList(app.db.loadFavoritedItems());
 		new mainWindow();
 	}
 	

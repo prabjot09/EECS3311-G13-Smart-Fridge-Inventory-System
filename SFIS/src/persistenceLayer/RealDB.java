@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import domainLayer.FavoritesList;
+
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
@@ -19,6 +21,7 @@ import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
 public class RealDB implements DB {
+
 	FridgeStubDB dbPop = new FridgeStubDB();
 	List<StoredItem> fridgePop = dbPop.loadItems();
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
@@ -31,6 +34,8 @@ public class RealDB implements DB {
 	String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
 	String selectFrom = "select * from fridgeitem;";
+	String updateDrop = "drop table fridgeitem;";
+	
 
 	public RealDB() {
 
@@ -47,16 +52,12 @@ public class RealDB implements DB {
 			e.printStackTrace();
 		}
 
-		try {
-			Connection con = DriverManager.getConnection(url, user, password);
-			Statement createState = con.createStatement();
+		
 
 			for (int x = 0; x < fridgePop.size(); x++) {
 				addItem(fridgePop.get(x));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	
 
 	}
 
@@ -81,7 +82,7 @@ public class RealDB implements DB {
 
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
-			Statement createState = con.createStatement();
+			
 
 			PreparedStatement statement = con.prepareStatement(queryInsert);
 
@@ -160,6 +161,21 @@ public class RealDB implements DB {
 
 	@Override
 	public void updateFridge(Fridge fridge) {
+		
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			Statement createState = con.createStatement();
+	
+	
+
+			createState.executeUpdate(updateDrop);
+			createState.executeUpdate(createTable);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
 		for (int x = 0; x < fridge.getItems().size(); x++) {
 			StoredItem itemToAdd = fridge.getItems().get(x);
 
@@ -168,7 +184,7 @@ public class RealDB implements DB {
 		}
 
 	}
-
+	
 	public FoodItem foodItemBuilder(String name, int stockEnum, int creatEnum) {
 		FoodItem item = new FoodItem();
 		item.setName(name);
@@ -189,6 +205,7 @@ public class RealDB implements DB {
 
 	}
 
+
 	@Override
 	public List<StoredItem> loadFavoritedItems() {
 		// TODO Auto-generated method stub
@@ -200,5 +217,6 @@ public class RealDB implements DB {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
