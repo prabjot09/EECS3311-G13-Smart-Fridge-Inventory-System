@@ -22,10 +22,14 @@ import domainLayer.StoredItem;
 
 public class RealDB implements DB {
 
-	FridgeStubDB dbPop = new FridgeStubDB();
+	/*FridgeStubDB dbPop = new FridgeStubDB();
 	List<StoredItem> fridgePop = dbPop.loadItems();
 	FavoritesStubDB dbfavPop = new FavoritesStubDB();
 	List<StoredItem> favPop = dbfavPop.loadFavoritedItems();
+	*/
+	
+	ItemStubDB dbPop = new ItemStubDB();
+	List<String> itemPop = dbPop.getDB();
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String user = "root";
@@ -36,10 +40,13 @@ public class RealDB implements DB {
 	String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "PRIMARY KEY ( name))";
+	String createItemTable = "Create Table if not exists itemDB" + "(name VARCHAR(255)," + "PRIMARY KEY ( name))";
+	String queryInsertItem = "insert into itemDB VALUES (?)" + "ON DUPLICATE KEY UPDATE name = ?;";
 	String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
 	String selectFrom = "select * from fridgeitem;";
 	String selectFromFav = "select * from favitem;";
+	String selectFromItem = "select * from itemDB;";
 	String updateDrop = "drop table fridgeitem;";
 	String updateFavDrop = "drop table favitem;";
 
@@ -48,27 +55,35 @@ public class RealDB implements DB {
 		try {
 			Connection con = DriverManager.getConnection(firsttimeurl, user, password);
 			Statement createState = con.createStatement();
+			PreparedStatement statement = con.prepareStatement(queryInsertItem);
 			createState.executeUpdate(createDatabase);
 			System.out.println("Succesfully Created Database");
 
 			createState.executeUpdate(select);
 			createState.executeUpdate(createTable);
-
+			createState.executeUpdate(createItemTable);
+			
+			for (int x = 0; x < itemPop.size(); x++) {
+				String itemName = itemPop.get(x);
+				statement.setString(1, itemName);
+				statement.setString(2,itemName);
+				statement.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		
 
-			for (int x = 0; x < fridgePop.size(); x++) {
+	/*		for (int x = 0; x < fridgePop.size(); x++) {
 				addItem(fridgePop.get(x));
 			}
 			
 			for (int x = 0; x < favPop.size(); x++) {
 				addItem(favPop.get(x));
 			}
-	
-
+	*/
+			
 	}
 
 	@Override
@@ -155,7 +170,7 @@ public class RealDB implements DB {
 			Statement createState = con.createStatement();
 			createState.execute(select);
 
-			ResultSet rs = createState.executeQuery(selectFrom);
+			ResultSet rs = createState.executeQuery(selectFromItem);
 
 			while (rs.next()) {
 
