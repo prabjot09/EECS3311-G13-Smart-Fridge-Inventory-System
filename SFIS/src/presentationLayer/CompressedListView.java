@@ -14,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
@@ -30,6 +31,9 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private JButton remButton;
 	private List<StoredItem> displayItems;
 	private DefaultListModel<String> stringItemList;
+	
+	private JPanel buttonPanel;
+	private boolean buttonPanelFlag;
 
 	public CompressedListView(ItemManager inv) {
 		this.inv = inv;
@@ -49,7 +53,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    this.setPreferredSize(new Dimension(820, 400));
 	    this.add(scroll);
 	    
-	    JPanel buttonPanel = new JPanel();
+	    buttonPanel = new JPanel();
 	    buttonPanel.setBackground(Color.black);
 	    this.add(buttonPanel);
 	    
@@ -68,6 +72,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    remButton.setPreferredSize(new Dimension(200, 50));
 	    buttonPanel.add(remButton);
 	    
+	    this.buttonPanelFlag = true;
 	    this.generateList(displayItems);
 	}
 	
@@ -128,4 +133,31 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    list.revalidate();
 	}
 	
+	public void setButtonPanelFlag(boolean flag) {
+		if (flag == buttonPanelFlag)
+			return;
+		
+		buttonPanelFlag = flag;
+		if (buttonPanelFlag) {
+			this.add(buttonPanel);
+		}
+		else {
+			this.remove(buttonPanel);
+		}
+		
+		this.revalidate();
+	}
+	
+	public StoredItem getSelectedItem() {
+		int index = list.getSelectedIndex();
+		
+		if (index == -1) {
+			return null;
+		}
+		return displayItems.get(index);
+	}
+	
+	public void setListListener(ListSelectionListener listener) {
+		list.addListSelectionListener(listener);
+	}
 }

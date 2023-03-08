@@ -77,7 +77,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    JPanel upperPanel = new JPanel();
 	    upperPanel.setLayout(new BorderLayout());
 	    upperPanel.setBackground(this.getBackground());
-	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 0));
 	    this.add(upperPanel);
 	    
 	    JPanel infoPanel = new JPanel();

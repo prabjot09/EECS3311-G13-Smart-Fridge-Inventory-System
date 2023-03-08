@@ -36,7 +36,7 @@ import domainLayer.StoredItem;
 public class mainWindow implements ActionListener{	
 	// Input Components
 	private JTextField search;
-	private JButton addButton, searchButton;
+	private JButton addButton, searchButton, favoritesButton;
 	
 	// Domain-logic
 	private Fridge inv;
@@ -102,6 +102,11 @@ public class mainWindow implements ActionListener{
 	    addButton.addActionListener(this);
 	    addButton.setPreferredSize(new Dimension(50,50));
 	    topPanel.add(addButton);
+	    
+	    favoritesButton = new JButton("Favorites List");
+	    favoritesButton.addActionListener(this);
+	    favoritesButton.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+	    topPanel.add(favoritesButton);
 	    // END: Search Panel
 	    
 	    // Set up View Toggler Button
@@ -152,6 +157,10 @@ public class mainWindow implements ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
 			new addWindow(this);
+			jframe.setVisible(false);
+		}
+		else if (e.getSource() == favoritesButton) {
+			new FavoritesView(this);
 			jframe.setVisible(false);
 		}
 		else if (e.getSource() == searchButton) {		
