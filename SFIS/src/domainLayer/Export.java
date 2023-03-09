@@ -22,7 +22,7 @@ public class Export {
 				outputBuffer.append("-");
 				outputBuffer.append(item.getFoodItem().getName());
 				writeOut.println(outputBuffer);
-			}
+			} 
 			//Close printer
 			writeOut.close();
 			JOptionPane.showMessageDialog(null, "Export to file complete");
