@@ -33,7 +33,7 @@ public class RealDB implements DB {
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String user = "root";
-	String password = "Blaziken@123";
+	String password = "G-13-Excellent";
 	String createDatabase = "create database if not exists SIFSDB";
 	String createTable = "Create Table if not exists fridgeitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "PRIMARY KEY ( name))";
