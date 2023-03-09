@@ -32,6 +32,9 @@ import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomBoxPanel;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 
 public class mainWindow implements ActionListener{	
 	// Input Components
@@ -59,29 +62,16 @@ public class mainWindow implements ActionListener{
 		inv = App.getInstance().getInventory();
 		
 		jframe = new JFrame("SFIS");
-			
-		// Title 'Smart Fridge Tracker' Setup
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
-	    panel.setBackground(Color.black);
-		jframe.add(panel,BorderLayout.NORTH);
-	    
-	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
-	    titleLabel.setForeground(Color.white);
-	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
-	    panel.add(titleLabel);
-	    
+		
+		headerSetup();	 
 	    
 	    // START: Search and Item List Panel
-	    JPanel searchPanel = new JPanel();
-	    searchPanel.setBackground(Color.black);
-	    searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.Y_AXIS));
+	    JPanel searchPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS);
 	    searchPanel.setBounds(0,100,1000,500);
 	    jframe.add(searchPanel);
 	    
 	    // START: Item Search Panel
-	    JPanel topPanel = new JPanel();
-	    topPanel.setBackground(Color.black);
+	    JPanel topPanel = new CustomPanel(Color.black, null);
 	    searchPanel.add(topPanel);
 	    
 	    search = new JTextField();
@@ -92,20 +82,13 @@ public class mainWindow implements ActionListener{
 	    search.setPreferredSize(new Dimension(300,50));
 	    topPanel.add(search);
 	    
-	    searchButton = new JButton("Search");
-	    searchButton.addActionListener(this);
-	    searchButton.setPreferredSize(new Dimension(100,50));
+	    searchButton = new CustomButton("Search", this, 50, 100);
 	    topPanel.add(searchButton);
 	    
-	    // New Item Add Button
-	    addButton = new JButton("+");
-	    addButton.addActionListener(this);
-	    addButton.setPreferredSize(new Dimension(50,50));
+	    addButton = new CustomButton("+", this, 50, 50);
 	    topPanel.add(addButton);
 	    
-	    favoritesButton = new JButton("Favorites List");
-	    favoritesButton.addActionListener(this);
-	    favoritesButton.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+	    favoritesButton = new CustomButton("Favorites List", this, 15);
 	    topPanel.add(favoritesButton);
 	    // END: Search Panel
 	    
@@ -114,36 +97,22 @@ public class mainWindow implements ActionListener{
 	    compressedIcon = new ImageIcon(compressedIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
 	    expressiveIcon = new ImageIcon("resources/ExpressiveViewIcon.png");
 	    expressiveIcon = new ImageIcon(expressiveIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
-	    viewToggler = new JButton();
-	    viewToggler.setPreferredSize(new Dimension(50, 50));
+	    viewToggler = new CustomButton(null, this, 50, 50);
 	    viewToggler.setIcon(expressiveIcon);
 	    viewToggler.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	    viewToggler.addActionListener(this);
 	    topPanel.add(viewToggler);
 	    
 	    // Set up the Item List View Panel
 	    List<ListView> views = new ArrayList<ListView>();
 	    views.add(new CompressedListView(inv));
-	    views.add(new ExpressiveListView(inv));
+	    views.add(new ExpressiveListView(inv, true));
 	    viewManager = new ListViewManager(views);
-	    viewPanel = new JPanel();
-	    viewPanel.setBackground(Color.black);
-	    viewPanel.setPreferredSize(new Dimension(400, 400));
+	    viewPanel = new CustomPanel(Color.black, null);
+	    viewPanel.setPreferredSize(new Dimension(820, 400));
 	    viewPanel.add((JPanel) viewManager.getCurrentView());
 	    
 	    searchPanel.add(viewPanel);
 	    // END: Search and Item List Panel
-	    
-	    // Grocery List Panel
-	    JPanel rightPanel = new JPanel();
-	    rightPanel.setBackground(Color.black);
-	    rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    
-	    
-	    rightPanel.add(new GroceryListView());
-	    jframe.add(rightPanel, BorderLayout.EAST);
-
 	    
 	    // Update DB when closing the window
 	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,11 +125,22 @@ public class mainWindow implements ActionListener{
 	    
 	    // set the jframe size and location, and make it visible
 	    jframe.getContentPane().setBackground(Color.black);
-	    jframe.setPreferredSize(new Dimension(1260, 650));
+	    jframe.setPreferredSize(new Dimension(1000, 650));
 	    jframe.pack();
 	    jframe.setLocationRelativeTo(null);
 	    jframe.setVisible(true);
 		
+	}
+	
+	public void headerSetup() {
+		JPanel panel = new CustomPanel(Color.black, null);
+		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
+		jframe.add(panel,BorderLayout.NORTH);
+	    
+	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
+	    titleLabel.setForeground(Color.white);
+	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+	    panel.add(titleLabel);
 	}
 
 	@Override

@@ -18,27 +18,11 @@ import domainLayer.ContinuousStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
 import domainLayer.Pair;
+import presentationLayer.swingExtensions.DropDown;
+import presentationLayer.swingExtensions.InputField;
+import presentationLayer.swingExtensions.TextInput;
 
 public class StockInputField {
-	
-	private interface InputField {
-		public String getInput();
-		public void clearField();
-	}
-	
-	private class DropDown<E> extends JComboBox<E> implements InputField {
-		public DropDown(E[] values) { super(values); }
-		
-		public String getInput() { return (String) this.getSelectedItem(); }
-		public void clearField() { this.setSelectedIndex(0); }
-	}
-	
-	private class TextInput extends JTextField implements InputField {
-		public TextInput(String string) { super(string); }
-
-		public String getInput() { return this.getText(); }
-		public void clearField() { this.setText(""); }
-	}
 	
 	private TextInput discreteAmtField;
 	private DropDown<String> continuousAmtField;

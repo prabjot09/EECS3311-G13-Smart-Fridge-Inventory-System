@@ -11,16 +11,11 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -28,6 +23,9 @@ import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.FoodItem.StockType;
+import presentationLayer.swingExtensions.CustomBoxPanel;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 import domainLayer.Pair;
 import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
@@ -51,92 +49,16 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
 		this.getContentPane().setLayout(overallLayout);
 		
-		JPanel titlePanel = new JPanel();
-		titlePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		titlePanel.setBackground(Color.black);
-		titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, titlePanel.getPreferredSize().height));
-	    this.add(titlePanel);
+		titleBuilder();
 	    
-	    JLabel titleLabel = new JLabel("Favorited Items");
-	    titleLabel.setForeground(Color.white);
-	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
-	    titlePanel.add(titleLabel);
-	    
-	    JPanel backPanel = new JPanel();
-	    backPanel.setBackground(Color.black);
-	    backPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
-	    backPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    this.add(backPanel);
-	    backButton = new JButton("Back");
-	    backButton.addActionListener(this);
-	    backPanel.add(backButton);
-	    
-	    JPanel viewPanel = new JPanel();
-	    viewPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.X_AXIS));
-		viewPanel.setBackground(Color.black);
+	    JPanel viewPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS, 10);
 	    this.add(viewPanel);
 	    
-	    JPanel fridgePanel = new JPanel();
-	    fridgePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    fridgePanel.setLayout(new BoxLayout(fridgePanel, BoxLayout.Y_AXIS));
-	    fridgePanel.setBackground(Color.black);
-	    viewPanel.add(fridgePanel);
+	    fridgeViewBuilder(viewPanel);
 	    
-	    JPanel labelWrap = new JPanel();
-	    labelWrap.setBackground(Color.black);
-	    labelWrap.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    fridgePanel.add(labelWrap);
+	    favoritesViewBuilder(viewPanel);
 	    
-	    JLabel fridgeLabel = new JLabel("Your Fridge Items");
-	    fridgeLabel.setForeground(Color.white);
-	    fridgeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-	    labelWrap.add(fridgeLabel);
-	    
-	    fridgeItems = new CompressedListView(App.getInstance().getInventory());
-	    fridgeItems.setButtonPanelFlag(false);
-	    fridgeItems.setListListener(this);
-	    fridgePanel.add(fridgeItems);
-	    
-	    JPanel favoritesPanel = new JPanel();
-	    favoritesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    favoritesPanel.setLayout(new BoxLayout(favoritesPanel, BoxLayout.Y_AXIS));
-	    favoritesPanel.setBackground(Color.black);
-	    viewPanel.add(favoritesPanel);
-	    
-	    labelWrap = new JPanel();
-	    labelWrap.setBackground(Color.black);
-	    labelWrap.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    favoritesPanel.add(labelWrap);
-	    
-	    JLabel favoritesLabel = new JLabel("Your Favorites List");
-	    favoritesLabel.setForeground(Color.white);
-	    favoritesLabel.setFont(new Font("Arial", Font.BOLD, 16));
-	    labelWrap.add(favoritesLabel);
-	    
-	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites());	  
-	    favoritesPanel.add(favoritesView);
-	    
-	    inputPanel = new JPanel();
-	    inputPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		inputPanel.setBackground(Color.black);
-	    this.add(inputPanel);
-	    
-	    quantityPanel = new JPanel();
-	    quantityPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    quantityPanel.setBackground(Color.black);
-	    
-	    JLabel quantityLabel = new JLabel("Item Quantity: ");
-	    quantityLabel.setForeground(Color.white);
-	    quantityLabel.setFont(new Font("Arial", Font.BOLD, 20));
-	    quantityPanel.add(quantityLabel);
-	    
-	    quantityInput = new StockInputField();
-	    
-	    addButton = new JButton("Add to Favorites List");
-	    addButton.addActionListener(this);
-	    addButton.setEnabled(false);
-	    inputPanel.add(addButton);
+	    inputViewBuilder();
 	    
 	    //dispose on close while also opening mainwindow on close
 	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -149,12 +71,89 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 	    });
 	    this.getContentPane().setBackground(Color.black);
 	    // set the jframe size and location, and make it visible
-	    this.setPreferredSize(new Dimension(1000, 600));
+	    this.setPreferredSize(new Dimension(1300, 600));
 	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);
 	}
 
+	
+	public void titleBuilder() {
+		JPanel titlePanel = new CustomPanel(Color.black, 10);
+		titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, titlePanel.getPreferredSize().height));
+	    this.add(titlePanel);
+	    
+	    JLabel titleLabel = new JLabel("Favorited Items");
+	    titleLabel.setForeground(Color.white);
+	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+	    titlePanel.add(titleLabel);
+	    
+	    JPanel backPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
+	    backPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
+	    this.add(backPanel);
+	    backButton = new CustomButton("Back", this);
+	    backPanel.add(backButton);
+	}
+	
+	
+	public void fridgeViewBuilder(JPanel viewPanel) {
+		JPanel fridgePanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
+	    viewPanel.add(fridgePanel);
+	    
+	    JPanel labelWrap = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
+	    fridgePanel.add(labelWrap);
+	    
+	    JLabel fridgeLabel = new JLabel("Your Fridge Items");
+	    fridgeLabel.setForeground(Color.white);
+	    fridgeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+	    labelWrap.add(fridgeLabel);
+	    
+	    fridgeItems = new CompressedListView(App.getInstance().getInventory());
+	    fridgeItems.setButtonPanelFlag(false);
+	    fridgeItems.setListListener(this);
+	    fridgePanel.add(fridgeItems);
+	}
+	
+	
+	
+	public void favoritesViewBuilder(JPanel viewPanel) {
+		JPanel favoritesPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
+	    viewPanel.add(favoritesPanel);
+	    
+	    JPanel labelWrap = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
+	    favoritesPanel.add(labelWrap);
+	    
+	    JLabel favoritesLabel = new JLabel("Your Favorites List");
+	    favoritesLabel.setForeground(Color.white);
+	    favoritesLabel.setFont(new Font("Arial", Font.BOLD, 16));
+	    labelWrap.add(favoritesLabel);
+	    
+	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites(), false);	  
+	    favoritesPanel.add(favoritesView);
+	}
+	
+	
+	
+	public void inputViewBuilder() {
+		inputPanel = new CustomPanel(Color.black, 10);
+	    this.add(inputPanel);
+	    
+	    quantityPanel = new CustomPanel(Color.black, 10);
+	    
+	    JLabel quantityLabel = new JLabel("Item Quantity: ");
+	    quantityLabel.setForeground(Color.white);
+	    quantityLabel.setFont(new Font("Arial", Font.BOLD, 20));
+	    quantityPanel.add(quantityLabel);
+	    
+	    quantityInput = new StockInputField();
+	    
+	    addButton = new CustomButton("Add to Favorites List", this);
+	    addButton.setEnabled(false);
+	    inputPanel.add(addButton);
+	}
+	
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {

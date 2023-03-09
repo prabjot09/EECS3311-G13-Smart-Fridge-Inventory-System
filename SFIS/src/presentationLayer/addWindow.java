@@ -20,6 +20,9 @@ import javax.swing.JRadioButton;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
+import presentationLayer.swingExtensions.CustomBoxPanel;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 
 public class addWindow extends JFrame implements ActionListener{
 	private JPanel addMethodPanel;
@@ -36,9 +39,7 @@ public class addWindow extends JFrame implements ActionListener{
 		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
 		this.getContentPane().setLayout(overallLayout);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    panel.setBackground(Color.black);
+		JPanel panel = new CustomPanel(Color.black, 10);
 	    this.add(panel);
 	    
 	    JLabel titleLabel = new JLabel("Add New Item");
@@ -47,11 +48,7 @@ public class addWindow extends JFrame implements ActionListener{
 	    panel.add(titleLabel);
 	    panel.setMaximumSize(new Dimension(panel.getMaximumSize().width, panel.getPreferredSize().height));
 	    
-	    JPanel selectionPanel = new JPanel();
-	    BoxLayout selectionLayout = new BoxLayout(selectionPanel, BoxLayout.Y_AXIS);
-	    selectionPanel.setLayout(selectionLayout);
-	    selectionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	    selectionPanel.setBackground(Color.black);
+	    JPanel selectionPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
 	    this.add(selectionPanel);
 	    
 	    JRadioButton fromDbOption = new JRadioButton("Select an item from our database.");
@@ -60,8 +57,7 @@ public class addWindow extends JFrame implements ActionListener{
 	    manualItemOption.setName("manualSelect");
 	    
 	    //back button
-	    backButton = new JButton("Back");
-	    backButton.addActionListener(this);
+	    backButton = new CustomButton("Back", this);
 	    this.add(backButton);
 	    
 	    ButtonGroup grp = new ButtonGroup();
@@ -74,9 +70,7 @@ public class addWindow extends JFrame implements ActionListener{
 	    fromDbOption.addActionListener(this);
 	    manualItemOption.addActionListener(this);
 	    
-	    JPanel addMethodPanel = new JPanel();
-		addMethodPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    addMethodPanel.setBackground(Color.black);
+	    JPanel addMethodPanel = new CustomPanel(Color.black, 10);
 	    this.add(addMethodPanel);
 	    this.addMethodPanel = addMethodPanel;
 	    

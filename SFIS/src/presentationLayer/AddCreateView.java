@@ -21,6 +21,9 @@ import javax.swing.JTextField;
 
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
+import presentationLayer.swingExtensions.CustomBoxPanel;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 import domainLayer.Pair;
 
 public class AddCreateView extends JPanel{
@@ -36,14 +39,10 @@ public class AddCreateView extends JPanel{
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(overallLayout);
 		
-		JPanel inputPanel = new JPanel();
-		inputPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
-		inputPanel.setBackground(Color.black);
+		JPanel inputPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
 		this.add(inputPanel);
 	    
-		JPanel namePanel = new JPanel();
-		namePanel.setBackground(Color.black);
+		JPanel namePanel = new CustomPanel(Color.black, null);
 		inputPanel.add(namePanel);
 		
 		JLabel nameLabel = new JLabel("Item Name: ");
@@ -61,8 +60,7 @@ public class AddCreateView extends JPanel{
 	    this.nameField = nameField;
 	    namePanel.add(nameField);
 	    
-	    amountPanel = new JPanel();
-	    amountPanel.setBackground(Color.black);
+	    amountPanel = new CustomPanel(Color.black, null);
 	    inputPanel.add(amountPanel);
 	    
 	    String[] values = {"Amount Type", StockType.CONTINUOUS.toString(), StockType.DISCRETE.toString()};
@@ -75,13 +73,9 @@ public class AddCreateView extends JPanel{
 	    amountField = new StockInputField();
 	    amountEntry = null;
 	    
-	    JPanel buttonPanel = new JPanel();
-		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		buttonPanel.setBackground(Color.black);
+	    JPanel buttonPanel = new CustomPanel(Color.black, 10);
 		
-	    JButton addButton = new JButton("Add");
-	    addButton.addActionListener(listener);
-		addButton.setPreferredSize(new Dimension(100, 50));
+	    JButton addButton = new CustomButton("Add Item", listener, 20);
 		buttonPanel.add(addButton);
 		
 		this.add(buttonPanel);
