@@ -23,7 +23,7 @@ public class App {
 		
 		app.db = DBProxy.getInstance();
 		app.inv = new Fridge(app.db.loadItems());
-		//app.favorites = new FavoritesList(app.db.loadFavoritedItems());
+		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
 		new mainWindow();
 	}
 	

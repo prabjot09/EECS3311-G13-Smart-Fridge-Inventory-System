@@ -61,6 +61,7 @@ public class RealDB implements DB {
 
 			createState.executeUpdate(select);
 			createState.executeUpdate(createTable);
+			createState.executeUpdate(createFavTable);
 			createState.executeUpdate(createItemTable);
 			
 			for (int x = 0; x < itemPop.size(); x++) {
@@ -319,7 +320,7 @@ public class RealDB implements DB {
 		for (int x = 0; x < favorites.getItems().size(); x++) {
 			StoredItem itemToAdd = favorites.getItems().get(x);
 
-			addItem(itemToAdd);
+			addFavItem(itemToAdd);
 
 		}
 		
