@@ -1,0 +1,94 @@
+package persistenceLayer;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+
+import domainLayer.FridgeItem;
+import domainLayer.StoredItem;
+import domainLayer.FoodItem.CreationType;
+import domainLayer.FoodItem.StockType;
+import domainLayer.Fridge;
+
+public class FridgeRealDB {
+	
+	String createTable = "Create Table if not exists fridgeitem" + "(name VARCHAR(255)," + "StockType INT,"
+			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
+	String updateDrop = "drop table fridgeitem;";
+	String url = "jdbc:mysql://localhost:3306/SIFSDB";
+	String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
+	
+	public FridgeRealDB() {
+		
+	}
+	
+	public void addItem(FridgeItem Fridge, String user, String password) {
+		String name = Fridge.getFoodItem().getName();
+		int fridgeEnum;
+		int creationEnum;
+		int amount = Fridge.getStockableItem().getStock();
+		LocalDate date = Fridge.getExpDate();
+		if (Fridge.getFoodItem().getStockType() == StockType.values()[0]) {
+			fridgeEnum = 0;
+		} else {
+			fridgeEnum = 1;
+		}
+
+		if (Fridge.getFoodItem().getCreator() == CreationType.values()[0]) {
+			creationEnum = 0;
+		} else {
+			creationEnum = 1;
+		}
+
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			
+
+			PreparedStatement statement = con.prepareStatement(queryInsert);
+
+			statement.setInt(2, fridgeEnum);
+			statement.setString(1, name);
+			statement.setInt(3, amount);
+			statement.setInt(4, creationEnum);
+			statement.setInt(6, amount);
+			if (date == null) {
+				statement.setDate(5, null);
+			}
+			else {
+			statement.setDate(5, Date.valueOf(date));
+			}
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void updateFridge(Fridge fridge, String user, String password) {
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			Statement createState = con.createStatement();
+	
+	
+
+			createState.executeUpdate(updateDrop);
+			createState.executeUpdate(createTable);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		for (int x = 0; x < fridge.getItems().size(); x++) {
+			FridgeItem itemToAdd = (FridgeItem) fridge.getItems().get(x);
+
+			addItem(itemToAdd, user, password);
+
+		}
+	}
+}
