@@ -16,6 +16,7 @@ import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomBoxPanel;
 
 public class ExpressiveListView extends JPanel implements ListView{
 	
@@ -23,9 +24,11 @@ public class ExpressiveListView extends JPanel implements ListView{
 	private JPanel listView;
 	private JScrollPane scroll;
 	
+	private boolean fridgeFlag;
+	
 	public static void main(String[] args) {
 		JFrame jframe = new JFrame("Hi");
-		jframe.add(new ExpressiveListView(new Fridge(DBProxy.getInstance().loadItems())));
+		jframe.add(new ExpressiveListView(new Fridge(DBProxy.getInstance().loadItems()), true));
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jframe.getContentPane().setBackground(Color.black);
 	    jframe.setPreferredSize(new Dimension(600, 600));
@@ -34,7 +37,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	    jframe.setVisible(true);
 	}
 	
-	public ExpressiveListView(ItemManager inv) {
+	public ExpressiveListView(ItemManager inv, boolean fridgeFlag) {
 		this.inv = inv;
 		
 		this.setLayout(new BorderLayout());
@@ -43,6 +46,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		scroll = new JScrollPane();
 		this.add(scroll);
 		
+		this.fridgeFlag = fridgeFlag;
 		this.generateList(inv.getItems());
 	}
 	
@@ -50,13 +54,11 @@ public class ExpressiveListView extends JPanel implements ListView{
 		if (listView != null) 
 			this.remove(scroll);
 			
-		listView = new JPanel();
+		listView = new CustomBoxPanel(new Color(20, 20, 20), BoxLayout.Y_AXIS, -1);
 		listView.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
-		listView.setBackground(new Color(20, 20, 20));
-		listView.setLayout(new BoxLayout(listView, BoxLayout.Y_AXIS));
 		
 		for (StoredItem item: items) {
-			ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this);
+			ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this, fridgeFlag);
 			listView.add(itemView);
 		}
 		
@@ -68,7 +70,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	}
 	
 	public void addItem(StoredItem item) {
-		ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this);
+		ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this, fridgeFlag);
 		listView.add(itemView);
 		
 		listView.revalidate();
@@ -85,6 +87,10 @@ public class ExpressiveListView extends JPanel implements ListView{
 	public void updateList(StoredItem itemObj) {
 		inv.updateItem(itemObj);		
 	}
-	
+
+	public StoredItem retrieveObj(StoredItem itemObj) {
+		return inv.getItems().get(inv.itemIndex(itemObj));
+		
+	}
 	
 }

@@ -3,6 +3,8 @@ package domainLayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import domainLayer.FoodItem.StockType;
+
 public class FavoritesList extends ItemManager{
 	
 	public FavoritesList(List<StoredItem> items) {
@@ -25,4 +27,13 @@ public class FavoritesList extends ItemManager{
 		return overlap;
 	}
 
+	@Override
+	public void updateItem(StoredItem item) {		
+		StoredItem updated = item.copy();
+		StockableItem stock = updated.getStockableItem();
+		StockType type = updated.getFoodItem().getStockType();
+		
+		updated.setStockableItem(StockableItemFactory.createStockableItem(type, stock.getStock()));
+		super.updateItem(updated);
+	}
 }

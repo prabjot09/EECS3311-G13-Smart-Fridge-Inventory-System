@@ -21,6 +21,8 @@ import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 
 public class CompressedListView extends JPanel implements ActionListener, ListView{
 	
@@ -55,28 +57,19 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    this.setPreferredSize(new Dimension(820, 400));
 	    this.add(scroll);
 	    
-	    buttonPanel = new JPanel();
-	    buttonPanel.setBackground(Color.black);
+	    buttonPanel = new CustomPanel(Color.black, null);
 	    this.add(buttonPanel);
 	    
-	    incButton = new JButton("Increment");
-	    incButton.addActionListener(this);
-	    incButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+	    incButton = new CustomButton("Increment", this, 15);
 	    buttonPanel.add(incButton);
 	    
-	    decButton = new JButton("Decrement");
-	    decButton.addActionListener(this);
-	    decButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+	    decButton = new CustomButton("Decrement", this, 15);
 	    buttonPanel.add(decButton);
 	    
-	    remButton = new JButton("Remove");
-	    remButton.addActionListener(this);
-	    remButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+	    remButton = new CustomButton("Remove", this, 15);
 	    buttonPanel.add(remButton);
 	    
-	    groceryListButton = new JButton("Add to Grocery List");
-	    groceryListButton.addActionListener(this);
-	    groceryListButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+	    groceryListButton = new CustomButton("Add to Grocery List", this, 15);
 	    buttonPanel.add(groceryListButton);
 	    
 	    this.buttonPanelFlag = true;
@@ -107,8 +100,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		
 		if (e.getSource() == incButton) {	
 			int itemIndex = list.getSelectedIndex();
-			this.displayItems.get(itemIndex).executeIncrement();
-			this.inv.updateItem(this.displayItems.get(itemIndex));
+			StoredItem item = this.displayItems.get(itemIndex);
+			item.executeIncrement();
+			this.inv.updateItem(item);
+			
+			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
@@ -119,8 +115,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 				return;
 			}
 			
-			this.displayItems.get(itemIndex).executeDecrement();
-			this.inv.updateItem(this.displayItems.get(itemIndex));
+			StoredItem item = this.displayItems.get(itemIndex);
+			item.executeDecrement();
+			this.inv.updateItem(item);
+			
+			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
