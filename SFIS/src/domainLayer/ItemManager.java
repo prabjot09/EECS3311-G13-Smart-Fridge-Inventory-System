@@ -23,6 +23,11 @@ public class ItemManager implements Inventory {
 	    }
 	    return items;
 	}
+	
+	public List<StoredItem> getItems(ISortingStrategy sortingStrategy){
+		List<StoredItem> sortedItems = sortingStrategy.sortItems(new ArrayList<>(this.items));
+		return sortedItems;
+	}
 
 	public void setItems(List<StoredItem> items) {
 		this.items = new ArrayList<StoredItem>();
