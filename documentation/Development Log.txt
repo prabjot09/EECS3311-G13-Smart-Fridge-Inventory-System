@@ -31,7 +31,7 @@ Meeting 4: February 6th 2023 - 1h 15min
 * Division of code amongst team members by assigning implementation of different layers (to rely on abstraction of each others' code so we don't need to know how each member implemented their code).
 * Assigning developer tasks for remaining implementation.
 
-Iteration 1 Developer Tasks
+ITERATION 1 DEVELOPER TASKS
 
 Abdirahman Farah
 *Tasks chosen: Implementation of stub database, main GUI window, some backend search add and remove implementations
@@ -87,3 +87,11 @@ Meeting 6: March 3, 2023 - 1h
 * Delegated tasks regarding feedback from client teams
 * Delegated and clarified about iteration 2 features as well as the plan going forward
 * Set soft deadlines for members 
+
+ITERATION 2 DEVELOPER TASKS
+
+Prabjot Dhaliwal
+* Task Chosen: Expressive View Layout GUI, Favorites List Internal Implementation, Favorites List GUI, DB Login GUI, Input Field Clear QoL Change
+* Related User Stories: Set Favorite Fridge Items, View Favorite Fridge Items, (Iteration 1 GUI Feature) Expressive View Layout
+* Expected Dev Times: Expressive View Layout GUI (5 days), Favorites List Internal Implementation (3 days), Favorites List GUI (3 days), DB Login GUI (1 day), Input Field Clear QoL Change (1 day)
+* Actual Dev Times: Expressive View Layout GUI (6 days), Favorites List Internal Implementation (2 days), Favorites List GUI (4 days), DB Login GUI (0.5 days), Input Field Clear QoL Change (0.5 days)

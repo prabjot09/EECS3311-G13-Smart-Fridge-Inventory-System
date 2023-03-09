@@ -69,8 +69,10 @@ public class AddSelectController implements ActionListener{
 	
 	
 	public void addHandler() {
-		this.validateInput();
-		
+		if (!this.validateInput()) {
+			return;
+		}
+
 		String selectedItem = this.addSelectView.getItemChosen();		
 		String amountString = this.addSelectView.getAmountField();
 		int amount = Integer.parseInt(amountString);

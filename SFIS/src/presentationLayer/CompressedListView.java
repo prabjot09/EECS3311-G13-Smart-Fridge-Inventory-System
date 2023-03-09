@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -14,11 +15,14 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 
 public class CompressedListView extends JPanel implements ActionListener, ListView{
 	
@@ -28,8 +32,12 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private JButton incButton;
 	private JButton decButton;
 	private JButton remButton;
+	private JButton groceryListButton;
 	private List<StoredItem> displayItems;
 	private DefaultListModel<String> stringItemList;
+	
+	private JPanel buttonPanel;
+	private boolean buttonPanelFlag;
 
 	public CompressedListView(ItemManager inv) {
 		this.inv = inv;
@@ -40,34 +48,31 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    list = new JList<String>();
 	    list.setBackground(Color.gray);
 	    list.setFont(new Font("Arial", Font.BOLD, 24));
-	    list.setPreferredSize(new Dimension(800, 220));
-	    list.setBounds(0,300,1000,500);
+	    //list.setPreferredSize(new Dimension(800, 220));
+	    //list.setBounds(0,300,1000,500);
 	    
 	    scroll = new JScrollPane(list);
-	    scroll.setPreferredSize(new Dimension(820, 220));
+	    //scroll.setPreferredSize(new Dimension(820, 220));
 	    this.setBackground(Color.black);
 	    this.setPreferredSize(new Dimension(820, 400));
 	    this.add(scroll);
 	    
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.setBackground(Color.black);
+	    buttonPanel = new CustomPanel(Color.black, null);
 	    this.add(buttonPanel);
 	    
-	    incButton = new JButton("Increment");
-	    incButton.addActionListener(this);
-	    incButton.setPreferredSize(new Dimension(200,50));
+	    incButton = new CustomButton("Increment", this, 15);
 	    buttonPanel.add(incButton);
 	    
-	    decButton = new JButton("Decrement");
-	    decButton.addActionListener(this);
-	    decButton.setPreferredSize(new Dimension(200,50));
+	    decButton = new CustomButton("Decrement", this, 15);
 	    buttonPanel.add(decButton);
 	    
-	    remButton = new JButton("Remove");
-	    remButton.addActionListener(this);
-	    remButton.setPreferredSize(new Dimension(200, 50));
+	    remButton = new CustomButton("Remove", this, 15);
 	    buttonPanel.add(remButton);
 	    
+	    groceryListButton = new CustomButton("Add to Grocery List", this, 15);
+	    buttonPanel.add(groceryListButton);
+	    
+	    this.buttonPanelFlag = true;
 	    this.generateList(displayItems);
 	}
 	
@@ -80,7 +85,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		 
 		stringItemList = updatedFridgeList;
 		list.setModel(updatedFridgeList);
-		list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
+		//list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 		list.revalidate();
 		 
 		revalidate();
@@ -95,8 +100,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		
 		if (e.getSource() == incButton) {	
 			int itemIndex = list.getSelectedIndex();
-			this.displayItems.get(itemIndex).executeIncrement();
-			this.inv.updateItem(this.displayItems.get(itemIndex));
+			StoredItem item = this.displayItems.get(itemIndex);
+			item.executeIncrement();
+			this.inv.updateItem(item);
+			
+			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
@@ -107,8 +115,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 				return;
 			}
 			
-			this.displayItems.get(itemIndex).executeDecrement();
-			this.inv.updateItem(this.displayItems.get(itemIndex));
+			StoredItem item = this.displayItems.get(itemIndex);
+			item.executeDecrement();
+			this.inv.updateItem(item);
+			
+			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		}
@@ -118,14 +129,45 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.displayItems.remove(itemIndex);
 			this.stringItemList.remove(itemIndex);
 		}
+		else if (e.getSource() == groceryListButton) {
+			// Add grocery list insertion code
+			
+		}
 	}
 	
 	public void addItem(StoredItem item) {
 		displayItems.add(item);
 	    stringItemList.addElement(item.getDescription());
 	    list.setModel(stringItemList);
-	    list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
+	    //list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 	    list.revalidate();
 	}
 	
+	public void setButtonPanelFlag(boolean flag) {
+		if (flag == buttonPanelFlag)
+			return;
+		
+		buttonPanelFlag = flag;
+		if (buttonPanelFlag) {
+			this.add(buttonPanel);
+		}
+		else {
+			this.remove(buttonPanel);
+		}
+		
+		this.revalidate();
+	}
+	
+	public StoredItem getSelectedItem() {
+		int index = list.getSelectedIndex();
+		
+		if (index == -1) {
+			return null;
+		}
+		return displayItems.get(index);
+	}
+	
+	public void setListListener(ListSelectionListener listener) {
+		list.addListSelectionListener(listener);
+	}
 }

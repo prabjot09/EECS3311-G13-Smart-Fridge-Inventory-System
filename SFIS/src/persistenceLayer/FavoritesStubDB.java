@@ -14,6 +14,8 @@ public class FavoritesStubDB {
 	private List<StoredItem> favorites;
 	
 	public FavoritesStubDB() {
+		favorites = new ArrayList<>();
+		
 		FoodItem food1 = new FoodItem();
 		food1.setName("Milk - 3 Bags");
 		food1.setStockType(StockType.values()[0]);
@@ -31,7 +33,7 @@ public class FavoritesStubDB {
 		favorites.add(item2);
 		
 		FoodItem food3 = new FoodItem();
-		food3.setName("Eggs - Carton");
+		food3.setName("Eggs - Single");
 		food3.setStockType(StockType.values()[1]);
 		FridgeItem item3 = new FridgeItem();
 		item3.setStockableItem(StockableItemFactory.createStockableItem(food3.getStockType(), 15));
@@ -39,10 +41,10 @@ public class FavoritesStubDB {
 		favorites.add(item3);
 		
 		FoodItem food4 = new FoodItem();
-		food4.setName("PeanutButter");
+		food4.setName("Bananas");
 		food4.setStockType(StockType.values()[1]);
 		FridgeItem item4 = new FridgeItem();
-		item4.setStockableItem(StockableItemFactory.createStockableItem(food4.getStockType(), 15));
+		item4.setStockableItem(StockableItemFactory.createStockableItem(food4.getStockType(), 7));
 		item4.setFoodItem(food4);
 		favorites.add(item4);
 		

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,6 +25,9 @@ import domainLayer.FoodItem;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomBoxPanel;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
 
 public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private JLabel name;
@@ -31,9 +35,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private JProgressBar quantityVisual;
 	private StoredItem itemObj;
 	
-	private JButton incButton;
-	private JButton decButton;
-	private JButton delButton;
+	private JButton incButton, decButton, delButton, groceryListButton;
 	
 	private ExpressiveListView view;
 	
@@ -48,7 +50,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			item.setFoodItem(fItem);
 			item.setStockableItem(new DiscreteStockableItem(3));
 			item.getStockableItem().setMax(4);
-			ExpressiveItemComponent a = new ExpressiveItemComponent(item, null);
+			ExpressiveItemComponent a = new ExpressiveItemComponent(item, null, true);
 			
 			lay.add(a);			
 		}
@@ -65,24 +67,25 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    
 	}
 	
-	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveListView view) {	
+	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveListView view, boolean fridgeFlag) {	
 		this.itemObj = itemObj;
 		this.view = view;
-		
 		
 		this.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(50, 50, 50)));
 	    this.setBackground(new Color(20, 20, 20));
 	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	    
-	    JPanel upperPanel = new JPanel();
-	    upperPanel.setLayout(new BorderLayout());
-	    upperPanel.setBackground(this.getBackground());
-	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+	    itemInfoBuilder(fridgeFlag);
+	    itemQuantityControlBuilder();	    
+	}
+	
+	
+	public void itemInfoBuilder(boolean fridgeFlag) {
+		JPanel upperPanel = new CustomPanel(this.getBackground(), new BorderLayout());
+	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 0));
 	    this.add(upperPanel);
 	    
-	    JPanel infoPanel = new JPanel();
-	    infoPanel.setBackground(this.getBackground());
-	    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+	    JPanel infoPanel = new CustomBoxPanel(this.getBackground(), BoxLayout.Y_AXIS);
 	    upperPanel.add(infoPanel, BorderLayout.LINE_START);
 	    
 	    name = new JLabel("Name: " + itemObj.getFoodItem().getName());
@@ -95,15 +98,26 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    quantity.setFont(new Font("Arial", Font.BOLD, 18));
 	    infoPanel.add(quantity);
 	    
-	    delButton = new JButton("Remove");
-	    delButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	    delButton.addActionListener(this);
-	    upperPanel.add(delButton, BorderLayout.LINE_END);
+	    JPanel rightPanel = new CustomPanel(this.getBackground(), BoxLayout.X_AXIS);
+	    upperPanel.add(rightPanel, BorderLayout.LINE_END);
 	    
-	    JPanel quantityPanel = new JPanel();
-	    quantityPanel.setBackground(this.getBackground());
+	    delButton = new CustomButton("Remove", this, 10);
+	    rightPanel.add(delButton);
+	    
+	    if (fridgeFlag) {
+	    	rightPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+	    	
+	    	groceryListButton = new CustomButton("Add to Grocery List", this, 10);
+		    rightPanel.add(groceryListButton);	
+	    }
+	    
+	}
+	
+	
+	
+	public void itemQuantityControlBuilder() {
+		JPanel quantityPanel = new CustomPanel(this.getBackground(), new GridBagLayout());
 	    quantityPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-	    quantityPanel.setLayout(new GridBagLayout());
 	    GridBagConstraints c = new GridBagConstraints();
 	    this.add(quantityPanel);
 	    	    
@@ -120,16 +134,14 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    c.weightx = 0.06;
 	    c.weighty = 1.0;
 	    c.insets = new Insets(0, 12, 0, 0);
-	    incButton = new JButton("+");
-	    incButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	    incButton.addActionListener(this);
+	    incButton = new CustomButton("+", this, 5);
 	    quantityPanel.add(incButton, c);
 	    
-	    decButton = new JButton("-");
-	    decButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	    decButton.addActionListener(this);
-	    quantityPanel.add(decButton, c);	    
+	    decButton = new CustomButton("-", this, 5);
+	    quantityPanel.add(decButton, c);
 	}
+	
+	
 	
 	public void updateLabel() {
 		name.setText("Name: " + itemObj.getFoodItem().getName());
@@ -149,20 +161,31 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		if (clicked == incButton) {
 			this.itemObj.executeIncrement();
 			view.updateList(itemObj);
+			
+			this.updateItem();
 			this.updateLabel();
 		}
 		else if (clicked == decButton) {
 			this.itemObj.executeDecrement();
 			view.updateList(itemObj);
+			
+			this.updateItem();
 			this.updateLabel();
 		}
 		else if (clicked == delButton) {
 			view.removeItem(this);
 		}
-		
+		else if (clicked == groceryListButton) {
+			// Add grocery list insertion code
+			
+		}
 	}
 	
 	public StoredItem getItemObj() {
 		return this.itemObj;
+	}
+	
+	public void updateItem() {
+		this.itemObj = view.retrieveObj(this.itemObj);
 	}
 }

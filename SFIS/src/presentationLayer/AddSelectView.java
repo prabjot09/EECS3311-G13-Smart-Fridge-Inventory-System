@@ -17,6 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import domainLayer.DBProxy;
+import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.PromptText;
 
 
 public class AddSelectView extends JPanel {
@@ -28,9 +31,7 @@ public class AddSelectView extends JPanel {
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(overallLayout);
 		
-		JPanel searchPanel = new JPanel();
-		searchPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    searchPanel.setBackground(Color.black);
+		JPanel searchPanel = new CustomPanel(Color.black, 10);
 	    
 		JTextField search = new PromptText("Find Item in Database");
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -41,13 +42,10 @@ public class AddSelectView extends JPanel {
 	    this.searchField = search;
 	    searchPanel.add(search);
 	    
-	    JButton searchButton = new JButton("Search");
-	    searchButton.addActionListener(listener);
-	    searchButton.setPreferredSize(new Dimension(150,50));
+	    JButton searchButton = new CustomButton("Search", listener, 50, 150);
 	    searchPanel.add(searchButton);
 	    
 	    this.add(searchPanel);
-		
 	    
 		JList<String> itemList = new JList<String>();
 		itemList.setBackground(Color.gray);
@@ -61,9 +59,7 @@ public class AddSelectView extends JPanel {
 		listPanel.setBackground(Color.black);
 		this.add(listPanel);
 		
-		JPanel addPanel = new JPanel();
-		addPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		addPanel.setBackground(Color.black);
+		JPanel addPanel = new CustomPanel(Color.black, 10);
 		
 		JTextField amountField = new PromptText("Quantity");
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -73,9 +69,7 @@ public class AddSelectView extends JPanel {
 	    this.amountField = amountField;
 	    addPanel.add(amountField);
 		
-		JButton addButton = new JButton("Add");
-		addButton.addActionListener(listener);
-		addButton.setPreferredSize(new Dimension(100, 50));
+		JButton addButton = new CustomButton("Add Item", listener, 50, 100);
 		addPanel.add(addButton);
 		
 		this.add(addPanel);
