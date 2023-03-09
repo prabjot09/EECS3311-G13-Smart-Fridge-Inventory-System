@@ -36,7 +36,7 @@ public class AddSelectController implements ActionListener{
 		if (clicked.getText() == "Search") {
 			this.searchHandler();
 		}
-		else if (clicked.getText() == "Add") {
+		else if (clicked.getText() == "Add Item") {
 			this.addHandler();
 		}
 	}
