@@ -19,7 +19,7 @@ public class App {
 	
 	public static void main(String[] args) {
 		app = new App();
-		DBProxy.getInstance().setDB(new RealDB());
+		DBProxy.getInstance().setDB(new StubDB());
 		
 		app.db = DBProxy.getInstance();
 		app.inv = new Fridge(app.db.loadItems());

@@ -114,6 +114,16 @@ public class mainWindow implements ActionListener{
 	    searchPanel.add(viewPanel);
 	    // END: Search and Item List Panel
 	    
+	    // Grocery List Panel
+	    JPanel rightPanel = new JPanel();
+	    rightPanel.setBackground(Color.black);
+	    rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    rightPanel.setPreferredSize(new Dimension(400, 400));
+	    
+	    
+	    rightPanel.add(new GroceryListView());
+	    jframe.add(rightPanel, BorderLayout.EAST);
+	    
 	    // Update DB when closing the window
 	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jframe.addWindowListener(new WindowAdapter() {
@@ -125,7 +135,7 @@ public class mainWindow implements ActionListener{
 	    
 	    // set the jframe size and location, and make it visible
 	    jframe.getContentPane().setBackground(Color.black);
-	    jframe.setPreferredSize(new Dimension(1000, 650));
+	    jframe.setPreferredSize(new Dimension(1260, 650));
 	    jframe.pack();
 	    jframe.setLocationRelativeTo(null);
 	    jframe.setVisible(true);
