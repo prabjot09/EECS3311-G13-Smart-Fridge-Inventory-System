@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.swingExtensions;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
