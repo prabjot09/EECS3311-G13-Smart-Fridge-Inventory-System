@@ -1,6 +1,10 @@
 package domainLayer;
 
+import java.time.LocalDate;
+
 public class FridgeItem extends StoredItem{
+	
+	private LocalDate expDate;
 	
 	public FridgeItem() {
 		
@@ -26,6 +30,14 @@ public class FridgeItem extends StoredItem{
 	@Override
 	public FridgeItem copy() {
 		return new FridgeItem(this);
+	}
+	
+	public void setExpDate(LocalDate expDate) {
+		this.expDate = expDate;
+		
+	}
+	public LocalDate getExpDate() {
+			return this.expDate;
 	}
 
 }

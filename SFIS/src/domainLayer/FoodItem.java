@@ -1,5 +1,5 @@
 package domainLayer;
-import java.time.LocalDate;
+
 
 public class FoodItem {
 	public enum StockType {
@@ -29,7 +29,6 @@ public class FoodItem {
 	private String name;
 	private StockType stockType;
 	private CreationType creator;
-	private LocalDate expDate;
 	
 	public FoodItem() {
 		
@@ -40,16 +39,6 @@ public class FoodItem {
 		this.stockType = stockType;
 	}
 	
-	public FoodItem(String name, StockType stockType, LocalDate expDate) {
-		this.name = name;
-		this.stockType = stockType;
-		this.expDate = expDate;
-	}
-	
-	public FoodItem(String name, StockType stockType, CreationType creator, LocalDate expDate) {
-		this(name, stockType, expDate);
-		this.creator = creator;
-	}
 	
 	public FoodItem(String name, StockType stockType, CreationType creator) {
 		this(name, stockType);
@@ -80,13 +69,6 @@ public class FoodItem {
 		this.creator = creator;
 	}
 	
-	public void setExpDate(LocalDate expDate) {
-		this.expDate = expDate;
-		
-	}
-	public LocalDate getExpDate() {
-			return this.expDate;
-	}
 	
 	public boolean matches(FoodItem item) {
 		return this.getName().toLowerCase().contains(item.getName().toLowerCase());
