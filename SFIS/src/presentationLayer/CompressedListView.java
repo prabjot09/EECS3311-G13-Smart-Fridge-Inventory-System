@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -29,6 +30,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private JButton incButton;
 	private JButton decButton;
 	private JButton remButton;
+	private JButton groceryListButton;
 	private List<StoredItem> displayItems;
 	private DefaultListModel<String> stringItemList;
 	
@@ -59,18 +61,23 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    
 	    incButton = new JButton("Increment");
 	    incButton.addActionListener(this);
-	    incButton.setPreferredSize(new Dimension(200,50));
+	    incButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 	    buttonPanel.add(incButton);
 	    
 	    decButton = new JButton("Decrement");
 	    decButton.addActionListener(this);
-	    decButton.setPreferredSize(new Dimension(200,50));
+	    decButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 	    buttonPanel.add(decButton);
 	    
 	    remButton = new JButton("Remove");
 	    remButton.addActionListener(this);
-	    remButton.setPreferredSize(new Dimension(200, 50));
+	    remButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 	    buttonPanel.add(remButton);
+	    
+	    groceryListButton = new JButton("Add to Grocery List");
+	    groceryListButton.addActionListener(this);
+	    groceryListButton.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+	    buttonPanel.add(groceryListButton);
 	    
 	    this.buttonPanelFlag = true;
 	    this.generateList(displayItems);
@@ -122,6 +129,10 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.inv.remove(this.displayItems.get(itemIndex));
 			this.displayItems.remove(itemIndex);
 			this.stringItemList.remove(itemIndex);
+		}
+		else if (e.getSource() == groceryListButton) {
+			// Add grocery list insertion code
+			
 		}
 	}
 	

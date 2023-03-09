@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,9 +32,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private JProgressBar quantityVisual;
 	private StoredItem itemObj;
 	
-	private JButton incButton;
-	private JButton decButton;
-	private JButton delButton;
+	private JButton incButton, decButton, delButton, groceryListButton;
 	
 	private ExpressiveListView view;
 	
@@ -95,10 +94,22 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    quantity.setFont(new Font("Arial", Font.BOLD, 18));
 	    infoPanel.add(quantity);
 	    
+	    JPanel rightPanel = new JPanel();
+	    rightPanel.setBackground(this.getBackground());
+	    rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.X_AXIS));
+	    upperPanel.add(rightPanel, BorderLayout.LINE_END);
+	    
 	    delButton = new JButton("Remove");
 	    delButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	    delButton.addActionListener(this);
-	    upperPanel.add(delButton, BorderLayout.LINE_END);
+	    rightPanel.add(delButton);
+	    
+	    rightPanel.add(Box.createRigidArea(new Dimension(15, 15)));
+	    
+	    groceryListButton = new JButton("Add to Grocery List");
+	    groceryListButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    groceryListButton.addActionListener(this);
+	    rightPanel.add(groceryListButton);
 	    
 	    JPanel quantityPanel = new JPanel();
 	    quantityPanel.setBackground(this.getBackground());
@@ -159,7 +170,10 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		else if (clicked == delButton) {
 			view.removeItem(this);
 		}
-		
+		else if (clicked == groceryListButton) {
+			// Add grocery list insertion code
+			
+		}
 	}
 	
 	public StoredItem getItemObj() {
