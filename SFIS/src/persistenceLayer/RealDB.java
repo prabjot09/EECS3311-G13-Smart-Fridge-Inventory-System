@@ -33,7 +33,7 @@ public class RealDB implements DB {
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String user = "root";
-	String password = "G-13-Excellent";
+	String password = "Blaziken@123";
 	String createDatabase = "create database if not exists SIFSDB";
 	String createTable = "Create Table if not exists fridgeitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "PRIMARY KEY ( name))";
@@ -50,9 +50,11 @@ public class RealDB implements DB {
 	String updateDrop = "drop table fridgeitem;";
 	String updateFavDrop = "drop table favitem;";
 
-	public RealDB() {
+	public RealDB(String user, String pass) throws SQLException {
 
-		try {
+			this.user = user;
+			this.password = pass;
+			
 			Connection con = DriverManager.getConnection(firsttimeurl, user, password);
 			Statement createState = con.createStatement();
 			PreparedStatement statement = con.prepareStatement(queryInsertItem);
@@ -70,9 +72,6 @@ public class RealDB implements DB {
 				statement.setString(2,itemName);
 				statement.executeUpdate();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
 		
 
