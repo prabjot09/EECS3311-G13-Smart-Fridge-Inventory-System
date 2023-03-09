@@ -1,5 +1,6 @@
 package presentationLayer;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class ListViewManager{
 	public void addItemToLists(StoredItem item) {
 		for (ListView view: views) {
 			view.addItem(item);
+		}
+	}
+	
+	public void setSizes(Dimension dimension) {
+		for (ListView view: views) {
+			((JPanel) view).setPreferredSize(dimension);
 		}
 	}
 }

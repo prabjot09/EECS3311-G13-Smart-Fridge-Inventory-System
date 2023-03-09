@@ -48,11 +48,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	    list = new JList<String>();
 	    list.setBackground(Color.gray);
 	    list.setFont(new Font("Arial", Font.BOLD, 24));
-	    list.setPreferredSize(new Dimension(800, 220));
-	    list.setBounds(0,300,1000,500);
+	    //list.setPreferredSize(new Dimension(800, 220));
+	    //list.setBounds(0,300,1000,500);
 	    
 	    scroll = new JScrollPane(list);
-	    scroll.setPreferredSize(new Dimension(820, 220));
+	    //scroll.setPreferredSize(new Dimension(820, 220));
 	    this.setBackground(Color.black);
 	    this.setPreferredSize(new Dimension(820, 400));
 	    this.add(scroll);
@@ -85,7 +85,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		 
 		stringItemList = updatedFridgeList;
 		list.setModel(updatedFridgeList);
-		list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
+		//list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 		list.revalidate();
 		 
 		revalidate();
@@ -139,7 +139,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		displayItems.add(item);
 	    stringItemList.addElement(item.getDescription());
 	    list.setModel(stringItemList);
-	    list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
+	    //list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 	    list.revalidate();
 	}
 	

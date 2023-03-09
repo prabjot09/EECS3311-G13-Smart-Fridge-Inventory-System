@@ -67,7 +67,7 @@ public class mainWindow implements ActionListener{
 	    
 	    // START: Search and Item List Panel
 	    JPanel searchPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS);
-	    searchPanel.setBounds(0,100,1000,500);
+	    //searchPanel.setBounds(0,100,1000,500);
 	    jframe.add(searchPanel);
 	    
 	    // START: Item Search Panel
@@ -107,8 +107,8 @@ public class mainWindow implements ActionListener{
 	    views.add(new CompressedListView(inv));
 	    views.add(new ExpressiveListView(inv, true));
 	    viewManager = new ListViewManager(views);
+	    viewManager.setSizes(new Dimension(650, 400));
 	    viewPanel = new CustomPanel(Color.black, null);
-	    viewPanel.setPreferredSize(new Dimension(820, 400));
 	    viewPanel.add((JPanel) viewManager.getCurrentView());
 	    
 	    searchPanel.add(viewPanel);
@@ -135,7 +135,7 @@ public class mainWindow implements ActionListener{
 	    
 	    // set the jframe size and location, and make it visible
 	    jframe.getContentPane().setBackground(Color.black);
-	    jframe.setPreferredSize(new Dimension(1260, 650));
+	    jframe.setPreferredSize(new Dimension(1100, 650));
 	    jframe.pack();
 	    jframe.setLocationRelativeTo(null);
 	    jframe.setVisible(true);
