@@ -11,33 +11,32 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import domainLayer.FavoritesList;
 import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
-import domainLayer.Fridge;
 
-public class FridgeRealDB {
-
-	String createTable = "Create Table if not exists fridgeitem" + "(name VARCHAR(255)," + "StockType INT,"
-			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
-	String updateDrop = "drop table fridgeitem;";
-	String url = "jdbc:mysql://localhost:3306/SIFSDB";
-	String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
-	String select = "use SIFSDB";
-	String selectFrom = "select * from fridgeitem;";
+public class FavoritesRealDB {
 	DBHelpers helper = new DBHelpers();
+	String url = "jdbc:mysql://localhost:3306/SIFSDB";
+	String select = "use SIFSDB";
+	String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
+	String selectFromFav = "select * from favitem;";
+	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
+			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
+	String updateFavDrop = "drop table favitem;";
 
-	public FridgeRealDB() {
+	public FavoritesRealDB() {
 
 	}
 
-	public void addItem(FridgeItem Fridge, String user, String password) {
+	public void addFavItem(StoredItem Fridge, String user, String password) {
 		String name = Fridge.getFoodItem().getName();
 		int fridgeEnum;
 		int creationEnum;
 		int amount = Fridge.getStockableItem().getStock();
-		LocalDate date = Fridge.getExpDate();
+		LocalDate date = ((FridgeItem) Fridge).getExpDate();
 		if (Fridge.getFoodItem().getStockType() == StockType.values()[0]) {
 			fridgeEnum = 0;
 		} else {
@@ -53,18 +52,18 @@ public class FridgeRealDB {
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 
-			PreparedStatement statement = con.prepareStatement(queryInsert);
+			PreparedStatement statement = con.prepareStatement(queryInsertFav);
 
-			statement.setInt(2, fridgeEnum);
 			statement.setString(1, name);
+			statement.setInt(2, fridgeEnum);
 			statement.setInt(3, amount);
 			statement.setInt(4, creationEnum);
-			statement.setInt(6, amount);
 			if (date == null) {
 				statement.setDate(5, null);
 			} else {
 				statement.setDate(5, Date.valueOf(date));
 			}
+			statement.setInt(6, amount);
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -73,34 +72,14 @@ public class FridgeRealDB {
 
 	}
 
-	public void updateFridge(Fridge fridge, String user, String password) {
-		try {
-			Connection con = DriverManager.getConnection(url, user, password);
-			Statement createState = con.createStatement();
-
-			createState.executeUpdate(updateDrop);
-			createState.executeUpdate(createTable);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		for (int x = 0; x < fridge.getItems().size(); x++) {
-			FridgeItem itemToAdd = (FridgeItem) fridge.getItems().get(x);
-
-			addItem(itemToAdd, user, password);
-
-		}
-	}
-
-	public List<StoredItem> loadItems(String user, String password) {
-		List<StoredItem> fridge = new ArrayList<StoredItem>();
+	public List<StoredItem> loadFavoritedItems(String user, String password) {
+		List<StoredItem> fav = new ArrayList<StoredItem>();
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 			Statement createState = con.createStatement();
 			createState.execute(select);
 
-			ResultSet rs = createState.executeQuery(selectFrom);
+			ResultSet rs = createState.executeQuery(selectFromFav);
 
 			while (rs.next()) {
 
@@ -111,13 +90,13 @@ public class FridgeRealDB {
 				LocalDate Date;
 				if (rs.getDate(5) == null) {
 					Date = null;
-				} 
-				else {
+				} else {
 					Date = rs.getDate(5).toLocalDate();
 				}
+
 				FridgeItem item = helper.fridgeItemBuilder(Name, stockEnum, amount, creatEnum, Date);
 
-				fridge.add(item);
+				fav.add(item);
 			}
 
 		}
@@ -126,7 +105,27 @@ public class FridgeRealDB {
 			e.printStackTrace();
 		}
 
-		return fridge;
+		return fav;
+	}
+
+	public void updateFavoritedItems(FavoritesList favorites, String user, String password) {
+		try {
+			Connection con = DriverManager.getConnection(url, user, password);
+			Statement createState = con.createStatement();
+
+			createState.executeUpdate(updateFavDrop);
+			createState.executeUpdate(createFavTable);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		for (int x = 0; x < favorites.getItems().size(); x++) {
+			StoredItem itemToAdd = favorites.getItems().get(x);
+
+			addFavItem(itemToAdd, user, password);
+
+		}
 
 	}
 }
