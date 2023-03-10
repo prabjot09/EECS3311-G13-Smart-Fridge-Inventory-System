@@ -18,7 +18,7 @@ import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 
 public class FridgeRealDB {
-
+//Class where we handle all the logic for communicating to the fridge table of our database
 	String createTable = "Create Table if not exists fridgeitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
 	String updateDrop = "drop table fridgeitem;";
@@ -32,6 +32,7 @@ public class FridgeRealDB {
 
 	}
 
+//adds fridge items to our db
 	public void addItem(FridgeItem Fridge, String user, String password) {
 		String name = Fridge.getFoodItem().getName();
 		int fridgeEnum;
@@ -73,6 +74,8 @@ public class FridgeRealDB {
 
 	}
 
+//on window close of our program, updates the fridge table
+	// like our other classes it drops the table so not ideal
 	public void updateFridge(Fridge fridge, String user, String password) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
@@ -92,7 +95,7 @@ public class FridgeRealDB {
 
 		}
 	}
-
+//loads the fridgeitems from our table onto a storeditemlist for use in our program
 	public List<StoredItem> loadItems(String user, String password) {
 		List<StoredItem> fridge = new ArrayList<StoredItem>();
 		try {
@@ -111,8 +114,7 @@ public class FridgeRealDB {
 				LocalDate Date;
 				if (rs.getDate(5) == null) {
 					Date = null;
-				} 
-				else {
+				} else {
 					Date = rs.getDate(5).toLocalDate();
 				}
 				FridgeItem item = helper.fridgeItemBuilder(Name, stockEnum, amount, creatEnum, Date);

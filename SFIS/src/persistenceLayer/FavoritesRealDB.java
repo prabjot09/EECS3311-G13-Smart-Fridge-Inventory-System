@@ -16,7 +16,8 @@ import domainLayer.FridgeItem;
 import domainLayer.StoredItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
-
+//Databaswe for our favourites list, very similar to our other 2 databases, probably a better way to do this 
+//as the logic is the same, can just pass a different select form the realdb maybe?
 public class FavoritesRealDB {
 	DBHelpers helper = new DBHelpers();
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
@@ -27,10 +28,12 @@ public class FavoritesRealDB {
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
 	String updateFavDrop = "drop table favitem;";
 
+	//each method takes the user and password given at the program launch
 	public FavoritesRealDB() {
 
 	}
 
+	//method to add af avorited item to teh sql database
 	public void addFavItem(StoredItem Fridge, String user, String password) {
 		String name = Fridge.getFoodItem().getName();
 		int fridgeEnum;
@@ -72,6 +75,7 @@ public class FavoritesRealDB {
 
 	}
 
+	//loads all the items currently in our persistent storage into a list of storeditems
 	public List<StoredItem> loadFavoritedItems(String user, String password) {
 		List<StoredItem> fav = new ArrayList<StoredItem>();
 		try {
@@ -107,7 +111,8 @@ public class FavoritesRealDB {
 
 		return fav;
 	}
-
+//On window close, our program updates ours ql database with teh current contents of the favourites list
+	//drops the table whenver called, probably a better way to do this
 	public void updateFavoritedItems(FavoritesList favorites, String user, String password) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);

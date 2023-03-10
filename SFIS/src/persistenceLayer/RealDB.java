@@ -23,12 +23,17 @@ import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
 public class RealDB implements DB {
-
+//implementation of our real database, alot to go over here, many STrings where we hold sql commands to call
+	// instantiate our 4 Databases where we deal with the fridge, teh favourties
+	// list, the grocerylist, and teh list of items we
+	// can add
 	FridgeRealDB fridgeDB = new FridgeRealDB();
 	FavoritesRealDB favDB = new FavoritesRealDB();
 	GroceryRealDB grocDB = new GroceryRealDB();
 	ItemStubDB dbPop = new ItemStubDB();
 	List<String> itemPop = dbPop.getDB();
+
+	// bunch of sql commands
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String user = "root";
@@ -51,6 +56,9 @@ public class RealDB implements DB {
 	String updateDrop = "drop table fridgeitem;";
 	String updateFavDrop = "drop table favitem;";
 
+	// on isntantiation of the class, we pass the given user and password.
+	// This user and password is whatever the user setup their sql user and password
+	// to be
 	public RealDB(String user, String pass) throws SQLException {
 
 		this.user = user;
@@ -67,18 +75,19 @@ public class RealDB implements DB {
 		createState.executeUpdate(createFavTable);
 		createState.executeUpdate(createItemTable);
 		createState.executeUpdate(createGroceryTable);
-
+		//populates our item table everytiem the program is ran, can probably do a way to check if htis has been done so
+		//we dont have to every time
 		for (int x = 0; x < itemPop.size(); x++) {
 			String itemName = itemPop.get(x);
 			statement.setString(1, itemName);
 			statement.setString(2, itemName);
 			statement.executeUpdate();
 		}
-		
-		
 
 	}
 
+	//all these add items just call from our 3 databases, passing the user and password along
+	//maybe a static implementation isntead for itr3?
 	@Override
 	public void addItem(StoredItem Fridge) {
 
@@ -91,11 +100,12 @@ public class RealDB implements DB {
 		favDB.addFavItem(Fridge, user, password);
 
 	}
-	
+
 	public void addGrocItem(StoredItem Fridge) {
 		grocDB.addGroceryItem((FridgeItem) Fridge, user, password);
 	}
 
+	//our lone meaty method in this class, used to search through our db of preset items
 	@Override
 	public List<String> findMatchingFoods(String name) {
 		List<String> holdMatch = new ArrayList<String>();
@@ -125,6 +135,7 @@ public class RealDB implements DB {
 		return holdMatch;
 	}
 
+	//our loads and updates for our 3 databases classes
 	@Override
 	public List<StoredItem> loadItems() {
 		return fridgeDB.loadItems(user, password);
@@ -156,9 +167,9 @@ public class RealDB implements DB {
 
 	@Override
 	public void updateGroceryItems(GroceryList groceries) {
-		
+
 		grocDB.updateGroceryItems(groceries, user, password);
-		
+
 	}
 
 }

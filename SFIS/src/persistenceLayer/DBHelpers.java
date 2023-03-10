@@ -9,7 +9,7 @@ import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
 
 public class DBHelpers {
-
+//Helper method that contains builders for some of our items, useful for our db impelmentation where wwe pack and unpack from sql
 	public DBHelpers() {
 		
 	}
