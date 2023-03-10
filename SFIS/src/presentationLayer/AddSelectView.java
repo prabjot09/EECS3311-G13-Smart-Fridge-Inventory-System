@@ -122,6 +122,7 @@ public class AddSelectView extends JPanel {
 	public void clearInput() {
 		this.amountField.setText("");
 		this.searchField.setText("");
+		this.dateField.clearInputs();
 		this.displayMatches(DBProxy.getInstance().findItemDBItems(this.getSearchField()));
 	}
 	

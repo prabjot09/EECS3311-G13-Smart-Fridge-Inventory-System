@@ -23,7 +23,7 @@ public class FavoritesRealDB {
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String select = "use SIFSDB";
 	String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
-	String selectFromFav = "SELECT name, stocktype, amount, creationtype, date from favitem;";
+	String selectFromFav = "select name, StockType, Amount, CreationType, Date from favitem;";
 	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
 	String updateFavDrop = "drop table favitem;";

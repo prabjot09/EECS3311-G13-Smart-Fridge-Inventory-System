@@ -100,11 +100,15 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    infoPanel.add(quantity);
 	    
 	    try {
-	    	FridgeItem item = (FridgeItem) itemObj;
-	    	expiry = new JLabel("Best Before: " + item.getExpDate().toString());
-	    	expiry.setForeground(Color.white);
-	    	expiry.setFont(new Font("Arial", Font.BOLD, 16));
-	    	infoPanel.add(expiry);
+	    	if (fridgeFlag) {
+		    	FridgeItem item = (FridgeItem) itemObj;
+		    	expiry = new JLabel("Best Before: " + item.getExpDate().toString());
+		    	expiry.setForeground(Color.white);
+		    	expiry.setFont(new Font("Arial", Font.BOLD, 16));
+		    	infoPanel.add(expiry);
+		    	
+		    	this.updateLabel();
+	    	}
 	    } catch (Exception e) {
 	    	
 	    }
@@ -160,6 +164,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		if (expiry != null) {
 			FridgeItem item = (FridgeItem) itemObj;
 			expiry.setText("Best Before: " + item.getExpDate().toString());
+			if (item.isExpiring()) {
+				expiry.setText(expiry.getText() + " [EXPIRY WARNING]");
+				name.setForeground(Color.red);
+				quantity.setForeground(Color.red);
+				expiry.setForeground(Color.red);
+			}
 		}
 		
 		StockableItem stock = this.itemObj.getStockableItem();

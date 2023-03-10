@@ -86,4 +86,11 @@ public class DateInputField extends JPanel {
 		return dateObj;
 	}
 
+
+	public void clearInputs() {
+		this.dateField.setSelectedIndex(0);
+		this.monthField.setSelectedIndex(0);
+		this.yearField.setSelectedIndex(0);		
+	}
+
 }

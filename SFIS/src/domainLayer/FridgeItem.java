@@ -58,7 +58,7 @@ public class FridgeItem extends StoredItem{
 		
 		String desc = super.getDescription() + ", Exp: " + expDate.toString();
 		if (this.isExpiring()) {
-			desc += " [EXPIRING SOON]";
+			desc += " [EXPIRY WARNING]";
 		}
 		return desc;
 	}

@@ -118,6 +118,7 @@ public class AddCreateView extends JPanel{
 		this.amountField.clear();
 		this.nameField.setText("");
 		this.amountTypeField.setSelectedIndex(0);
+		this.dateField.clearInputs();
 	}
 	
 	public void setAmountEntry() {

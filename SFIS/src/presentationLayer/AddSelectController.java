@@ -97,7 +97,7 @@ public class AddSelectController implements ActionListener{
 		
 		try {
 			App.getInstance().getInventory().add(item);
-			this.homeView.addNewItem();
+			this.homeView.reloadLists();
 			this.addSelectView.clearInput();
 		}
 		catch (Exception e) {

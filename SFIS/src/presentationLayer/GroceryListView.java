@@ -55,6 +55,7 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    //Grocery viewing 
 	    viewList = new JList<String>();
 	    viewList.setBackground(Color.GRAY);
+	    viewList.setFont(new Font("Arial", Font.BOLD, 14));
 	    JScrollPane scrollViewingPane = new JScrollPane(viewList);
 	    scrollViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 	    scrollViewingPane.setPreferredSize(new Dimension(400,280));

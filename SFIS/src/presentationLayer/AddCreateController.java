@@ -87,7 +87,7 @@ public class AddCreateController implements ActionListener {
 		
 		try {
 			App.getInstance().getInventory().add(item);
-			this.homeView.addNewItem();
+			this.homeView.reloadLists();
 			this.addCreateView.clearInput();
 		}
 		catch (Exception e) {

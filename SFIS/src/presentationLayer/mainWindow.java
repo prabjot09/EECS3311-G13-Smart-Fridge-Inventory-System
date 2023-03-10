@@ -88,9 +88,11 @@ public class mainWindow implements ActionListener{
 	    viewLayerSetup(searchPanel, groceryView);
 	    
 	    // Grocery List Panel
-	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
-	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    rightPanel.add(groceryView);
+	    JPanel rightPanel = new CustomPanel(Color.BLACK, null);
+	    JPanel wrapper = new CustomPanel(Color.black, new BorderLayout(), 15);
+	    rightPanel.add(wrapper);
+	    //rightPanel.setPreferredSize(new Dimension(400, 400));
+	    wrapper.add(groceryView);
 	    jframe.add(rightPanel, BorderLayout.EAST);
 	    
 	    // Update DB when closing the window
@@ -105,7 +107,7 @@ public class mainWindow implements ActionListener{
 	    
 	    // set the jframe size and location, and make it visible
 	    jframe.getContentPane().setBackground(Color.black);
-	    jframe.setPreferredSize(new Dimension(1100, 650));
+	    jframe.setPreferredSize(new Dimension(1140, 650));
 	    jframe.pack();
 	    jframe.setLocationRelativeTo(null);
 	    jframe.setVisible(true);
@@ -227,7 +229,7 @@ public class mainWindow implements ActionListener{
 			ISortingStrategy strat = this.sortMethodMap.get((String) sortMethodType.getSelectedItem());
 			List<StoredItem> sortedList = strat.sortItems(App.getInstance().getInventory().getItems());
 			App.getInstance().getInventory().setItems(sortedList);
-			viewManager.setViewLists(sortedList);
+			viewManager.setViewLists(App.getInstance().getInventory().getItems());
 		}
 	}
 	
@@ -265,5 +267,9 @@ public class mainWindow implements ActionListener{
 	//makes frame visible
 	public void makeVisible() {
 		jframe.setVisible(true);
+	}
+	
+	public void reloadLists() {
+		viewManager.setViewLists(App.getInstance().getInventory().getItems());
 	}
 }
