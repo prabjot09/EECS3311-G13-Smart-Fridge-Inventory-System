@@ -1,5 +1,6 @@
 package domainLayer;
 
+
 public class FoodItem {
 	public enum StockType {
 		CONTINUOUS,
@@ -38,6 +39,7 @@ public class FoodItem {
 		this.stockType = stockType;
 	}
 	
+	
 	public FoodItem(String name, StockType stockType, CreationType creator) {
 		this(name, stockType);
 		this.creator = creator;
@@ -66,6 +68,7 @@ public class FoodItem {
 	public void setCreator(CreationType creator) {
 		this.creator = creator;
 	}
+	
 	
 	public boolean matches(FoodItem item) {
 		return this.getName().toLowerCase().contains(item.getName().toLowerCase());

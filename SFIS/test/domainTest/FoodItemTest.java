@@ -1,6 +1,7 @@
 package domainTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ class FoodItemTest {
 	@Test
 	public void constructorTest() {
 		FoodItem item = new FoodItem();
+		LocalDate someExpDate = LocalDate.of(2020, 1, 8);
 		assertTrue(item.getName()== null, "Name not set default to null");
 		
 		item = new FoodItem("Pineapple", StockType.CONTINUOUS);
@@ -29,6 +31,10 @@ class FoodItemTest {
 		
 		item = new FoodItem("Pineapple", StockType.CONTINUOUS, CreationType.PRESET);
 		assertEquals(item.getCreator(), CreationType.PRESET, "Creation Type not set correctly by constructor.");
+		
+		item = new FoodItem("Pineapple", StockType.CONTINUOUS, LocalDate.of(2020, 1, 8));
+		assertEquals(item.getExpDate(), LocalDate.of(2020, 1, 8), "Exp Date not set correctly by constructor.");
+		
 	}
 	
 	@Test
@@ -50,6 +56,13 @@ class FoodItemTest {
 		item.setCreator(CreationType.PRESET);
 		
 		assertEquals(item.getCreator(), CreationType.PRESET, "CreationType setter is faulty.");
+	}
+	
+	@Test
+	public void getSetExpDateTest() {
+		item.setExpDate(LocalDate.of(2020, 1, 8));
+		
+		assertEquals(item.getExpDate(), LocalDate.of(2020, 1, 8), "ExpDate setter is faulty.");
 	}
 	
 	@Test 
