@@ -82,9 +82,52 @@ public class mainWindow implements ActionListener{
 	    //searchPanel.setBounds(0,100,1000,500);
 	    jframe.add(searchPanel);
 	    
-	    // START: Item Search Panel
+	    
+	    topLayerSetup(searchPanel);
+	    
+	    viewLayerSetup(searchPanel, groceryView);
+	    
+	    // Grocery List Panel
+	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
+	    rightPanel.setPreferredSize(new Dimension(400, 400));
+	    rightPanel.add(groceryView);
+	    jframe.add(rightPanel, BorderLayout.EAST);
+	    
+	    // Update DB when closing the window
+	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    jframe.addWindowListener(new WindowAdapter() {
+	    	@Override
+	    	public void windowClosing(WindowEvent e) {
+	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
+	    		DBProxy.getInstance().updateGroceryItems(groc);
+	    	}
+	    });
+	    
+	    // set the jframe size and location, and make it visible
+	    jframe.getContentPane().setBackground(Color.black);
+	    jframe.setPreferredSize(new Dimension(1100, 650));
+	    jframe.pack();
+	    jframe.setLocationRelativeTo(null);
+	    jframe.setVisible(true);
+		
+	}
+	
+	public void headerSetup() {
+		JPanel panel = new CustomPanel(Color.black, null);
+		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
+		jframe.add(panel,BorderLayout.NORTH);
+	    
+	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
+	    titleLabel.setForeground(Color.white);
+	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+	    panel.add(titleLabel);
+	}
+	
+	
+	public void topLayerSetup(JPanel parent) {
+		// START: Item Search Panel
 	    JPanel topPanel = new CustomPanel(Color.black, null);
-	    searchPanel.add(topPanel);
+	    parent.add(topPanel);
 	    
 	    search = new JTextField();
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -113,8 +156,11 @@ public class mainWindow implements ActionListener{
 	    viewToggler.setIcon(expressiveIcon);
 	    viewToggler.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    topPanel.add(viewToggler);
-	    
-	    // Set up the Item List View Panel
+	}
+	
+	
+	public void viewLayerSetup(JPanel parent, GroceryListView groceryView) {
+		// Set up the Item List View Panel
 	    List<ListView> views = new ArrayList<ListView>();
 	    views.add(new CompressedListView(inv, groceryView));
 	    views.add(new ExpressiveListView(inv, true, groceryView));
@@ -155,44 +201,10 @@ public class mainWindow implements ActionListener{
 	    
 	    
 	    
-	    searchPanel.add(viewPanel);
+	    parent.add(viewPanel);
 	    // END: Search and Item List Panel
-	    
-	    // Grocery List Panel
-	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
-	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    rightPanel.add(groceryView);
-	    jframe.add(rightPanel, BorderLayout.EAST);
-	    
-	    // Update DB when closing the window
-	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    jframe.addWindowListener(new WindowAdapter() {
-	    	@Override
-	    	public void windowClosing(WindowEvent e) {
-	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
-	    		DBProxy.getInstance().updateGroceryItems(groc);
-	    	}
-	    });
-	    
-	    // set the jframe size and location, and make it visible
-	    jframe.getContentPane().setBackground(Color.black);
-	    jframe.setPreferredSize(new Dimension(1100, 650));
-	    jframe.pack();
-	    jframe.setLocationRelativeTo(null);
-	    jframe.setVisible(true);
-		
 	}
 	
-	public void headerSetup() {
-		JPanel panel = new CustomPanel(Color.black, null);
-		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
-		jframe.add(panel,BorderLayout.NORTH);
-	    
-	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
-	    titleLabel.setForeground(Color.white);
-	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
-	    panel.add(titleLabel);
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
