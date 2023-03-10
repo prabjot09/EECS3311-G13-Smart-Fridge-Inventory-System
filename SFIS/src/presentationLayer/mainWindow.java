@@ -31,6 +31,7 @@ import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.GroceryList;
 import domainLayer.StoredItem;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
@@ -43,7 +44,7 @@ public class mainWindow implements ActionListener{
 	
 	// Domain-logic
 	private Fridge inv;
-	
+	private GroceryList groc;
 	// Components required to manage the view for item list
 	private JPanel viewPanel;
 	private JButton viewToggler;
@@ -60,7 +61,7 @@ public class mainWindow implements ActionListener{
 	public mainWindow() {
 	    // create our jframe as usual
 		inv = App.getInstance().getInventory();
-		
+		groc = App.getInstance().getGroceryList();
 		jframe = new JFrame("SFIS");
 		
 		headerSetup();	 
@@ -117,7 +118,7 @@ public class mainWindow implements ActionListener{
 	    // Grocery List Panel
 	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
 	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    rightPanel.add(new GroceryListView(App.getInstance().getGroceryList()));
+	    rightPanel.add(new GroceryListView(groc));
 	    jframe.add(rightPanel, BorderLayout.EAST);
 	    
 	    // Update DB when closing the window
@@ -126,6 +127,7 @@ public class mainWindow implements ActionListener{
 	    	@Override
 	    	public void windowClosing(WindowEvent e) {
 	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
+	    		DBProxy.getInstance().updateGroceryItems(groc);
 	    	}
 	    });
 	    

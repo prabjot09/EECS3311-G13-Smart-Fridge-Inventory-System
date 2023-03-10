@@ -26,6 +26,7 @@ public class RealDB implements DB {
 
 	FridgeRealDB fridgeDB = new FridgeRealDB();
 	FavoritesRealDB favDB = new FavoritesRealDB();
+	GroceryRealDB grocDB = new GroceryRealDB();
 	ItemStubDB dbPop = new ItemStubDB();
 	List<String> itemPop = dbPop.getDB();
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
@@ -39,6 +40,8 @@ public class RealDB implements DB {
 	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
 	String createItemTable = "Create Table if not exists itemDB" + "(name VARCHAR(255)," + "PRIMARY KEY ( name))";
+	String createGroceryTable = "Create Table if not exists groceryitem" + "(name VARCHAR(255)," + "StockType INT,"
+			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
 	String queryInsertItem = "insert into itemDB VALUES (?)" + "ON DUPLICATE KEY UPDATE name = ?;";
 	String queryInsertFav = "insert into favitem VALUES (?, ?, ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
@@ -63,6 +66,7 @@ public class RealDB implements DB {
 		createState.executeUpdate(createTable);
 		createState.executeUpdate(createFavTable);
 		createState.executeUpdate(createItemTable);
+		createState.executeUpdate(createGroceryTable);
 
 		for (int x = 0; x < itemPop.size(); x++) {
 			String itemName = itemPop.get(x);
@@ -70,6 +74,8 @@ public class RealDB implements DB {
 			statement.setString(2, itemName);
 			statement.executeUpdate();
 		}
+		
+		
 
 	}
 
@@ -141,13 +147,13 @@ public class RealDB implements DB {
 
 	@Override
 	public List<StoredItem> loadGroceryItems() {
-		// TODO Auto-generated method stub
-		return null;
+		return grocDB.loadGroceryItems(user, password);
 	}
 
 	@Override
 	public void updateGroceryItems(GroceryList groceries) {
-		// TODO Auto-generated method stub
+		
+		grocDB.updateGroceryItems(groceries, user, password);
 		
 	}
 
