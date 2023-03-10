@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import domainLayer.AlphabeticalSorting;
 import domainLayer.DepletedSorting;
+import domainLayer.FoodItem;
 import domainLayer.ISortingStrategy;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
@@ -45,6 +46,97 @@ class ItemManagerTest {
 		list = new ItemManager(itemCopies);
 		
 	}
+	
+	
+	@Test
+	void getSetTest() {
+		List<StoredItem> copy = list.getItems();
+		for (int i = 0; i < copy.size(); i++) {
+			assertTrue(itemCopies.get(i).sameItemDescription(copy.get(i)), "Getter doesn't get the correct copy of item " + i);
+			copy.get(i).executeIncrement();
+			copy.get(i).setFoodItem(new FoodItem());
+			copy.get(i).getStockableItem().setStock(15);
+			assertTrue(itemCopies.get(i).sameItemDescription(list.getItems().get(i)), "Composition fails to protect item " + i + " from external changes");
+		}
+		
+		list.setItems(DepletedSortedCopy);
+		copy = list.getItems();
+		for (int i = 0; i < copy.size(); i++) {
+			assertTrue(DepletedSortedCopy.get(i).sameItemDescription(copy.get(i)), "Setter doesn't set the correct copy of item " + i);
+			DepletedSortedCopy.get(i).executeIncrement();
+			DepletedSortedCopy.get(i).setFoodItem(new FoodItem());
+			DepletedSortedCopy.get(i).getStockableItem().setStock(15);
+			assertTrue(copy.get(i).sameItemDescription(list.getItems().get(i)), "Composition fails to protect item " + i + " from external changes");
+		}
+	}
+	
+	
+	@Test
+	void searchTest() {
+		List<StoredItem> items =  list.search("");
+		for (int i = 0; i < itemCopies.size(); i++) {
+			assertTrue(itemCopies.get(i).sameItemDescription(items.get(i)), "Search doesn't return all items upon empty string input");
+		}
+		
+		items = list.search(" - ");
+		for (int i = 0; i < itemCopies.size(); i++) {
+			assertTrue(itemCopies.get(i).sameItemDescription(items.get(i)), "Search doesn't return all items upon common substring (amongst all items) input");
+		} 
+		
+		items = list.search("Slices");
+		assertEquals(3, items.size(), "Search fails for input 'Slices' (whole word matching)");
+		
+		items = list.search("TE");
+		assertEquals(2, items.size(), "Search fails for case-insensitive random string");
+		
+		items = list.search("Eggos");
+		assertEquals(0, items.size(), "Search finds matching items to random string with no expected matches");
+	}
+	
+	
+	@Test
+	void addTest() {
+		try {
+			list.add(new StubItemX("Pizza", 2, 3));
+		} catch (Exception e) {
+			fail("List doesn't add items with similar yet different names");
+		}
+		
+		try {
+			list.add(new StubItemX("Pizza - Slices", 3, 5));
+			fail("List permits the addtion of items with the same name");
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			StoredItem itemX = new StubItemX("Maccaroni", 8, 10);
+			list.add(itemX);
+			assertTrue(list.getItems().size() == itemCopies.size() + 2, "Item not added properly");
+			assertTrue(list.getItems().get(list.getItems().size() - 1).sameItemDescription(itemX), "Item not appended to the end of list.");
+		} catch (Exception e) {
+			
+		}		
+	}
+	
+	
+	@Test
+	void removeTest() {
+		list.remove(new StubItemX("Cookies", 2, 3));
+		assertEquals(list.getItems().size(), itemCopies.size(), "A non-matching item was deleted.");
+		
+		list.remove(new StubItemX("Cheese", 3, 5));
+		assertEquals(list.getItems().size(), itemCopies.size(), "A non-matching item with similar but different name was deleted.");		
+
+		StoredItem removed = new StubItemX("Cheese - Slices", 9, 10);
+		list.remove(removed);
+		assertEquals(list.getItems().size(), itemCopies.size() - 1, "A matching item with different stock was not deleted.");
+		for (StoredItem item: list.getItems()) {
+			assertFalse(removed.sameItemDescription(item), "The correct item was not deleted, but a different one was.");
+		}
+	}
+	
+	
 	
 	@Test
 	void itemIndexTest() {

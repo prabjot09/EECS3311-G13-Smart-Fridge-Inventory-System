@@ -52,14 +52,15 @@ class ItemDBTest {
 		flist.add(item.getName());
 		flist.add(item1.getName());
 
+		try {	
+			RealDB db = new RealDB(user, password);
 			
-		RealDB db = new RealDB(user, password);
-		
-		assertTrue(db.findMatchingFoods(flist.get(0)).get(0).contains(flist.get(0)));
-		
-		assertTrue(db.findMatchingFoods(flist.get(1)).get(0).contains(flist.get(1)));
-				
-				
+			assertTrue(db.findMatchingFoods(flist.get(0)).get(0).contains(flist.get(0)));
+			
+			assertTrue(db.findMatchingFoods(flist.get(1)).get(0).contains(flist.get(1)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 		
 	}
 

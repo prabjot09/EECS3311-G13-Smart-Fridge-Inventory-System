@@ -129,4 +129,23 @@ class ContinuousStockableItemTest {
 		copy.increment();
 		assertEquals(50, stock.getStock(), "Copy is not independent of original.");
 	}
+	
+	
+	@Test
+	public void percentTest() {
+		assertEquals(50, stock.calculatePercent(), "Percent is not generated correctly on new object");
+		
+		stock.increment();
+		stock.increment();
+		
+		assertEquals(100, stock.calculatePercent(), "Percent is not generated correctly after stock has changed.");
+		
+		stock.setMax(90);
+		
+		assertEquals(100, stock.calculatePercent(), "Percentage is changed by change in max stock which should always stay at 100%.");
+		
+		stock.setStock(9);
+		assertEquals(9, stock.calculatePercent(), "Percentage doesn't reflect change in current stock.");
+		
+	}
 }

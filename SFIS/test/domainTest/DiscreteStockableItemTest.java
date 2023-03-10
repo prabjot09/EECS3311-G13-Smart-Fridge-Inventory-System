@@ -121,4 +121,22 @@ class DiscreteStockableItemTest {
 		assertEquals(50, stock.getStock(), "Copy is not independent of original.");
 	}
 	
+	@Test
+	public void percentTest() {
+		assertEquals(100, stock.calculatePercent(), "Percent is not generated correctly on new object");
+		
+		stock.increment();
+		stock.increment();
+		
+		assertEquals(100, stock.calculatePercent(), "Percent is not generated correctly after stock has changed.");
+		
+		stock.setMax(90);
+		
+		assertEquals((52 * 100) / 90, stock.calculatePercent(), "Percentage doesn't reflect change in max stock.");
+		
+		stock.setStock(9);
+		assertEquals(10, stock.calculatePercent(), "Percentage doesn't reflect change in current stock.");
+		
+	}
+	
 }
