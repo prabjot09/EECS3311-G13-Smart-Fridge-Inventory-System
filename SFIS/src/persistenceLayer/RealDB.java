@@ -47,7 +47,7 @@ public class RealDB implements DB {
 	String select = "use SIFSDB";
 	String selectFrom = "select * from fridgeitem;";
 	String selectFromFav = "select * from favitem;";
-	String selectFromItem = "select * from itemDB;";
+	String selectFromItem = "select * from itemdb;";
 	String updateDrop = "drop table fridgeitem;";
 	String updateFavDrop = "drop table favitem;";
 
@@ -91,6 +91,10 @@ public class RealDB implements DB {
 		favDB.addFavItem(Fridge, user, password);
 
 	}
+	
+	public void addGrocItem(StoredItem Fridge) {
+		grocDB.addGroceryItem((FridgeItem) Fridge, user, password);
+	}
 
 	@Override
 	public List<String> findMatchingFoods(String name) {
@@ -106,7 +110,7 @@ public class RealDB implements DB {
 			while (rs.next()) {
 
 				String dbName = rs.getString(1);
-				if (dbName.toLowerCase().contains(name)) {
+				if (dbName.toLowerCase().contains(name.toLowerCase())) {
 					holdMatch.add(dbName);
 				}
 

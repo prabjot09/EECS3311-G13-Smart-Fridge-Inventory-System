@@ -28,7 +28,7 @@ public class App {
 		app = new App();
 		
 		// Uncomment this line to use RealDB
-		//App.getInstance().login = new DBLoginView();
+		// App.getInstance().login = new DBLoginView();
 		
 		// Uncomment this code to use StubDB only
 		DBProxy.getInstance().setDB(new StubDB());
@@ -72,6 +72,7 @@ public class App {
 		app.db = DBProxy.getInstance();
 		app.inv = new Fridge(app.db.loadItems());
 		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
+		app.groceries = new GroceryList(app.db.loadGroceryItems());
 		new mainWindow();
 	}
 }
