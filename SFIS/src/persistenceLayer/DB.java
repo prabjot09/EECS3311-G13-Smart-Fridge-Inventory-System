@@ -5,6 +5,7 @@ import java.util.List;
 
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
+import domainLayer.GroceryList;
 import domainLayer.StoredItem;
 
 public interface DB {
@@ -15,6 +16,8 @@ public interface DB {
 	public void updateFridge(Fridge fridge);
 	public List<StoredItem> loadFavoritedItems();
 	public void updateFavoritedItems(FavoritesList favorites);
+	public List<StoredItem> loadGroceryItems();
+	public void updateGroceryItems(GroceryList groceries);
 	
 }
 

@@ -52,4 +52,12 @@ public class DBProxy {
 	public void updateFavoritedItems(FavoritesList favorites) {
 		db.updateFavoritedItems(favorites);
 	}
+	
+	public List<StoredItem> loadGroceryItems() {
+		return db.loadGroceryItems();
+	}
+	
+	public void updateGroceryItems(GroceryList groceries) {
+		db.updateGroceryItems(groceries);
+	}
 }

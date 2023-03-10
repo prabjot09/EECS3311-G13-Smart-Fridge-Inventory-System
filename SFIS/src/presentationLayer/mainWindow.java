@@ -157,13 +157,9 @@ public class mainWindow implements ActionListener{
 	    // END: Search and Item List Panel
 	    
 	    // Grocery List Panel
-	    JPanel rightPanel = new JPanel();
-	    rightPanel.setBackground(Color.black);
-	    rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
 	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    
-	    
-	    rightPanel.add(new GroceryListView());
+	    rightPanel.add(new GroceryListView(App.getInstance().getGroceryList()));
 	    jframe.add(rightPanel, BorderLayout.EAST);
 	    
 	    // Update DB when closing the window

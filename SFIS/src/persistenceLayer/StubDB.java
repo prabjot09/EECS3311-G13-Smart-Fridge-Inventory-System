@@ -6,6 +6,7 @@ import java.util.List;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.GroceryList;
 import domainLayer.StoredItem;
 
 
@@ -14,6 +15,7 @@ public class StubDB implements DB {
 	ItemStubDB ItemDB = new ItemStubDB();
 	FridgeStubDB FridgeDB = new FridgeStubDB();
 	FavoritesStubDB favoritesDB = new FavoritesStubDB();
+	GroceryStubDB groceriesDB = new GroceryStubDB();
 
 	
 	//given a string, we use this code to return a matching food item in our db
@@ -43,6 +45,17 @@ public class StubDB implements DB {
 		favoritesDB.updateFavoritedItems(favorites);
 	}
 
+	@Override
+	public List<StoredItem> loadGroceryItems() {
+		return groceriesDB.loadGroceryItems();
+	}
+
+	@Override
+	public void updateGroceryItems(GroceryList groceries) {
+		groceriesDB.updateGroceryItems(groceries);
+	}
+	
+	
 
 
 
