@@ -86,10 +86,11 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    items = this.groceryInv.getItems();
 	    viewListItems = new DefaultListModel<String>();
 	    for (StoredItem item : items) {
-	    	viewListItems.addElement("- "+item.getFoodItem().getName());
+	    	viewListItems.addElement("- " + item.getFoodItem().getName());
 	    }
 	    viewList.setModel(viewListItems);
 	    revalidate();
+	    
 	}
 	
 	@Override
@@ -100,6 +101,7 @@ public class GroceryListView extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Please select an item in the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			items = groceryInv.getItems();
 			int deleteIndex = viewList.getSelectedIndex();
 			groceryInv.remove(items.get(deleteIndex));
 			viewListItems.remove(deleteIndex);
@@ -113,6 +115,15 @@ public class GroceryListView extends JPanel implements ActionListener {
 			if (exportDecision.getSelectedItem() == "Favorites List") {
 				new Export(App.getInstance().getFavorites().getItems());
 			}
+		}
+	}
+	public void visualAdd(StoredItem item) {
+		if (groceryInv.itemIndex(item) != -1) {
+			viewListItems.addElement("- " + item.getFoodItem().getName());
+			revalidate();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Item is not in grocery list and therefore cannot be displayed", "Notice", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

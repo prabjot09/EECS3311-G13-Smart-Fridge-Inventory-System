@@ -63,6 +63,7 @@ public class mainWindow implements ActionListener{
 		inv = App.getInstance().getInventory();
 		groc = App.getInstance().getGroceryList();
 		jframe = new JFrame("SFIS");
+		GroceryListView groceryView = new GroceryListView(groc);
 		
 		headerSetup();	 
 	    
@@ -105,7 +106,7 @@ public class mainWindow implements ActionListener{
 	    
 	    // Set up the Item List View Panel
 	    List<ListView> views = new ArrayList<ListView>();
-	    views.add(new CompressedListView(inv));
+	    views.add(new CompressedListView(inv, groceryView));
 	    views.add(new ExpressiveListView(inv, true));
 	    viewManager = new ListViewManager(views);
 	    viewManager.setSizes(new Dimension(650, 400));
@@ -118,7 +119,7 @@ public class mainWindow implements ActionListener{
 	    // Grocery List Panel
 	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
 	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    rightPanel.add(new GroceryListView(groc));
+	    rightPanel.add(groceryView);
 	    jframe.add(rightPanel, BorderLayout.EAST);
 	    
 	    // Update DB when closing the window

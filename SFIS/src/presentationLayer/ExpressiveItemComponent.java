@@ -180,7 +180,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		else if (clicked == groceryListButton) {
 			try {
 				App.getInstance().getGroceryList().add(this.getItemObj());
-				revalidate();
+				view.groceryVisualAdd(this.getItemObj());
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
 			}
