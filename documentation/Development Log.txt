@@ -95,3 +95,9 @@ Prabjot Dhaliwal
 * Related User Stories: Set Favorite Fridge Items, View Favorite Fridge Items, (Iteration 1 GUI Feature) Expressive View Layout
 * Expected Dev Times: Expressive View Layout GUI (5 days), Favorites List Internal Implementation (3 days), Favorites List GUI (3 days), DB Login GUI (1 day), Input Field Clear QoL Change (1 day)
 * Actual Dev Times: Expressive View Layout GUI (6 days), Favorites List Internal Implementation (2 days), Favorites List GUI (4 days), DB Login GUI (0.5 days), Input Field Clear QoL Change (0.5 days)
+
+Eric Cha
+* Tasks Chosen: Grocery List GUI, Grocery List add and remove items, Export either grocery or favorites list to an external medium, addWindow QoL(only 1 popup)
+* Related User Stories: Generate grocery list, adjust items on grocery list, export grocery list (txt for now), export according to grocery list or favorites list
+* Expected Dev Times: Grocery List GUI (7 days), Grocery List Logic (5 days), Export feature (2 days), addWindow QoL (1 day)
+* Actual Dev Times: Grocery List GUI (10 days), Grocery List Logic (6 days), Export feature (2 days), addWindow QoL (1 day)
