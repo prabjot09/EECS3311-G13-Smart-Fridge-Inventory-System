@@ -41,12 +41,12 @@ public class AddSelectView extends JPanel {
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
 	    search.setBackground(Color.gray);
 	    search.setBounds(0,100,300,500);
-	    search.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-	    search.setPreferredSize(new Dimension(300,50));
+	    search.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+	    search.setPreferredSize(new Dimension(300,40));
 	    this.searchField = search;
 	    searchPanel.add(search);
 	    
-	    JButton searchButton = new CustomButton("Search", listener, 50, 150);
+	    JButton searchButton = new CustomButton("Search", listener, 40, 150);
 	    searchPanel.add(searchButton);
 	    
 	    this.add(searchPanel);
@@ -54,7 +54,7 @@ public class AddSelectView extends JPanel {
 		JList<String> itemList = new JList<String>();
 		itemList.setBackground(Color.gray);
 		itemList.setFont(new Font("Arial", Font.BOLD, 18));
-		itemList.setPreferredSize(new Dimension(440, 200));
+		itemList.setPreferredSize(new Dimension(440, 170));
 		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.matchList = itemList;
 		
@@ -91,7 +91,7 @@ public class AddSelectView extends JPanel {
 		dateField.setBackground(Color.black);
 		expiryPanel.add(dateField);
 		
-		
+		this.displayMatches(DBProxy.getInstance().findItemDBItems(""));
 		this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 	    this.setBackground(Color.black);		
 	}
@@ -115,7 +115,7 @@ public class AddSelectView extends JPanel {
 		}
 		
 		this.matchList.setModel(listModel);
-		this.matchList.setPreferredSize(new Dimension(440, 30 * matches.size()));
+		this.matchList.setPreferredSize(new Dimension(440, 24 * matches.size()));
 		this.matchList.revalidate();
 	}
 

@@ -14,9 +14,7 @@ public class PromptText extends JTextField {
 
             @Override
             public void focusLost(FocusEvent e) {
-                if(getText().isEmpty()) {
-                    setText(promptedText);
-                }
+            	
             }
 
             @Override
