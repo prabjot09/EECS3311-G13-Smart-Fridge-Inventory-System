@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
- 
+
 import domainLayer.FavoritesList;
 
 import domainLayer.FoodItem;
@@ -18,6 +18,7 @@ import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.GroceryList;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
@@ -136,6 +137,18 @@ public class RealDB implements DB {
 
 		favDB.updateFavoritedItems(favorites, user, password);
 
+	}
+
+	@Override
+	public List<StoredItem> loadGroceryItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateGroceryItems(GroceryList groceries) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
