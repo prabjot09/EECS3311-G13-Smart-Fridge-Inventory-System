@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -93,12 +94,18 @@ public class GroceryListView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//Remove button functionality 
 		if (e.getSource() == removeGroceryButton) {
+			if (viewList.getSelectedIndex() == -1) {
+				JOptionPane.showMessageDialog(null, "Please select an item in the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			int deleteIndex = viewList.getSelectedIndex();
 			groceryInv.remove(items.get(deleteIndex));
 			viewListItems.remove(deleteIndex);
 			revalidate();
 		}
+		//Export button functionality 
 		if (e.getSource() == exportButton) {
 			if (exportDecision.getSelectedItem() == "Grocery List") {
 				new Export(groceryInv.getItems());

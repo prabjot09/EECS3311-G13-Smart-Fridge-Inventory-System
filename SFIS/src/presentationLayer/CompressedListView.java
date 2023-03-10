@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 
+import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
@@ -139,7 +140,13 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.displayItems.remove(itemIndex);
 			this.stringItemList.remove(itemIndex);
 		} else if (e.getSource() == groceryListButton) {
-			// Add grocery list insertion code
+			int itemIndex = list.getSelectedIndex();
+			try {
+				App.getInstance().getGroceryList().add(this.displayItems.get(itemIndex));
+				revalidate();
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
+			}
 
 		}
 	}
