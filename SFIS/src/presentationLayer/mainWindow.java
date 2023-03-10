@@ -11,13 +11,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,10 +31,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import appLayer.App;
+import domainLayer.AlphabeticalSorting;
 import domainLayer.DBProxy;
+import domainLayer.DepletedSorting;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.ISortingStrategy;
 import domainLayer.StoredItem;
+import domainLayer.UnalphabeticalSorting;
+import domainLayer.FoodItem.StockType;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
@@ -40,6 +48,8 @@ public class mainWindow implements ActionListener{
 	// Input Components
 	private JTextField search;
 	private JButton addButton, searchButton, favoritesButton;
+	private JComboBox<String> sortMethodType;
+	private Map<String, ISortingStrategy> sortMethodMap;
 	
 	// Domain-logic
 	private Fridge inv;
@@ -66,7 +76,7 @@ public class mainWindow implements ActionListener{
 		headerSetup();	 
 	    
 	    // START: Search and Item List Panel
-	    JPanel searchPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS);
+	    JPanel searchPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 20);
 	    //searchPanel.setBounds(0,100,1000,500);
 	    jframe.add(searchPanel);
 	    
@@ -108,8 +118,40 @@ public class mainWindow implements ActionListener{
 	    views.add(new ExpressiveListView(inv, true));
 	    viewManager = new ListViewManager(views);
 	    viewManager.setSizes(new Dimension(650, 400));
-	    viewPanel = new CustomPanel(Color.black, null);
+	    viewPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS);
+	    
+	    JPanel labelPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
+	    viewPanel.add(labelPanel);
+	    
+	    JLabel viewLabel = new JLabel("Your Fridge Items: ");
+	    viewLabel.setForeground(Color.white);
+	    viewLabel.setFont(new Font("Arial", Font.BOLD, 18));
+	    viewLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    labelPanel.add(viewLabel, BorderLayout.LINE_START);
+	    
+	    JPanel sortPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS, 15);
+	    labelPanel.add(sortPanel, BorderLayout.LINE_END);
+	    
+	    JLabel sortLabel = new JLabel("Sort By: ");
+	    sortLabel.setForeground(Color.white);
+	    sortLabel.setFont(new Font("Arial", Font.BOLD, 18));
+	    sortLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    sortPanel.add(sortLabel);
+	    
+	    String[] values = {"Alphabetial", "Reverse Alphabetical", "Depletion"};
+	    sortMethodMap = new HashMap<>();
+	    sortMethodMap.put(values[0], new AlphabeticalSorting());
+	    sortMethodMap.put(values[1], new UnalphabeticalSorting());
+	    sortMethodMap.put(values[2], new DepletedSorting());
+	    sortMethodType = new JComboBox<String>(values);
+	    sortMethodType.setFont(new Font("Arial", Font.PLAIN, 14));
+	    //sortMethodType.setPreferredSize(new Dimension(300,50));
+	    sortMethodType.addActionListener(this);
+	    sortPanel.add(sortMethodType);
+	    
 	    viewPanel.add((JPanel) viewManager.getCurrentView());
+	    
+	    
 	    
 	    searchPanel.add(viewPanel);
 	    // END: Search and Item List Panel
@@ -169,6 +211,12 @@ public class mainWindow implements ActionListener{
 		}
 		else if (e.getSource() == viewToggler) {
 			this.mainViewToggleHandler();
+		}
+		else if (e.getSource() == this.sortMethodType) {
+			ISortingStrategy strat = this.sortMethodMap.get((String) sortMethodType.getSelectedItem());
+			List<StoredItem> sortedList = strat.sortItems(App.getInstance().getInventory().getItems());
+			App.getInstance().getInventory().setItems(sortedList);
+			viewManager.setViewLists(sortedList);
 		}
 	}
 	
