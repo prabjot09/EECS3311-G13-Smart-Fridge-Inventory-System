@@ -25,7 +25,7 @@ public class FridgeRealDB {
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String queryInsert = "insert into fridgeitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
-	String selectFrom = "select * from fridgeitem;";
+	String selectFrom = "SELECT name, stocktype, amount, creationtype, date from fridgeitem;";
 	DBHelpers helper = new DBHelpers();
 
 	public FridgeRealDB() {
