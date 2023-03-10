@@ -2,8 +2,13 @@
 Welcome to the SFIS (Smart Fridge Inventory System) application.
 Here, we will describe how to get started with our application.
 
+## TA Instructions
+- To run the Integration Tests, you must enter your root password into the variables in the relevant files under /test/IntegrationTests
+- Peer Evaluation is found under the documentation directory.
+
 ## Installation
 You are welcome to clone this repository and run the files yourself through whichever IDE you choose, but if you simply would like to use the application without viewing any of the code, then run the SIFS.exe exectutable in this root directory.
+
 Dependencies:
  - JUnit 5
  - JDBC 8.0.23
