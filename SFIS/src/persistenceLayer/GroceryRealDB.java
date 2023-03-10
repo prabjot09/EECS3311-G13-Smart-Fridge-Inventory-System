@@ -26,7 +26,7 @@ public class GroceryRealDB {
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
 	String queryInsert = "insert into groceryitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
-	String selectFrom = "select * from groceryitem;";
+	String selectFrom = "SELECT name, stocktype, amount, creationtype, date from groceryitem;";
 	
 	public GroceryRealDB() {
 		
