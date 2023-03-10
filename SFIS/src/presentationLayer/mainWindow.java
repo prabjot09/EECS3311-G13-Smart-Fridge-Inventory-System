@@ -107,7 +107,7 @@ public class mainWindow implements ActionListener{
 	    // Set up the Item List View Panel
 	    List<ListView> views = new ArrayList<ListView>();
 	    views.add(new CompressedListView(inv, groceryView));
-	    views.add(new ExpressiveListView(inv, true));
+	    views.add(new ExpressiveListView(inv, true, groceryView));
 	    viewManager = new ListViewManager(views);
 	    viewManager.setSizes(new Dimension(650, 400));
 	    viewPanel = new CustomPanel(Color.black, null);

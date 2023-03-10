@@ -51,7 +51,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		this.generateList(inv.getItems());
 	}
 	
-	public ExpressiveListView(ItemManager inv, boolean fridgeFlag, GroceryListView groceryview) {
+	public ExpressiveListView(ItemManager inv, boolean fridgeFlag, GroceryListView groceryView) {
 		this(inv, fridgeFlag);
 		this.groceryView = groceryView;
 	}
