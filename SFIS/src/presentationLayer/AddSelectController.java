@@ -15,6 +15,7 @@ import domainLayer.DBProxy;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.CreationType;
+import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
@@ -89,6 +90,7 @@ public class AddSelectController implements ActionListener{
 		itemDesc.setName(selectedItem);
 		itemDesc.setCreator(CreationType.PRESET);
 		StockableItem stock = new DiscreteStockableItem(amount);
+		itemDesc.setStockType(StockType.DISCRETE);
 		
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);
