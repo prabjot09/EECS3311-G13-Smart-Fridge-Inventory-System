@@ -107,3 +107,10 @@ Abdirahman Farah
 *Related User Stories: Assign Expiry dates to Food, generating grocery list
 *Expected Dev Times:DB Work (8 days) Expiry dates (3 days) Grocery Work (2 days)
 *Actaul Dev Times: DB Work (10 days) Expiry Dates (2 days) Grocery Work (2 days)
+
+Karim Jaouhar
+* Task Chosen: Add Expiry date to fridgeItems, Create allowing users to sort by name and by depletion
+* Related User Story: sort items by how close they are to being depleted, assign expiry dates to items as I add them to my fridge, sort items by name
+* Expected Dev Times: Sorting Implementation (3 days), Expiry Date Implementation (2 day)
+* Actaul Dev Times: Sorting Implementation (4 days), Expiry Date Implementation (1 day)
+
