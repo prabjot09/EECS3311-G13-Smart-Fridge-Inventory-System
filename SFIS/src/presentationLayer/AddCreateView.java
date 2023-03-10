@@ -81,7 +81,7 @@ public class AddCreateView extends JPanel{
 		
 		JLabel expiryLabel = new JLabel("[Optional] Expiry Date: ");
 		expiryLabel.setForeground(Color.white);
-		expiryLabel.setFont(new Font("Arial", Font.BOLD, 24));
+		expiryLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		expiryLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 	    expiryPanel.add(expiryLabel);
 	    

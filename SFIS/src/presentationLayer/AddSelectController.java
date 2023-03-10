@@ -2,6 +2,7 @@ package presentationLayer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -72,6 +73,13 @@ public class AddSelectController implements ActionListener{
 		if (!this.validateInput()) {
 			return;
 		}
+		
+		LocalDate date = null;
+		try {
+			date = addSelectView.getDateInput();
+		} catch (Exception e) {
+			return;
+		}
 
 		String selectedItem = this.addSelectView.getItemChosen();		
 		String amountString = this.addSelectView.getAmountField();
@@ -85,6 +93,7 @@ public class AddSelectController implements ActionListener{
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);
 		item.setStockableItem(stock);
+		item.setExpDate(date);
 		
 		try {
 			App.getInstance().getInventory().add(item);

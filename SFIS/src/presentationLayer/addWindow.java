@@ -87,7 +87,7 @@ public class addWindow extends JFrame implements ActionListener{
 	    });
 	    this.getContentPane().setBackground(Color.black);
 	    // set the jframe size and location, and make it visible
-	    this.setPreferredSize(new Dimension(1000, 600));
+	    this.setPreferredSize(new Dimension(1000, 650));
 	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);

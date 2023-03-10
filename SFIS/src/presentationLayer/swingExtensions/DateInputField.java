@@ -28,7 +28,7 @@ public class DateInputField extends JPanel {
 		
 		String[] months = new String[13];
 		months[0] = "Month";
-		for (int i = 1; i < 12; i++) {
+		for (int i = 1; i < 13; i++) {
 			months[i] = "" + i;
 		}
 		

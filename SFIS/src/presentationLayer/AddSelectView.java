@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +21,7 @@ import javax.swing.ListSelectionModel;
 import domainLayer.DBProxy;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.DateInputField;
 import presentationLayer.swingExtensions.PromptText;
 
 
@@ -26,6 +29,7 @@ public class AddSelectView extends JPanel {
 	private JTextField searchField;
 	private JTextField amountField;
 	private JList<String> matchList;
+	private DateInputField dateField;
 	
 	public AddSelectView(ActionListener listener) {
 		BoxLayout overallLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -49,7 +53,7 @@ public class AddSelectView extends JPanel {
 	    
 		JList<String> itemList = new JList<String>();
 		itemList.setBackground(Color.gray);
-		itemList.setFont(new Font("Arial", Font.BOLD, 24));
+		itemList.setFont(new Font("Arial", Font.BOLD, 18));
 		itemList.setPreferredSize(new Dimension(440, 200));
 		itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.matchList = itemList;
@@ -60,19 +64,33 @@ public class AddSelectView extends JPanel {
 		this.add(listPanel);
 		
 		JPanel addPanel = new CustomPanel(Color.black, 10);
+		this.add(addPanel);
 		
 		JTextField amountField = new PromptText("Quantity");
 	    amountField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    amountField.setBackground(Color.gray);
-	    amountField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-	    amountField.setPreferredSize(new Dimension(100, 50));
+	    amountField.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    amountField.setMinimumSize(new Dimension(300, 0));
 	    this.amountField = amountField;
 	    addPanel.add(amountField);
 		
-		JButton addButton = new CustomButton("Add Item", listener, 50, 100);
+		JButton addButton = new CustomButton("Add Item", listener, 12);
 		addPanel.add(addButton);
 		
-		this.add(addPanel);
+		
+		JPanel expiryPanel = new CustomPanel(Color.black, null);
+		this.add(expiryPanel);
+		
+		JLabel expiryLabel = new JLabel("[Optional] Expiry Date: ");
+		expiryLabel.setForeground(Color.white);
+		expiryLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		expiryLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+	    expiryPanel.add(expiryLabel);
+	    
+		dateField = new DateInputField();
+		dateField.setBackground(Color.black);
+		expiryPanel.add(dateField);
+		
 		
 		this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 	    this.setBackground(Color.black);		
@@ -105,5 +123,16 @@ public class AddSelectView extends JPanel {
 		this.amountField.setText("");
 		this.searchField.setText("");
 		this.displayMatches(DBProxy.getInstance().findItemDBItems(this.getSearchField()));
+	}
+	
+	public LocalDate getDateInput() throws Exception {
+		if (dateField.isUnused()) 
+			return null;
+		
+		LocalDate date = dateField.getDate();
+		if (date == null)
+			throw new Exception();
+		
+		return date;
 	}
 }
