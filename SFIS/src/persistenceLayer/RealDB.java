@@ -17,6 +17,7 @@ import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
+import domainLayer.GroceryList;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
@@ -322,6 +323,18 @@ public class RealDB implements DB {
 			addFavItem(itemToAdd);
 
 		}
+		
+	}
+
+	@Override
+	public List<StoredItem> loadGroceryItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateGroceryItems(GroceryList groceries) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -2,20 +2,40 @@ package presentationLayer;
 
 import java.util.List;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import appLayer.App;
+import domainLayer.Export;
+import domainLayer.ItemManager;
+import domainLayer.StoredItem;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import domainLayer.*;
 
 public class GroceryListView extends JPanel implements ActionListener {
 	
 	//variables
 	private JButton removeGroceryButton, exportButton;
 	private JComboBox<String> exportDecision;
+	private ItemManager groceryInv;
+	private JList<String> viewList;
+	private List<StoredItem> items;
+	private DefaultListModel<String> viewListItems;
 	
-	public GroceryListView() {
+	public GroceryListView(ItemManager inv) {
+		this.groceryInv = inv;
 	    this.setBounds(0, 0, 500, 500);
 	    this.setBackground(Color.WHITE);
 	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -32,7 +52,7 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    titlePanel.add(groceryTitle);
 	    
 	    //Grocery viewing 
-	    JList<String> viewList = new JList<String>();
+	    viewList = new JList<String>();
 	    viewList.setBackground(Color.GRAY);
 	    JScrollPane scrollViewingPane = new JScrollPane(viewList);
 	    scrollViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -61,19 +81,30 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    exportButton.addActionListener(this);
 	    buttonsPanel.add(exportButton);
 	    
+	    //Grocery dynamic view
+	    items = this.groceryInv.getItems();
+	    viewListItems = new DefaultListModel<String>();
+	    for (StoredItem item : items) {
+	    	viewListItems.addElement("- "+item.getFoodItem().getName());
+	    }
+	    viewList.setModel(viewListItems);
+	    revalidate();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == removeGroceryButton) {
-			//
+			int deleteIndex = viewList.getSelectedIndex();
+			groceryInv.remove(items.get(deleteIndex));
+			viewListItems.remove(deleteIndex);
+			revalidate();
 		}
 		if (e.getSource() == exportButton) {
 			if (exportDecision.getSelectedItem() == "Grocery List") {
-				//
+				new Export(groceryInv.getItems());
 			}
-			if (exportDecision.getSelectedItem() == "Export") {
-				//
+			if (exportDecision.getSelectedItem() == "Favorites List") {
+				new Export(App.getInstance().getFavorites().getItems());
 			}
 		}
 	}

@@ -19,7 +19,7 @@ public class Export {
 			//Iterate through given list to print out names
 			for (StoredItem item : this.items) {
 				outputBuffer = new StringBuilder();
-				outputBuffer.append("-");
+				outputBuffer.append("- ");
 				outputBuffer.append(item.getFoodItem().getName());
 				writeOut.println(outputBuffer);
 			} 

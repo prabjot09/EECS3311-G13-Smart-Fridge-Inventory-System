@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
+import domainLayer.GroceryList;
 import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
 import presentationLayer.DBLoginView;
@@ -17,6 +18,7 @@ public class App {
 	private DBProxy db;
 	private FavoritesList favorites;
 	private DBLoginView login;
+	private GroceryList groceries;
 	
 	private App() {
 		
@@ -26,16 +28,17 @@ public class App {
 		app = new App();
 		
 		// Uncomment this line to use RealDB
-		App.getInstance().login = new DBLoginView();
+		//App.getInstance().login = new DBLoginView();
 		
-		/* Uncomment this code to use StubDB only
+		// Uncomment this code to use StubDB only
 		DBProxy.getInstance().setDB(new StubDB());
 		
 		app.db = DBProxy.getInstance();
 		app.inv = new Fridge(app.db.loadItems());
 		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
+		app.groceries = new GroceryList(app.db.loadGroceryItems());
 		new mainWindow();
-		*/
+		
 	}
 	
 	public static App getInstance() {
@@ -51,6 +54,10 @@ public class App {
 	
 	public FavoritesList getFavorites() {
 		return app.favorites;
+	}
+	
+	public GroceryList getGroceryList() {
+		return app.groceries;
 	}
 	
 	public void initializeApplication(String user, String pass) {
