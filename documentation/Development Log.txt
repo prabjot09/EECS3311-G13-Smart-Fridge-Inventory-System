@@ -101,3 +101,9 @@ Eric Cha
 * Related User Stories: Generate grocery list, adjust items on grocery list, export grocery list (txt for now), export according to grocery list or favorites list
 * Expected Dev Times: Grocery List GUI (7 days), Grocery List Logic (5 days), Export feature (2 days), addWindow QoL (1 day)
 * Actual Dev Times: Grocery List GUI (10 days), Grocery List Logic (6 days), Export feature (2 days), addWindow QoL (1 day)
+
+Abdirahman Farah
+* Tasks Chosen: Expiration dates, SQL and DB logic, Connections between layers for grocery/favorites list implementations
+*Related User Stories: Assign Expiry dates to Food, generating grocery list
+*Expected Dev Times:DB Work (8 days) Expiry dates (3 days) Grocery Work (2 days)
+*Actaul Dev Times: DB Work (10 days) Expiry Dates (2 days) Grocery Work (2 days)
