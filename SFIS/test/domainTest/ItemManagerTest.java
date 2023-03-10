@@ -26,7 +26,7 @@ class ItemManagerTest {
 	public void init() {
 		StoredItem item1 = new StubItemX("Pizza - Slices", 5, 6);
 		StoredItem item2 = new StubItemX("Milk - Cartons", 3, 5);
-		StoredItem item3 = new StubItemX("Water - Bottles", 9, 15);
+		StoredItem item3 = new StubItemX("Water - Bottles", 10, 15);
 		StoredItem item4 = new StubItemX("Apple Pie - Slices", 1, 12);
 		StoredItem item5 = new StubItemX("Eggs - Single", 3, 12);
 		StoredItem item6 = new StubItemX("Chocolate - Bars", 0, 9);
@@ -39,7 +39,7 @@ class ItemManagerTest {
 		StoredItem[] AphabeticallySorted = {item4, item7, item6, item5, item2, item8, item1, item3}; // alpahbetical order
 		AphabeticallySortedCopy = Arrays.asList(AphabeticallySorted);
 		
-		StoredItem[] DepletedSorted = {item7, item4, item5, item6, item3, item8, item2, item1}; //depleted order
+		StoredItem[] DepletedSorted = {item6, item4, item5, item7, item2, item3, item8, item1}; //depleted order
 		DepletedSortedCopy = Arrays.asList(DepletedSorted);
 		
 		list = new ItemManager(itemCopies);

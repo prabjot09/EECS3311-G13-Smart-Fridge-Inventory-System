@@ -32,6 +32,13 @@ class StubItemX extends StubBase {
 			public int getMax() { return StubItemX.this.max; }
 			public void setStock(int a) { StubItemX.this.stock = a; }
 			public void setMax(int a) { StubItemX.this.max = a; }
+			public int calculatePercent() {
+				if (StubItemX.this.max == 0)
+					return 0;
+				
+				int percent = (StubItemX.this.stock * 100) / StubItemX.this.max;
+				return percent;
+			}
 		});
 	}
 }
