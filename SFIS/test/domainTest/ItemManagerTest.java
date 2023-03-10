@@ -9,6 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domainLayer.AlphabeticalSorting;
+import domainLayer.DepletedSorting;
+import domainLayer.ISortingStrategy;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
 
@@ -16,6 +19,8 @@ class ItemManagerTest {
 
 	private ItemManager list;
 	private List<StoredItem> itemCopies;
+	private List<StoredItem> AphabeticallySortedCopy;
+	private List<StoredItem> DepletedSortedCopy;
 	
 	@BeforeEach
 	public void init() {
@@ -30,6 +35,12 @@ class ItemManagerTest {
 		
 		StoredItem[] items = {item1, item2, item3, item4, item5, item6, item7, item8};
 		itemCopies = Arrays.asList(items);
+		
+		StoredItem[] AphabeticallySorted = {item4, item7, item6, item5, item2, item8, item1, item3}; // alpahbetical order
+		AphabeticallySortedCopy = Arrays.asList(AphabeticallySorted);
+		
+		StoredItem[] DepletedSorted = {item7, item4, item5, item6, item3, item8, item2, item1}; //depleted order
+		DepletedSortedCopy = Arrays.asList(DepletedSorted);
 		
 		list = new ItemManager(itemCopies);
 		
@@ -71,6 +82,29 @@ class ItemManagerTest {
 		
 		assertEquals(item.getStockableItem().getStock(), 1, "Composition doesn't protect quantity from being externally updated.");
 		assertEquals(item.getStockableItem().getMax(), 8, "Composition doesn't protect maximum quantity from being externally updated.");
+	}
+	@Test
+	void sortingTests() {
+		ISortingStrategy AplhSorter = new AlphabeticalSorting();
+		ISortingStrategy DepletionSorter = new DepletedSorting();
+		
+		List<StoredItem> sortedItems = AphabeticallySortedCopy;
+		List<StoredItem> test = list.getItems(AplhSorter);
+		
+		for (int i = 0; i < sortedItems.size(); i++) {
+		    StoredItem item1 = sortedItems.get(i);
+		    StoredItem item2 = test.get(i);
+		    assertEquals(item1.getFoodItem().getName(), item2.getFoodItem().getName()); // Compare name
+		}
+		
+		sortedItems = DepletedSortedCopy;
+		test = list.getItems(DepletionSorter);
+		for (int i = 0; i < sortedItems.size(); i++) {
+		    StoredItem item1 = sortedItems.get(i);
+		    StoredItem item2 = test.get(i);
+		    assertEquals(item1.getFoodItem().getName(), item2.getFoodItem().getName()); // Compare name
+		}
+		
 	}
 
 }
