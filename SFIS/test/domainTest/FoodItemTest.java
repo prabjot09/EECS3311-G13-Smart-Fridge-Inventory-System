@@ -22,7 +22,6 @@ class FoodItemTest {
 	@Test
 	public void constructorTest() {
 		FoodItem item = new FoodItem();
-		LocalDate someExpDate = LocalDate.of(2020, 1, 8);
 		assertTrue(item.getName()== null, "Name not set default to null");
 		
 		item = new FoodItem("Pineapple", StockType.CONTINUOUS);
