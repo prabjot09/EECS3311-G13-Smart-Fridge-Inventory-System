@@ -1,6 +1,7 @@
 package domainLayer;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class FridgeItem extends StoredItem{
 	
@@ -39,6 +40,15 @@ public class FridgeItem extends StoredItem{
 	}
 	public LocalDate getExpDate() {
 			return this.expDate;
+	}
+	
+	public boolean isExpiring() {
+		if (LocalDate.now().until(this.expDate, ChronoUnit.WEEKS) < 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }
