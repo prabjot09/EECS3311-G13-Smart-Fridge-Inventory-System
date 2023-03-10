@@ -48,7 +48,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 
 		list = new JList<String>();
 		list.setBackground(Color.gray);
-		list.setFont(new Font("Arial", Font.BOLD, 24));
+		list.setFont(new Font("Arial", Font.BOLD, 20));
 		// list.setPreferredSize(new Dimension(800, 220));
 		// list.setBounds(0,300,1000,500);
 
@@ -82,17 +82,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		DefaultListModel<String> updatedFridgeList = new DefaultListModel<String>();
 		for (StoredItem item : this.displayItems) {
 			FridgeItem newItem = (FridgeItem) item;
-			if (newItem.getExpDate() == null) {
-				updatedFridgeList.addElement(newItem.getDescription());
-			}
-			else if (newItem.isExpiring() == true) {
-				updatedFridgeList.addElement(newItem.getDescription() + " Expiry Date: " + newItem.getExpDate().toString()
-						+ " EXPIRING SOON");
-				
-			}
-			else {
-				updatedFridgeList.addElement(newItem.getDescription() + " Expiry Date: " + newItem.getExpDate().toString());
-			}
+			updatedFridgeList.addElement(newItem.getDescription());
 		}
 
 		stringItemList = updatedFridgeList;

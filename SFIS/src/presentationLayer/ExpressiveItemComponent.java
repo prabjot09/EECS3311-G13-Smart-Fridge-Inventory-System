@@ -30,8 +30,7 @@ import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 
 public class ExpressiveItemComponent extends JPanel implements ActionListener{
-	private JLabel name;
-	private JLabel quantity;
+	private JLabel name, quantity, expiry;
 	private JProgressBar quantityVisual;
 	private StoredItem itemObj;
 	
@@ -90,13 +89,23 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    
 	    name = new JLabel("Name: " + itemObj.getFoodItem().getName());
 	    name.setForeground(Color.white);
-	    name.setFont(new Font("Arial", Font.BOLD, 18));
+	    name.setFont(new Font("Arial", Font.BOLD, 16));
 	    infoPanel.add(name);
 	    
 	    quantity = new JLabel("Quantity: " + itemObj.getStockableItem().getDescription());
 	    quantity.setForeground(Color.white);
-	    quantity.setFont(new Font("Arial", Font.BOLD, 18));
+	    quantity.setFont(new Font("Arial", Font.BOLD, 16));
 	    infoPanel.add(quantity);
+	    
+	    try {
+	    	FridgeItem item = (FridgeItem) itemObj;
+	    	expiry = new JLabel("Best Before: " + item.getExpDate().toString());
+	    	expiry.setForeground(Color.white);
+	    	expiry.setFont(new Font("Arial", Font.BOLD, 16));
+	    	infoPanel.add(expiry);
+	    } catch (Exception e) {
+	    	
+	    }
 	    
 	    JPanel rightPanel = new CustomPanel(this.getBackground(), BoxLayout.X_AXIS);
 	    upperPanel.add(rightPanel, BorderLayout.LINE_END);
@@ -146,6 +155,10 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	public void updateLabel() {
 		name.setText("Name: " + itemObj.getFoodItem().getName());
 		quantity.setText("Quantity: " + itemObj.getStockableItem().getDescription());
+		if (expiry != null) {
+			FridgeItem item = (FridgeItem) itemObj;
+			expiry.setText("Best Before: " + item.getExpDate().toString());
+		}
 		
 		StockableItem stock = this.itemObj.getStockableItem();
 	    int percentQuantity = stock.calculatePercent();

@@ -51,4 +51,15 @@ public class FridgeItem extends StoredItem{
 		}
 	}
 
+	@Override
+	public String getDescription() {
+		if (this.expDate == null)
+			return super.getDescription();
+		
+		String desc = super.getDescription() + ", Exp: " + expDate.toString();
+		if (this.isExpiring()) {
+			desc += " [EXPIRING SOON]";
+		}
+		return desc;
+	}
 }

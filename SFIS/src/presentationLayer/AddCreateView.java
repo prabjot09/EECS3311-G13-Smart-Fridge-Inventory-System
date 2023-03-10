@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import domainLayer.FoodItem.StockType;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.DateInputField;
 import domainLayer.Pair;
 
 public class AddCreateView extends JPanel{
@@ -31,6 +33,7 @@ public class AddCreateView extends JPanel{
 	private JComboBox<String> amountTypeField;
 	
 	private StockInputField amountField;
+	private DateInputField dateField;
 	private JPanel amountPanel;
 	
 	private Component amountEntry;
@@ -72,6 +75,19 @@ public class AddCreateView extends JPanel{
 	    
 	    amountField = new StockInputField();
 	    amountEntry = null;
+	    
+	    JPanel expiryPanel = new CustomPanel(Color.black, null);
+		inputPanel.add(expiryPanel);
+		
+		JLabel expiryLabel = new JLabel("[Optional] Expiry Date: ");
+		expiryLabel.setForeground(Color.white);
+		expiryLabel.setFont(new Font("Arial", Font.BOLD, 24));
+		expiryLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+	    expiryPanel.add(expiryLabel);
+	    
+		dateField = new DateInputField();
+		dateField.setBackground(Color.black);
+		expiryPanel.add(dateField);
 	    
 	    JPanel buttonPanel = new CustomPanel(Color.black, 10);
 		
@@ -119,4 +135,15 @@ public class AddCreateView extends JPanel{
 		amountPanel.repaint();
 	}
 	
+	
+	public LocalDate getDateInput() throws Exception {
+		if (dateField.isUnused()) 
+			return null;
+		
+		LocalDate date = dateField.getDate();
+		if (date == null)
+			throw new Exception();
+		
+		return date;
+	}
 }

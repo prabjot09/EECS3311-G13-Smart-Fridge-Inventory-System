@@ -3,6 +3,7 @@ package presentationLayer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,17 +49,16 @@ public class addWindow extends JFrame implements ActionListener{
 	    panel.add(titleLabel);
 	    panel.setMaximumSize(new Dimension(panel.getMaximumSize().width, panel.getPreferredSize().height));
 	    
+	    JPanel optionsPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER));
+	    this.add(optionsPanel);
+	    
 	    JPanel selectionPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
-	    this.add(selectionPanel);
+	    optionsPanel.add(selectionPanel);
 	    
 	    JRadioButton fromDbOption = new JRadioButton("Select an item from our database.");
 	    fromDbOption.setName("databaseSelect");
 	    JRadioButton manualItemOption = new JRadioButton("Create your own item.");
 	    manualItemOption.setName("manualSelect");
-	    
-	    //back button
-	    backButton = new CustomButton("Back", this);
-	    this.add(backButton);
 	    
 	    ButtonGroup grp = new ButtonGroup();
 	    grp.add(fromDbOption);
@@ -66,6 +66,9 @@ public class addWindow extends JFrame implements ActionListener{
 	    
 	    selectionPanel.add(fromDbOption);
 	    selectionPanel.add(manualItemOption);
+	    
+	    backButton = new CustomButton("Back", this);
+	    selectionPanel.add(backButton);
 	    
 	    fromDbOption.addActionListener(this);
 	    manualItemOption.addActionListener(this);

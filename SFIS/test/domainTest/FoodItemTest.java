@@ -32,9 +32,6 @@ class FoodItemTest {
 		item = new FoodItem("Pineapple", StockType.CONTINUOUS, CreationType.PRESET);
 		assertEquals(item.getCreator(), CreationType.PRESET, "Creation Type not set correctly by constructor.");
 		
-		item = new FoodItem("Pineapple", StockType.CONTINUOUS, LocalDate.of(2020, 1, 8));
-		assertEquals(item.getExpDate(), LocalDate.of(2020, 1, 8), "Exp Date not set correctly by constructor.");
-		
 	}
 	
 	@Test
@@ -56,13 +53,6 @@ class FoodItemTest {
 		item.setCreator(CreationType.PRESET);
 		
 		assertEquals(item.getCreator(), CreationType.PRESET, "CreationType setter is faulty.");
-	}
-	
-	@Test
-	public void getSetExpDateTest() {
-		item.setExpDate(LocalDate.of(2020, 1, 8));
-		
-		assertEquals(item.getExpDate(), LocalDate.of(2020, 1, 8), "ExpDate setter is faulty.");
 	}
 	
 	@Test 

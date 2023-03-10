@@ -2,6 +2,7 @@ package presentationLayer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -64,6 +65,13 @@ public class AddCreateController implements ActionListener {
 		if (this.validateInput() == false)
 			return;
 		
+		LocalDate date;
+		try {
+			date = addCreateView.getDateInput();
+		} catch (Exception e) {
+			return;
+		}
+		
 		FoodItem itemDesc = new FoodItem();
 		itemDesc.setName(this.addCreateView.getItemName());
 		itemDesc.setCreator(FoodItem.CreationType.USER);
@@ -71,10 +79,11 @@ public class AddCreateController implements ActionListener {
 		Pair<StockType, Integer> amountData = this.addCreateView.getAmount();
 		StockableItem stock = StockableItemFactory.createStockableItem(amountData.getA(), amountData.getB());
 		itemDesc.setStockType(amountData.getA());
-		
+
 		FridgeItem item = new FridgeItem();
 		item.setFoodItem(itemDesc);
 		item.setStockableItem(stock);
+		item.setExpDate(date);
 		
 		try {
 			App.getInstance().getInventory().add(item);

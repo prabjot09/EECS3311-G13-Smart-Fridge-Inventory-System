@@ -15,7 +15,7 @@ public class Export {
 		try {
 			//Open printer to create or overwrite file 
 			PrintWriter writeOut = new PrintWriter("GroceryList.txt", "UTF-8");
-			writeOut.println("Gorcery List");
+			writeOut.println("Grocery List");
 			//Iterate through given list to print out names
 			for (StoredItem item : this.items) {
 				outputBuffer = new StringBuilder();
