@@ -23,6 +23,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	private ItemManager inv;
 	private JPanel listView;
 	private JScrollPane scroll;
+	private GroceryListView groceryView;
 	
 	private boolean fridgeFlag;
 	
@@ -48,6 +49,11 @@ public class ExpressiveListView extends JPanel implements ListView{
 		
 		this.fridgeFlag = fridgeFlag;
 		this.generateList(inv.getItems());
+	}
+	
+	public ExpressiveListView(ItemManager inv, boolean fridgeFlag, GroceryListView groceryView) {
+		this(inv, fridgeFlag);
+		this.groceryView = groceryView;
 	}
 	
 	public void generateList(List<StoredItem> items) {
@@ -93,4 +99,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		
 	}
 	
+	public void groceryVisualAdd(StoredItem item) {
+		groceryView.visualAdd(item);
+	}
 }

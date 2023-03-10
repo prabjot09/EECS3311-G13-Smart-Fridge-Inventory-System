@@ -37,6 +37,7 @@ import domainLayer.DepletedSorting;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.ISortingStrategy;
+import domainLayer.GroceryList;
 import domainLayer.StoredItem;
 import domainLayer.UnalphabeticalSorting;
 import domainLayer.FoodItem.StockType;
@@ -53,7 +54,7 @@ public class mainWindow implements ActionListener{
 	
 	// Domain-logic
 	private Fridge inv;
-	
+	private GroceryList groc;
 	// Components required to manage the view for item list
 	private JPanel viewPanel;
 	private JButton viewToggler;
@@ -70,8 +71,9 @@ public class mainWindow implements ActionListener{
 	public mainWindow() {
 	    // create our jframe as usual
 		inv = App.getInstance().getInventory();
-		
+		groc = App.getInstance().getGroceryList();
 		jframe = new JFrame("SFIS");
+		GroceryListView groceryView = new GroceryListView(groc);
 		
 		headerSetup();	 
 	    
@@ -114,8 +116,8 @@ public class mainWindow implements ActionListener{
 	    
 	    // Set up the Item List View Panel
 	    List<ListView> views = new ArrayList<ListView>();
-	    views.add(new CompressedListView(inv));
-	    views.add(new ExpressiveListView(inv, true));
+	    views.add(new CompressedListView(inv, groceryView));
+	    views.add(new ExpressiveListView(inv, true, groceryView));
 	    viewManager = new ListViewManager(views);
 	    viewManager.setSizes(new Dimension(650, 400));
 	    viewPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS);
@@ -159,7 +161,7 @@ public class mainWindow implements ActionListener{
 	    // Grocery List Panel
 	    JPanel rightPanel = new CustomPanel(Color.BLACK, 10);
 	    rightPanel.setPreferredSize(new Dimension(400, 400));
-	    rightPanel.add(new GroceryListView(App.getInstance().getGroceryList()));
+	    rightPanel.add(groceryView);
 	    jframe.add(rightPanel, BorderLayout.EAST);
 	    
 	    // Update DB when closing the window
@@ -168,6 +170,7 @@ public class mainWindow implements ActionListener{
 	    	@Override
 	    	public void windowClosing(WindowEvent e) {
 	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
+	    		DBProxy.getInstance().updateGroceryItems(groc);
 	    	}
 	    });
 	    

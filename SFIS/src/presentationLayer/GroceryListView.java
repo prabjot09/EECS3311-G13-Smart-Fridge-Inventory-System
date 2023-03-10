@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -85,20 +86,28 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    items = this.groceryInv.getItems();
 	    viewListItems = new DefaultListModel<String>();
 	    for (StoredItem item : items) {
-	    	viewListItems.addElement("- "+item.getFoodItem().getName());
+	    	viewListItems.addElement("- " + item.getFoodItem().getName());
 	    }
 	    viewList.setModel(viewListItems);
 	    revalidate();
+	    
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//Remove button functionality 
 		if (e.getSource() == removeGroceryButton) {
+			if (viewList.getSelectedIndex() == -1) {
+				JOptionPane.showMessageDialog(null, "Please select an item in the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			items = groceryInv.getItems();
 			int deleteIndex = viewList.getSelectedIndex();
 			groceryInv.remove(items.get(deleteIndex));
 			viewListItems.remove(deleteIndex);
 			revalidate();
 		}
+		//Export button functionality 
 		if (e.getSource() == exportButton) {
 			if (exportDecision.getSelectedItem() == "Grocery List") {
 				new Export(groceryInv.getItems());
@@ -106,6 +115,15 @@ public class GroceryListView extends JPanel implements ActionListener {
 			if (exportDecision.getSelectedItem() == "Favorites List") {
 				new Export(App.getInstance().getFavorites().getItems());
 			}
+		}
+	}
+	public void visualAdd(StoredItem item) {
+		if (groceryInv.itemIndex(item) != -1) {
+			viewListItems.addElement("- " + item.getFoodItem().getName());
+			revalidate();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Item is not in grocery list and therefore cannot be displayed", "Notice", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

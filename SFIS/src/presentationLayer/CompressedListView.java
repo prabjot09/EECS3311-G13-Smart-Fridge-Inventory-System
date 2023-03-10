@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
 
+import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
@@ -36,6 +37,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private JButton groceryListButton;
 	private List<StoredItem> displayItems;
 	private DefaultListModel<String> stringItemList;
+	private GroceryListView groceryView;
 
 	private JPanel buttonPanel;
 	private boolean buttonPanelFlag;
@@ -75,6 +77,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 
 		this.buttonPanelFlag = true;
 		this.generateList(displayItems);
+	}
+	
+	public CompressedListView(ItemManager inv, GroceryListView groceryView) {
+		this(inv);
+		this.groceryView = groceryView;
 	}
 
 	public void generateList(List<StoredItem> items) {
@@ -129,7 +136,13 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.displayItems.remove(itemIndex);
 			this.stringItemList.remove(itemIndex);
 		} else if (e.getSource() == groceryListButton) {
-			// Add grocery list insertion code
+			int itemIndex = list.getSelectedIndex();
+			try {
+				App.getInstance().getGroceryList().add(this.displayItems.get(itemIndex));
+				groceryView.visualAdd(this.displayItems.get(itemIndex));
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
+			}
 
 		}
 	}

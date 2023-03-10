@@ -16,10 +16,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import appLayer.App;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FridgeItem;
@@ -189,7 +191,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			view.removeItem(this);
 		}
 		else if (clicked == groceryListButton) {
-			// Add grocery list insertion code
+			try {
+				App.getInstance().getGroceryList().add(this.getItemObj());
+				view.groceryVisualAdd(this.getItemObj());
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
+			}
 			
 		}
 	}

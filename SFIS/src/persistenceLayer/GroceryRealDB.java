@@ -11,35 +11,33 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import domainLayer.FavoritesList;
-import domainLayer.FridgeItem;
+import domainLayer.GroceryList;
 import domainLayer.StoredItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
-//Databaswe for our favourites list, very similar to our other 2 databases, probably a better way to do this 
-//as the logic is the same, can just pass a different select form the realdb maybe?
-public class FavoritesRealDB {
+import domainLayer.FridgeItem;
+
+public class GroceryRealDB {
+	
 	DBHelpers helper = new DBHelpers();
-	String url = "jdbc:mysql://localhost:3306/SIFSDB";
-	String select = "use SIFSDB";
-	String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
-	String selectFromFav = "select * from favitem;";
-	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
+	String createGroceryTable = "Create Table if not exists groceryitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
-	String updateFavDrop = "drop table favitem;";
-
-	//each method takes the user and password given at the program launch
-	public FavoritesRealDB() {
-
+	String updateDrop = "drop table groceryitem;";
+	String url = "jdbc:mysql://localhost:3306/SIFSDB";
+	String queryInsert = "insert into groceryitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
+	String select = "use SIFSDB";
+	String selectFrom = "select * from groceryitem;";
+	
+	public GroceryRealDB() {
+		
 	}
-
-	//method to add af avorited item to teh sql database
-	public void addFavItem(StoredItem Fridge, String user, String password) {
+	
+	public void addGroceryItem(FridgeItem Fridge, String user, String password) {
 		String name = Fridge.getFoodItem().getName();
 		int fridgeEnum;
 		int creationEnum;
 		int amount = Fridge.getStockableItem().getStock();
-		LocalDate date = ((FridgeItem) Fridge).getExpDate();
+		LocalDate date = Fridge.getExpDate();
 		if (Fridge.getFoodItem().getStockType() == StockType.values()[0]) {
 			fridgeEnum = 0;
 		} else {
@@ -55,35 +53,33 @@ public class FavoritesRealDB {
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 
-			PreparedStatement statement = con.prepareStatement(queryInsertFav);
+			PreparedStatement statement = con.prepareStatement(queryInsert);
 
-			statement.setString(1, name);
 			statement.setInt(2, fridgeEnum);
+			statement.setString(1, name);
 			statement.setInt(3, amount);
 			statement.setInt(4, creationEnum);
+			statement.setInt(6, amount);
 			if (date == null) {
 				statement.setDate(5, null);
 			} else {
 				statement.setDate(5, Date.valueOf(date));
 			}
-			statement.setInt(6, amount);
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-
-	//loads all the items currently in our persistent storage into a list of storeditems
-	public List<StoredItem> loadFavoritedItems(String user, String password) {
-		List<StoredItem> fav = new ArrayList<StoredItem>();
+	
+	public List<StoredItem> loadGroceryItems(String user, String password) {
+		List<StoredItem> grocery = new ArrayList<StoredItem>();
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 			Statement createState = con.createStatement();
 			createState.execute(select);
 
-			ResultSet rs = createState.executeQuery(selectFromFav);
+			ResultSet rs = createState.executeQuery(selectFrom);
 
 			while (rs.next()) {
 
@@ -94,13 +90,13 @@ public class FavoritesRealDB {
 				LocalDate Date;
 				if (rs.getDate(5) == null) {
 					Date = null;
-				} else {
+				} 
+				else {
 					Date = rs.getDate(5).toLocalDate();
 				}
-
 				FridgeItem item = helper.fridgeItemBuilder(Name, stockEnum, amount, creatEnum, Date);
 
-				fav.add(item);
+				grocery.add(item);
 			}
 
 		}
@@ -109,28 +105,28 @@ public class FavoritesRealDB {
 			e.printStackTrace();
 		}
 
-		return fav;
+		return grocery;
 	}
-//On window close, our program updates ours ql database with teh current contents of the favourites list
-	//drops the table whenver called, probably a better way to do this
-	public void updateFavoritedItems(FavoritesList favorites, String user, String password) {
+
+	public void updateGroceryItems(GroceryList groceries, String user, String password) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 			Statement createState = con.createStatement();
 
-			createState.executeUpdate(updateFavDrop);
-			createState.executeUpdate(createFavTable);
+			createState.executeUpdate(updateDrop);
+			createState.executeUpdate(createGroceryTable);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		for (int x = 0; x < favorites.getItems().size(); x++) {
-			StoredItem itemToAdd = favorites.getItems().get(x);
+		for (int x = 0; x < groceries.getItems().size(); x++) {
+			FridgeItem itemToAdd = (FridgeItem) groceries.getItems().get(x);
 
-			addFavItem(itemToAdd, user, password);
+			addGroceryItem(itemToAdd, user, password);
 
 		}
-
+		
+		
 	}
 }
