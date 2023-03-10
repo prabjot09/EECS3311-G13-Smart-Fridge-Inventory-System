@@ -8,6 +8,9 @@ Dependencies:
  - JUnit 5
  - JDBC 8.0.23
  - MySQL on local machine
+ 
+ ## Database Access
+ As a user, you must use a valid user and password to access the system. Such as username "**root**" and your SQL root password.
 
 ## Usage Instructions
 ### Home Page
