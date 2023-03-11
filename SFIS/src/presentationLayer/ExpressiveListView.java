@@ -42,7 +42,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		this.inv = inv;
 		
 		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(820, 400));
+		//this.setPreferredSize(new Dimension(820, 400));
 		
 		scroll = new JScrollPane();
 		this.add(scroll);

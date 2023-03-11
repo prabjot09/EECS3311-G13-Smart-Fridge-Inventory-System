@@ -1,13 +1,17 @@
 package presentationLayer;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -23,6 +27,7 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 
@@ -45,35 +50,61 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	public CompressedListView(ItemManager inv) {
 		this.inv = inv;
 
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.black);
 		this.displayItems = inv.getItems();
+		
+		GridBagConstraints c = new GridBagConstraints();
 
 		list = new JList<String>();
 		list.setBackground(Color.gray);
-		list.setFont(new Font("Arial", Font.BOLD, 20));
+		list.setFont(new Font("Arial", Font.BOLD, 18));
 		// list.setPreferredSize(new Dimension(800, 220));
 		// list.setBounds(0,300,1000,500);
 
 		scroll = new JScrollPane(list);
+		scroll.setBorder(BorderFactory.createLineBorder(Color.white));
 		// scroll.setPreferredSize(new Dimension(820, 220));
-		this.setBackground(Color.black);
-		this.setPreferredSize(new Dimension(820, 400));
-		this.add(scroll);
+		
+		//this.setPreferredSize(new Dimension(820, 400));
+		JPanel viewPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
+		viewPanel.add(scroll);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.fill = GridBagConstraints.BOTH;
+		this.add(viewPanel, c);
 
-		buttonPanel = new CustomPanel(Color.black, null);
-		this.add(buttonPanel);
+		buttonPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weightx = 1;
+		c.weighty = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		this.add(buttonPanel, c);
 
-		incButton = new CustomButton("Increment", this, 15);
-		buttonPanel.add(incButton);
+		JPanel adjustPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS);
+		buttonPanel.add(adjustPanel, BorderLayout.LINE_END);
+		
+		incButton = new CustomButton("Incr", this, 10);
+		adjustPanel.add(incButton);
+		
+		adjustPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+		
+		decButton = new CustomButton("Decr", this, 10);
+		adjustPanel.add(decButton);
 
-		decButton = new CustomButton("Decrement", this, 15);
-		buttonPanel.add(decButton);
+		adjustPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+		
+		remButton = new CustomButton("Remove", this, 10);
+		adjustPanel.add(remButton);
 
-		remButton = new CustomButton("Remove", this, 15);
-		buttonPanel.add(remButton);
-
-		groceryListButton = new CustomButton("Add to Grocery List", this, 15);
-		buttonPanel.add(groceryListButton);
+		JPanel groceryItemPanel = new CustomPanel(Color.black, new BorderLayout());
+		buttonPanel.add(groceryItemPanel , BorderLayout.LINE_START);
+		
+		groceryListButton = new CustomButton("Add to Grocery List", this, 10);
+		groceryItemPanel.add(groceryListButton);
 
 		this.buttonPanelFlag = true;
 		this.generateList(displayItems);

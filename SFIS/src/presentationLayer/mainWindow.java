@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -73,12 +76,13 @@ public class mainWindow implements ActionListener{
 		inv = App.getInstance().getInventory();
 		groc = App.getInstance().getGroceryList();
 		jframe = new JFrame("SFIS");
+		jframe.getContentPane().setLayout(new BorderLayout());
 		GroceryListView groceryView = new GroceryListView(groc);
 		
 		headerSetup();	 
 	    
 	    // START: Search and Item List Panel
-	    JPanel searchPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 20);
+	    JPanel searchPanel = new CustomPanel(Color.black, new GridBagLayout(), 20);
 	    //searchPanel.setBounds(0,100,1000,500);
 	    jframe.add(searchPanel);
 	    
@@ -87,13 +91,27 @@ public class mainWindow implements ActionListener{
 	    
 	    viewLayerSetup(searchPanel, groceryView);
 	    
+	    GridBagConstraints c = new GridBagConstraints();
+	    
+	    JPanel midPanel = new CustomPanel(Color.black, null);
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c.gridx = 1;
+	    c.gridy = 1;
+	    c.weightx = 0.05;
+	    searchPanel.add(midPanel, c);
+	    
+	    c.fill = GridBagConstraints.BOTH;
+	    c.gridx = 2;
+	    c.gridy = 1;
+	    c.weightx = 0.33;
+	    c.weighty = 1;
 	    // Grocery List Panel
-	    JPanel rightPanel = new CustomPanel(Color.BLACK, null);
-	    JPanel wrapper = new CustomPanel(Color.black, new BorderLayout(), 15);
-	    rightPanel.add(wrapper);
+	    JPanel rightPanel = new CustomPanel(Color.BLACK, new BorderLayout(), 5);
+	    //rightPanel.setBorder(BorderFactory.createLineBorder(Color.red));
 	    //rightPanel.setPreferredSize(new Dimension(400, 400));
-	    wrapper.add(groceryView);
-	    jframe.add(rightPanel, BorderLayout.EAST);
+	    rightPanel.add(groceryView);
+	    //groceryView.setBorder(BorderFactory.createLineBorder(Color.blue));
+	    searchPanel.add(rightPanel, c);
 	    
 	    // Update DB when closing the window
 	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,65 +146,115 @@ public class mainWindow implements ActionListener{
 	
 	public void topLayerSetup(JPanel parent) {
 		// START: Item Search Panel
-	    JPanel topPanel = new CustomPanel(Color.black, null);
-	    parent.add(topPanel);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 0.62;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+	    JPanel topPanel = new CustomPanel(Color.black, new GridBagLayout(), 10);
+	    parent.add(topPanel, c);
 	    
+	    JLabel searchLabel = new JLabel("Search Item:  ");
+	    searchLabel.setFont(new Font("Arial", Font.BOLD, 16));
+	    searchLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    searchLabel.setForeground(Color.white);
+	    c.weightx = 0;
+	    c.fill = GridBagConstraints.NONE;
+	    topPanel.add(searchLabel, c);
+	    
+	    JPanel searchFieldWrapper = new CustomPanel(Color.black, new BorderLayout());
 	    search = new JTextField();
 	    search.setFont(new Font("Arial", Font.PLAIN, 16));
 	    search.setBackground(Color.gray);
-	    search.setBounds(0,100,300,500);
-	    search.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-	    search.setPreferredSize(new Dimension(300,50));
-	    topPanel.add(search);
+	    searchFieldWrapper.add(search);
+	    //search.setBounds(0,100,300,500);
+	    search.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    //search.setPreferredSize(new Dimension(300,50));
+	    c.gridx = 1;
+	    c.gridy = 0;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c.weightx = 1;
+	    topPanel.add(searchFieldWrapper, c);
 	    
-	    searchButton = new CustomButton("Search", this, 50, 100);
-	    topPanel.add(searchButton);
+	    JPanel buttonWrapper = new CustomPanel(Color.black, null);
+	    searchButton = new CustomButton("Search", this, 10);
+	    buttonWrapper.add(searchButton);
+	    c.gridx = 2;
+	    c.gridy = 0;
+	    c.weightx = 0;
+	    topPanel.add(buttonWrapper, c);
 	    
-	    addButton = new CustomButton("+", this, 50, 50);
-	    topPanel.add(addButton);
+	    addButton = new CustomButton("Add Item", this, 10);
+	    c.gridx = 3;
+	    c.gridy = 0;
+	    topPanel.add(addButton, c);
 	    
-	    favoritesButton = new CustomButton("Favorites List", this, 15);
-	    topPanel.add(favoritesButton);
+	    
+	    JPanel midPanel = new CustomPanel(Color.black, null);
+	    c.gridx = 1;
+	    c.gridy = 0;
+	    c.weightx = 0.05;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    parent.add(midPanel, c);
+	    
+	    JPanel topPanel2 = new CustomPanel(Color.black, new BorderLayout(), 10);
+	    c.gridx = 2;
+	    c.gridy = 0;
+	    c.weightx = 0.33;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    parent.add(topPanel2, c);
+	    
+	    favoritesButton = new CustomButton("Favorites List", this, 10);
+	    topPanel2.add(favoritesButton, BorderLayout.LINE_START);
 	    // END: Search Panel
 	    
 	    // Set up View Toggler Button
 	    compressedIcon = new ImageIcon("resources/CompressedViewIcon.png");
-	    compressedIcon = new ImageIcon(compressedIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
+	    compressedIcon = new ImageIcon(compressedIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 	    expressiveIcon = new ImageIcon("resources/ExpressiveViewIcon.png");
-	    expressiveIcon = new ImageIcon(expressiveIcon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH));
-	    viewToggler = new CustomButton(null, this, 50, 50);
+	    expressiveIcon = new ImageIcon(expressiveIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+	    viewToggler = new CustomButton(null, this, 3);
 	    viewToggler.setIcon(expressiveIcon);
-	    viewToggler.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	    topPanel.add(viewToggler);
+	    //viewToggler.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    topPanel2.add(viewToggler, BorderLayout.LINE_END);
 	}
 	
 	
 	public void viewLayerSetup(JPanel parent, GroceryListView groceryView) {
 		// Set up the Item List View Panel
+		GridBagConstraints c = new GridBagConstraints();
+				
 	    List<ListView> views = new ArrayList<ListView>();
 	    views.add(new CompressedListView(inv, groceryView));
 	    views.add(new ExpressiveListView(inv, true, groceryView));
 	    viewManager = new ListViewManager(views);
-	    viewManager.setSizes(new Dimension(650, 400));
-	    viewPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS);
+	    viewManager.setSizes(new Dimension(750, 400));
+	    viewPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);
 	    
 	    JPanel labelPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
-	    viewPanel.add(labelPanel);
+	    c.gridx = 0;
+	    c.gridy = 0;
+	    c.weightx = 1;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    viewPanel.add(labelPanel, c);
 	    
-	    JLabel viewLabel = new JLabel("Your Fridge Items: ");
+	    JLabel viewLabel = new JLabel("Your Fridge Items");
 	    viewLabel.setForeground(Color.white);
-	    viewLabel.setFont(new Font("Arial", Font.BOLD, 18));
+	    viewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    viewLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    labelPanel.add(viewLabel, BorderLayout.LINE_START);
 	    
-	    JPanel sortPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS, 15);
+	    JPanel sortPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS);
 	    labelPanel.add(sortPanel, BorderLayout.LINE_END);
 	    
 	    JLabel sortLabel = new JLabel("Sort By: ");
 	    sortLabel.setForeground(Color.white);
-	    sortLabel.setFont(new Font("Arial", Font.BOLD, 18));
-	    sortLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    sortLabel.setFont(new Font("Arial", Font.BOLD, 16));
+	    //sortLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    sortPanel.add(sortLabel);
+	    
+	    sortPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 	    
 	    String[] values = {"Alphabetial", "Reverse Alphabetical", "Depletion"};
 	    sortMethodMap = new HashMap<>();
@@ -194,16 +262,25 @@ public class mainWindow implements ActionListener{
 	    sortMethodMap.put(values[1], new UnalphabeticalSorting());
 	    sortMethodMap.put(values[2], new DepletedSorting());
 	    sortMethodType = new JComboBox<String>(values);
-	    sortMethodType.setFont(new Font("Arial", Font.PLAIN, 14));
+	    //sortMethodType.setFont(new Font("Arial", Font.PLAIN, 14));
 	    //sortMethodType.setPreferredSize(new Dimension(300,50));
 	    sortMethodType.addActionListener(this);
 	    sortPanel.add(sortMethodType);
 	    
-	    viewPanel.add((JPanel) viewManager.getCurrentView());
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    c.weightx = 1;
+	    c.weighty = 1;
+	    c.fill = GridBagConstraints.BOTH;
+	    //((JPanel) viewManager.getCurrentView()).setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    viewPanel.add((JPanel) viewManager.getCurrentView(), c);
 	    
-	    
-	    
-	    parent.add(viewPanel);
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    c.weighty = 1;
+	    c.weightx = 0.62;
+	    c.fill = GridBagConstraints.BOTH;
+	    parent.add(viewPanel, c);
 	    // END: Search and Item List Panel
 	}
 	
@@ -244,7 +321,12 @@ public class mainWindow implements ActionListener{
 		viewManager.toggle();
 		viewManager.getCurrentView().generateList(inv.getItems());
 		
-		viewPanel.add((JPanel) viewManager.getCurrentView());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+	    c.gridy = 1;
+	    c.weighty = 1;
+	    c.fill = GridBagConstraints.BOTH;
+		viewPanel.add((JPanel) viewManager.getCurrentView(), c);
 		viewPanel.revalidate();
 		viewPanel.repaint();
 	}

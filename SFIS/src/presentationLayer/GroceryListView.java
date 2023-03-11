@@ -17,10 +17,14 @@ import appLayer.App;
 import domainLayer.Export;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,51 +41,71 @@ public class GroceryListView extends JPanel implements ActionListener {
 	
 	public GroceryListView(ItemManager inv) {
 		this.groceryInv = inv;
-	    this.setBounds(0, 0, 500, 500);
-	    this.setBackground(Color.WHITE);
-	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	    //this.setBounds(0, 0, 500, 500);
+	    this.setBackground(Color.BLACK);
+	    this.setLayout(new GridBagLayout());
+	    
+	    GridBagConstraints c = new GridBagConstraints();
+	    
+	    JPanel topPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
+	    c.gridx = 0;
+	    c.gridy = 0;
+	    c.weightx = 1;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    this.add(topPanel, c);
 	    
 	    //Panel for the title 
-	    JPanel titlePanel = new JPanel();
-	    titlePanel.setBackground(Color.BLACK);
-	    titlePanel.setBorder(BorderFactory.createEmptyBorder(10,10,17,10));
-	    this.add(titlePanel);
+	    JPanel titlePanel = new CustomPanel(Color.black, 0);
+	    topPanel.add(titlePanel, BorderLayout.LINE_START);
 	    //Title 
 	    JLabel groceryTitle = new JLabel("Your Grocery List");
 	    groceryTitle.setForeground(Color.white);
-	    groceryTitle.setFont(new Font("Arial", Font.PLAIN, 26));
+	    groceryTitle.setFont(new Font("Arial", Font.BOLD, 16));
 	    titlePanel.add(groceryTitle);
 	    
-	    //Grocery viewing 
-	    viewList = new JList<String>();
-	    viewList.setBackground(Color.GRAY);
-	    viewList.setFont(new Font("Arial", Font.BOLD, 14));
-	    JScrollPane scrollViewingPane = new JScrollPane(viewList);
-	    scrollViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-	    scrollViewingPane.setPreferredSize(new Dimension(400,280));
-	    this.add(scrollViewingPane);
-	    
-	    //Panel for buttons
-	    JPanel buttonsPanel = new JPanel();
-	    buttonsPanel.setBackground(Color.BLACK);
-	    buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-	    buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
-	    this.add(buttonsPanel);
-	    //Remove grocery button
-	    removeGroceryButton = new JButton("Remove Grocery");
-	    removeGroceryButton.setPreferredSize(new Dimension(135,20));
-	    removeGroceryButton.addActionListener(this);
-	    buttonsPanel.add(removeGroceryButton);
-	    //Export choices combo box
 	    String exportChoices[] = {"Grocery List", "Favorites List"};
 	    exportDecision = new JComboBox<String>(exportChoices);
-	    exportDecision.setPreferredSize(new Dimension(110,20));
-	    buttonsPanel.add(exportDecision);
+	    //exportDecision.setPreferredSize(new Dimension(110,20));
+	    topPanel.add(exportDecision, BorderLayout.LINE_END);
+	    
+	    //Grocery viewing  
+	    viewList = new JList<String>();
+	    viewList.setBackground(Color.GRAY);
+	    viewList.setFont(new Font("Arial", Font.BOLD, 18));
+	    JScrollPane scrollViewingPane = new JScrollPane(viewList);
+	    scrollViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+	    //scrollViewingPane.setPreferredSize(new Dimension(400,280));
+	    
+	    JPanel viewWrapper = new CustomPanel(Color.black, new BorderLayout(), 5);
+	    viewWrapper.add(scrollViewingPane);
+	    
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    c.weightx = 1;
+	    c.weighty = 1;
+	    c.fill = GridBagConstraints.BOTH;
+	    this.add(viewWrapper, c);
+	    
+	    //Panel for buttons
+	    JPanel buttonsPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
+	    c.gridx = 0;
+	    c.gridy = 2;
+	    c.weightx = 1;
+	    c.weighty = 0;
+	    c.fill = GridBagConstraints.HORIZONTAL;
+	    this.add(buttonsPanel, c);
+	    //Remove grocery button
+	    removeGroceryButton = new JButton("Remove Grocery Item");
+	    removeGroceryButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    removeGroceryButton.addActionListener(this);
+	    buttonsPanel.add(removeGroceryButton, BorderLayout.LINE_END);
+	    //Export choices combo box
+	    
 	    //Export Button
 	    exportButton = new JButton("Export");
-	    exportButton.setPreferredSize(new Dimension(75,20));
+	    exportButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	    exportButton.addActionListener(this);
-	    buttonsPanel.add(exportButton);
+	    buttonsPanel.add(exportButton, BorderLayout.LINE_START);
 	    
 	    //Grocery dynamic view
 	    items = this.groceryInv.getItems();
