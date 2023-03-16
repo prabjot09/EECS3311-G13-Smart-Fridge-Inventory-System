@@ -18,6 +18,7 @@ import domainLayer.Export;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.GridConstraintsSpec;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -48,10 +49,7 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    GridBagConstraints c = new GridBagConstraints();
 	    
 	    JPanel topPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
-	    c.gridx = 0;
-	    c.gridy = 0;
-	    c.weightx = 1;
-	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.HORIZONTAL);
 	    this.add(topPanel, c);
 	    
 	    //Panel for the title 
@@ -79,20 +77,12 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    JPanel viewWrapper = new CustomPanel(Color.black, new BorderLayout(), 5);
 	    viewWrapper.add(scrollViewingPane);
 	    
-	    c.gridx = 0;
-	    c.gridy = 1;
-	    c.weightx = 1;
-	    c.weighty = 1;
-	    c.fill = GridBagConstraints.BOTH;
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.BOTH);
 	    this.add(viewWrapper, c);
 	    
 	    //Panel for buttons
 	    JPanel buttonsPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
-	    c.gridx = 0;
-	    c.gridy = 2;
-	    c.weightx = 1;
-	    c.weighty = 0;
-	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 0, GridBagConstraints.HORIZONTAL);
 	    this.add(buttonsPanel, c);
 	    //Remove grocery button
 	    removeGroceryButton = new JButton("Remove Grocery Item");

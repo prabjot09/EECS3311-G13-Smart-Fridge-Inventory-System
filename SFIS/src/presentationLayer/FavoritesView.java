@@ -142,12 +142,12 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 	    
 	    JLabel quantityLabel = new JLabel("Item Quantity: ");
 	    quantityLabel.setForeground(Color.white);
-	    quantityLabel.setFont(new Font("Arial", Font.BOLD, 20));
+	    quantityLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    quantityPanel.add(quantityLabel);
 	    
 	    quantityInput = new StockInputField();
 	    
-	    addButton = new CustomButton("Add to Favorites List", this);
+	    addButton = new CustomButton("Add to Favorites List", this, 10);
 	    addButton.setEnabled(false);
 	    inputPanel.add(addButton);
 	}

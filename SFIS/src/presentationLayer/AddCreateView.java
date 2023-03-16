@@ -26,6 +26,7 @@ import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.DateInputField;
+import presentationLayer.swingExtensions.LabelledInputField;
 import domainLayer.Pair;
 
 public class AddCreateView extends JPanel{
@@ -45,23 +46,9 @@ public class AddCreateView extends JPanel{
 		JPanel inputPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
 		this.add(inputPanel);
 	    
-		JPanel namePanel = new CustomPanel(Color.black, null);
+	    LabelledInputField namePanel = new LabelledInputField(Color.black, Color.white, "Item Name: ", 24, 16, 15);
 		inputPanel.add(namePanel);
-		
-		JLabel nameLabel = new JLabel("Item Name: ");
-	    nameLabel.setForeground(Color.white);
-	    nameLabel.setFont(new Font("Arial", Font.BOLD, 24));
-	    nameLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-	    namePanel.add(nameLabel);
-	    
-		JTextField nameField = new JTextField("");
-		nameField.setFont(new Font("Arial", Font.PLAIN, 16));
-		nameField.setBackground(Color.gray);
-		nameField.setBounds(0,100,300,500);
-	    nameField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		nameField.setPreferredSize(new Dimension(300,50));
-	    this.nameField = nameField;
-	    namePanel.add(nameField);
+		this.nameField = namePanel.getTextField();
 	    
 	    amountPanel = new CustomPanel(Color.black, null);
 	    inputPanel.add(amountPanel);

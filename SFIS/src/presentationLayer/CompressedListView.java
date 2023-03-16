@@ -30,6 +30,7 @@ import domainLayer.StoredItem;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.GridConstraintsSpec;
 
 public class CompressedListView extends JPanel implements ActionListener, ListView {
 
@@ -59,29 +60,17 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		list = new JList<String>();
 		list.setBackground(Color.gray);
 		list.setFont(new Font("Arial", Font.BOLD, 18));
-		// list.setPreferredSize(new Dimension(800, 220));
-		// list.setBounds(0,300,1000,500);
 
 		scroll = new JScrollPane(list);
 		scroll.setBorder(BorderFactory.createLineBorder(Color.white));
-		// scroll.setPreferredSize(new Dimension(820, 220));
-		
-		//this.setPreferredSize(new Dimension(820, 400));
+
 		JPanel viewPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
 		viewPanel.add(scroll);
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.fill = GridBagConstraints.BOTH;
+		c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH);
 		this.add(viewPanel, c);
 
 		buttonPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 0, GridBagConstraints.HORIZONTAL);
 		this.add(buttonPanel, c);
 
 		JPanel adjustPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS);

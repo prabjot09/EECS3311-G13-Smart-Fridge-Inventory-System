@@ -30,6 +30,7 @@ import domainLayer.StoredItem;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.GridConstraintsSpec;
 
 public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private JLabel name, quantity, expiry;
@@ -136,23 +137,23 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    GridBagConstraints c = new GridBagConstraints();
 	    this.add(quantityPanel);
 	    	    
-	    c.fill = GridBagConstraints.HORIZONTAL;
-	    c.weightx = 1.0;
 	    quantityVisual = new JProgressBar(SwingConstants.HORIZONTAL);
 	    quantityVisual.setStringPainted(true);
 	    quantityVisual.setForeground(Color.BLUE);
 	    StockableItem stock = this.itemObj.getStockableItem();
 	    int percentQuantity = stock.calculatePercent();
 	    quantityVisual.setValue(percentQuantity);
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.HORIZONTAL);
 	    quantityPanel.add(quantityVisual, c);
 	    
-	    c.weightx = 0.06;
-	    c.weighty = 1.0;
-	    c.insets = new Insets(0, 12, 0, 0);
 	    incButton = new CustomButton("+", this, 5);
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 0, 0.06, 1, GridBagConstraints.HORIZONTAL);
+	    c.insets = new Insets(0, 12, 0, 0);
 	    quantityPanel.add(incButton, c);
 	    
 	    decButton = new CustomButton("-", this, 5);
+	    c = GridConstraintsSpec.stretchableFillConstraints(2, 0, 0.06, 1, GridBagConstraints.HORIZONTAL);
+	    c.insets = new Insets(0, 12, 0, 0);
 	    quantityPanel.add(decButton, c);
 	}
 	

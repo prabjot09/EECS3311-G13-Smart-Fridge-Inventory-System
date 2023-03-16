@@ -47,6 +47,8 @@ import domainLayer.FoodItem.StockType;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.GridConstraintsSpec;
+import presentationLayer.swingExtensions.LabelledInputField;
 
 public class mainWindow implements ActionListener{	
 	// Input Components
@@ -94,23 +96,13 @@ public class mainWindow implements ActionListener{
 	    GridBagConstraints c = new GridBagConstraints();
 	    
 	    JPanel midPanel = new CustomPanel(Color.black, null);
-	    c.fill = GridBagConstraints.HORIZONTAL;
-	    c.gridx = 1;
-	    c.gridy = 1;
-	    c.weightx = 0.05;
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 1, 0.05, 0, GridBagConstraints.HORIZONTAL);
 	    searchPanel.add(midPanel, c);
 	    
-	    c.fill = GridBagConstraints.BOTH;
-	    c.gridx = 2;
-	    c.gridy = 1;
-	    c.weightx = 0.33;
-	    c.weighty = 1;
 	    // Grocery List Panel
 	    JPanel rightPanel = new CustomPanel(Color.BLACK, new BorderLayout(), 5);
-	    //rightPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-	    //rightPanel.setPreferredSize(new Dimension(400, 400));
 	    rightPanel.add(groceryView);
-	    //groceryView.setBorder(BorderFactory.createLineBorder(Color.blue));
+	    c = GridConstraintsSpec.stretchableFillConstraints(2, 1, 0.33, 1, GridBagConstraints.BOTH);
 	    searchPanel.add(rightPanel, c);
 	    
 	    // Update DB when closing the window
@@ -147,62 +139,35 @@ public class mainWindow implements ActionListener{
 	public void topLayerSetup(JPanel parent) {
 		// START: Item Search Panel
 		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 0.62;
-		c.fill = GridBagConstraints.HORIZONTAL;
 		
 	    JPanel topPanel = new CustomPanel(Color.black, new GridBagLayout(), 10);
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 0.62, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(topPanel, c);
 	    
-	    JLabel searchLabel = new JLabel("Search Item:  ");
-	    searchLabel.setFont(new Font("Arial", Font.BOLD, 16));
-	    searchLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	    searchLabel.setForeground(Color.white);
-	    c.weightx = 0;
-	    c.fill = GridBagConstraints.NONE;
-	    topPanel.add(searchLabel, c);
+	    LabelledInputField searchInputPanel = new LabelledInputField(Color.black, Color.white, "Search Item:", 16, 16, 0);
+	    searchInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.BOTH);
+	    topPanel.add(searchInputPanel, c);
 	    
-	    JPanel searchFieldWrapper = new CustomPanel(Color.black, new BorderLayout());
-	    search = new JTextField();
-	    search.setFont(new Font("Arial", Font.PLAIN, 16));
-	    search.setBackground(Color.gray);
-	    searchFieldWrapper.add(search);
-	    //search.setBounds(0,100,300,500);
-	    search.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	    //search.setPreferredSize(new Dimension(300,50));
-	    c.gridx = 1;
-	    c.gridy = 0;
-	    c.fill = GridBagConstraints.HORIZONTAL;
-	    c.weightx = 1;
-	    topPanel.add(searchFieldWrapper, c);
+	    this.search = searchInputPanel.getTextField();
 	    
 	    JPanel buttonWrapper = new CustomPanel(Color.black, null);
 	    searchButton = new CustomButton("Search", this, 10);
 	    buttonWrapper.add(searchButton);
-	    c.gridx = 2;
-	    c.gridy = 0;
-	    c.weightx = 0;
+	    c = GridConstraintsSpec.coordinateConstraints(1, 0);
 	    topPanel.add(buttonWrapper, c);
 	    
 	    addButton = new CustomButton("Add Item", this, 10);
-	    c.gridx = 3;
-	    c.gridy = 0;
+	    c = GridConstraintsSpec.coordinateConstraints(2, 0);
 	    topPanel.add(addButton, c);
 	    
 	    
 	    JPanel midPanel = new CustomPanel(Color.black, null);
-	    c.gridx = 1;
-	    c.gridy = 0;
-	    c.weightx = 0.05;
-	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 0, 0.05, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(midPanel, c);
 	    
 	    JPanel topPanel2 = new CustomPanel(Color.black, new BorderLayout(), 10);
-	    c.gridx = 2;
-	    c.gridy = 0;
-	    c.weightx = 0.33;
-	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c = GridConstraintsSpec.stretchableFillConstraints(2, 0, 0.33, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(topPanel2, c);
 	    
 	    favoritesButton = new CustomButton("Favorites List", this, 10);
@@ -233,10 +198,7 @@ public class mainWindow implements ActionListener{
 	    viewPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);
 	    
 	    JPanel labelPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
-	    c.gridx = 0;
-	    c.gridy = 0;
-	    c.weightx = 1;
-	    c.fill = GridBagConstraints.HORIZONTAL;
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.HORIZONTAL);
 	    viewPanel.add(labelPanel, c);
 	    
 	    JLabel viewLabel = new JLabel("Your Fridge Items");
@@ -266,20 +228,10 @@ public class mainWindow implements ActionListener{
 	    //sortMethodType.setPreferredSize(new Dimension(300,50));
 	    sortMethodType.addActionListener(this);
 	    sortPanel.add(sortMethodType);
-	    
-	    c.gridx = 0;
-	    c.gridy = 1;
-	    c.weightx = 1;
-	    c.weighty = 1;
-	    c.fill = GridBagConstraints.BOTH;
-	    //((JPanel) viewManager.getCurrentView()).setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.BOTH);
 	    viewPanel.add((JPanel) viewManager.getCurrentView(), c);
 	    
-	    c.gridx = 0;
-	    c.gridy = 1;
-	    c.weighty = 1;
-	    c.weightx = 0.62;
-	    c.fill = GridBagConstraints.BOTH;
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 0.62, 1, GridBagConstraints.BOTH);
 	    parent.add(viewPanel, c);
 	    // END: Search and Item List Panel
 	}
