@@ -144,7 +144,7 @@ public class mainWindow implements ActionListener{
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 0.62, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(topPanel, c);
 	    
-	    LabelledInputField searchInputPanel = new LabelledInputField(Color.black, Color.white, "Search Item:", 16, 16, 0);
+	    LabelledInputField searchInputPanel = new LabelledInputField(Color.black, Color.white, "Search Item:", 16, 16, 5);
 	    searchInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.BOTH);
 	    topPanel.add(searchInputPanel, c);
@@ -224,8 +224,6 @@ public class mainWindow implements ActionListener{
 	    sortMethodMap.put(values[1], new UnalphabeticalSorting());
 	    sortMethodMap.put(values[2], new DepletedSorting());
 	    sortMethodType = new JComboBox<String>(values);
-	    //sortMethodType.setFont(new Font("Arial", Font.PLAIN, 14));
-	    //sortMethodType.setPreferredSize(new Dimension(300,50));
 	    sortMethodType.addActionListener(this);
 	    sortPanel.add(sortMethodType);
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.BOTH);
@@ -256,9 +254,9 @@ public class mainWindow implements ActionListener{
 		}
 		else if (e.getSource() == this.sortMethodType) {
 			ISortingStrategy strat = this.sortMethodMap.get((String) sortMethodType.getSelectedItem());
-			List<StoredItem> sortedList = strat.sortItems(App.getInstance().getInventory().getItems());
-			App.getInstance().getInventory().setItems(sortedList);
-			viewManager.setViewLists(App.getInstance().getInventory().getItems());
+			App.getInstance().getInventory().setSortingStrategy(strat);
+			App.getInstance().getInventory().sort();
+			this.reloadLists();
 		}
 	}
 	
@@ -274,10 +272,7 @@ public class mainWindow implements ActionListener{
 		viewManager.getCurrentView().generateList(inv.getItems());
 		
 		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = 0;
-	    c.gridy = 1;
-	    c.weighty = 1;
-	    c.fill = GridBagConstraints.BOTH;
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 0, 1, GridBagConstraints.BOTH);
 		viewPanel.add((JPanel) viewManager.getCurrentView(), c);
 		viewPanel.revalidate();
 		viewPanel.repaint();

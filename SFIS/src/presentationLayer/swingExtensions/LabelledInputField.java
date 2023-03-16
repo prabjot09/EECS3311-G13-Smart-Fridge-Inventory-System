@@ -23,19 +23,13 @@ public class LabelledInputField extends JPanel{
 		JLabel inputLabel = new JLabel(label);
 		inputLabel.setForeground(fontColor);
 		inputLabel.setFont(new Font("Arial", Font.BOLD, fontSize));
-	    c.gridx = 0;
-	    c.gridy = 0;
-	    c.fill = GridBagConstraints.HORIZONTAL;
-	    c.weightx = 0.36;
+		c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 0.1, 1, GridBagConstraints.BOTH);
 	    this.add(inputLabel, c);
 	    
 		inputText = new JTextField("");
 		inputText.setFont(new Font("Arial", Font.PLAIN, fontSize));
 		inputText.setBackground(Color.gray);
-	    c.gridx = 1;
-	    c.gridy = 0;
-	    c.fill = GridBagConstraints.HORIZONTAL;
-	    c.weightx = 0.64;
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 0, 0.9, 1, GridBagConstraints.BOTH);
 	    this.add(inputText, c);
 	}
 	
@@ -48,22 +42,14 @@ public class LabelledInputField extends JPanel{
 		inputLabel.setForeground(fontColor);
 		inputLabel.setFont(new Font("Arial", Font.BOLD, labelFontSize));
 		inputLabel.setBorder(BorderFactory.createEmptyBorder(pad, pad, pad, pad));
-	    c.gridx = 0;
-	    c.gridy = 0;
-	    c.fill = GridBagConstraints.HORIZONTAL;
-	    c.weightx = 0.15;
-	    c.weighty = 1;
+		c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 0.1, 1, GridBagConstraints.BOTH);
 	    this.add(inputLabel, c);
 	    
 	    inputText = new JTextField("");
 		inputText.setFont(new Font("Arial", Font.PLAIN, inputFontSize));
 		inputText.setBackground(Color.gray);
 		inputText.setBorder(BorderFactory.createEmptyBorder(pad, pad, pad, pad));
-	    c.gridx = 1;
-	    c.gridy = 0;
-	    c.fill = GridBagConstraints.BOTH;
-	    c.weightx = 0.85;
-	    c.weighty = 1;
+		c = GridConstraintsSpec.stretchableFillConstraints(1, 0, 0.9, 1, GridBagConstraints.BOTH);
 	    this.add(inputText, c);
 	}
 

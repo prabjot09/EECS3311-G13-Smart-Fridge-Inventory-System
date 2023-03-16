@@ -177,11 +177,13 @@ class ItemManagerTest {
 	}
 	@Test
 	void sortingTests() {
-		ISortingStrategy AplhSorter = new AlphabeticalSorting();
+		ISortingStrategy AlphSorter = new AlphabeticalSorting();
 		ISortingStrategy DepletionSorter = new DepletedSorting();
 		
 		List<StoredItem> sortedItems = AphabeticallySortedCopy;
-		List<StoredItem> test = list.getItems(AplhSorter);
+		list.setSortingStrategy(AlphSorter);
+		list.sort();
+		List<StoredItem> test = list.getItems();
 		
 		for (int i = 0; i < sortedItems.size(); i++) {
 		    StoredItem item1 = sortedItems.get(i);
@@ -190,7 +192,9 @@ class ItemManagerTest {
 		}
 		
 		sortedItems = DepletedSortedCopy;
-		test = list.getItems(DepletionSorter);
+		list.setSortingStrategy(DepletionSorter);
+		list.sort();
+		test = list.getItems();
 		for (int i = 0; i < sortedItems.size(); i++) {
 		    StoredItem item1 = sortedItems.get(i);
 		    StoredItem item2 = test.get(i);

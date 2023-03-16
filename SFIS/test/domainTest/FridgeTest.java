@@ -78,7 +78,8 @@ public class FridgeTest {
 		}
 		
 		List<StoredItem> expiring = list.getExpiringItems();
-		list.setItems(list.getItems(new AlphabeticalSorting()));
+		list.setSortingStrategy(new AlphabeticalSorting());
+		list.sort();
 		List<StoredItem> topList =  list.getItems().subList(0, 3);
 		assertEquals(expiring.size(), 3, "Expiry of new item addition not accounted for.");
 		

@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ItemManager implements Inventory {
 	private List<StoredItem> items;
+	private ISortingStrategy sortStrat;
 
 	public ItemManager() {
 		
@@ -24,10 +25,6 @@ public class ItemManager implements Inventory {
 	    return items;
 	}
 	
-	public List<StoredItem> getItems(ISortingStrategy sortingStrategy){
-		List<StoredItem> sortedItems = sortingStrategy.sortItems(new ArrayList<>(this.items));
-		return sortedItems;
-	}
 
 	public void setItems(List<StoredItem> items) {
 		this.items = new ArrayList<StoredItem>();
@@ -35,7 +32,19 @@ public class ItemManager implements Inventory {
 	        this.items.add(item.copy());
 	    }
 	}
+	
+	
+	public void setSortingStrategy(ISortingStrategy sortStrat) {
+		this.sortStrat = sortStrat;
+	}
+	
+	
+	public void sort() {
+		List<StoredItem> sortedList = this.sortStrat.sortItems(this.getItems());
+		this.setItems(sortedList);
+	}
 
+	
 	@Override
 	public List<StoredItem> search(String name) {
 		FoodItem description = new FoodItem();
@@ -60,6 +69,9 @@ public class ItemManager implements Inventory {
 		}
 		
 		items.add(item.copy());
+		if (sortStrat != null) {
+			sort();
+		}
 	}
 
 	@Override

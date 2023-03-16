@@ -11,8 +11,8 @@ public class AlphabeticalSorting implements ISortingStrategy{
 	    List<StoredItem> sorted = new ArrayList<>(items);
 	    Collections.sort(sorted, new Comparator<StoredItem>() {
 	        public int compare(StoredItem item1, StoredItem item2) {
-	            String name1 = item1.getFoodItem().getName();
-	            String name2 = item2.getFoodItem().getName();
+	            String name1 = item1.getFoodItem().getName().toLowerCase();
+	            String name2 = item2.getFoodItem().getName().toLowerCase();
 	            return name1.compareTo(name2);
 	        }
 	    });
