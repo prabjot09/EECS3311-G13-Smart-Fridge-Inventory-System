@@ -63,5 +63,14 @@ class FavoritesListTest {
 		assertTrue(matchedItems.contains("Pizza - Slices"), "Misses a matching item");
 		assertTrue(matchedItems.contains("Carrots"), "Misses a matching item");
 	}
+	
+	@Test
+	public void itemUpdateTest() {
+		favorites.updateItem(new StubItemX("Chocolate - Bars", 4, 8));
+		
+		StoredItem chocolate = favorites.search("Chocolate - Bars").get(0);
+		assertEquals(chocolate.getStockableItem().getStock(), 4, "Stock doesn't update as normal");
+		assertEquals(chocolate.getStockableItem().getMax(), 4, "Maximum of discrete stockable items is same as stock");
+	}
 
 }

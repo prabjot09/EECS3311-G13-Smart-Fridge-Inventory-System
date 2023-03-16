@@ -29,6 +29,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	
 	public static void main(String[] args) {
 		JFrame jframe = new JFrame("Hi");
+		
 		jframe.add(new ExpressiveListView(new Fridge(DBProxy.getInstance().loadItems()), true));
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jframe.getContentPane().setBackground(Color.black);
@@ -42,6 +43,8 @@ public class ExpressiveListView extends JPanel implements ListView{
 		this.inv = inv;
 		
 		this.setLayout(new BorderLayout());
+		this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		this.setBackground(Color.black);
 		//this.setPreferredSize(new Dimension(820, 400));
 		
 		scroll = new JScrollPane();

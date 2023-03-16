@@ -128,7 +128,7 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 	    favoritesLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    labelWrap.add(favoritesLabel);
 	    
-	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites(), false);	  
+	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites(), false);
 	    favoritesPanel.add(favoritesView);
 	}
 	

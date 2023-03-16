@@ -3,6 +3,7 @@ package domainTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import domainLayer.AlphabeticalSorting;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
@@ -65,6 +67,37 @@ public class FridgeTest {
 		assertTrue(result2, "Missing item");
 		
 		assertFalse(expiring.get(0).sameItemDescription(expiring.get(1)), "Same 2 items returned for expiring items list.");
+	}
+	
+	@Test
+	public void expiringPrioritizationTest() {
+		try {
+			list.add(new ExpirableStubItem("Peanut Butter", LocalDate.now().plusDays(1)));
+		} catch (Exception e) {
+			fail("Unexpected failed addition due to: " + e.getMessage());
+		}
+		
+		List<StoredItem> expiring = list.getExpiringItems();
+		list.setItems(list.getItems(new AlphabeticalSorting()));
+		List<StoredItem> topList =  list.getItems().subList(0, 3);
+		assertEquals(expiring.size(), 3, "Expiry of new item addition not accounted for.");
+		
+		assertTrue(expiring.get(0).sameItemDescription(topList.get(0)) ||
+				   expiring.get(0).sameItemDescription(topList.get(1)) ||
+				   expiring.get(0).sameItemDescription(topList.get(2)), 
+				   "Expired items not prioritized. Error in item: " + expiring.get(0).getDescription());
+		
+		assertTrue(expiring.get(1).sameItemDescription(topList.get(0)) ||
+				   expiring.get(1).sameItemDescription(topList.get(1)) ||
+				   expiring.get(1).sameItemDescription(topList.get(2)), 
+				   "Expired items not prioritized. Error in item: " + expiring.get(0).getDescription());
+		
+		assertTrue(expiring.get(2).sameItemDescription(topList.get(0)) ||
+				   expiring.get(2).sameItemDescription(topList.get(1)) ||
+				   expiring.get(2).sameItemDescription(topList.get(2)), 
+				   "Expired items not prioritized. Error in item: " + expiring.get(0).getDescription());
+
+		
 	}
 	
 	
