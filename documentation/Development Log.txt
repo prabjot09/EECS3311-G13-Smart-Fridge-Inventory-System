@@ -114,3 +114,20 @@ Karim Jaouhar
 * Expected Dev Times: Sorting Implementation (3 days), Expiry Date Implementation (2 day)
 * Actaul Dev Times: Sorting Implementation (4 days), Expiry Date Implementation (1 day)
 
+ITERATION 2 END
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+ITERATION 3 START
+
+Meeting 7: March 18, 2023 - 1hr 15 min
+* Broke down big user stories into smaller user stories for Iteration 3
+* Reviewed QA team bug reports and areas to apply fixes
+* Set an early deadline to finish the code to allow for sufficient time at the end for documentation, testing and refactoring
+* Defined clearly the 4 new features to be added and implementations:
+  1) Recipe Recommendations: Match user ingredients to recipe ingredients to recommend user some recipes for meals they can make. These recipes can be hard-coded from the DB or retrieved from an API.
+  2) Import/Export to Backup Data: Import and export the entire SQL DB and when importing, overwrite the current data.
+  3) User History: Internally store states of the fridge at the end of the day, and use those snapshots in DB to display the daily changes in the fridge over the past week.
+  4) Adjusting to User Food Consumption: The stock of items in the fridge are automatically decremented daily by the program. The user can manually make adjustments to ensure that the current state of the fridge matches what the user has. These manual adjustments will be integrated into the automatic decrements into the future to adjust for the user's food consumption.
+* UI Design: Create a new home page to function simply as an interface to bring up new windows which will display the actual features of the application.
+
