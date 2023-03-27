@@ -25,7 +25,7 @@ import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 
-public class addWindow extends JFrame implements ActionListener{
+public class addWindow extends JPanel implements ActionListener{
 	private JPanel addMethodPanel;
 	private mainWindow homeView;
 	
@@ -37,8 +37,7 @@ public class addWindow extends JFrame implements ActionListener{
 	public addWindow(mainWindow homeView) {	
 		this.homeView = homeView;
 		
-		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
-		this.getContentPane().setLayout(overallLayout);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel panel = new CustomPanel(Color.black, 10);
 	    this.add(panel);
@@ -78,19 +77,19 @@ public class addWindow extends JFrame implements ActionListener{
 	    this.addMethodPanel = addMethodPanel;
 	    
 	    //dispose on close while also opening mainwindow on close
-	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    this.addWindowListener(new WindowAdapter() {
-	    	@Override
-	    	public void windowClosing(WindowEvent e) {
-	    		homeView.makeVisible();
-	    	}
-	    });
-	    this.getContentPane().setBackground(Color.black);
-	    // set the jframe size and location, and make it visible
-	    this.setPreferredSize(new Dimension(1000, 650));
-	    this.pack();
-	    this.setLocationRelativeTo(null);
-	    this.setVisible(true);
+//	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//	    this.addWindowListener(new WindowAdapter() {
+//	    	@Override
+//	    	public void windowClosing(WindowEvent e) {
+//	    		homeView.makeVisible();
+//	    	}
+//	    });
+//	    this.getContentPane().setBackground(Color.black);
+//	    // set the jframe size and location, and make it visible
+//	    this.setPreferredSize(new Dimension(1000, 650));
+//	    this.pack();
+//	    this.setLocationRelativeTo(null);
+//	    this.setVisible(true);
 		
 	}
 	
@@ -110,8 +109,9 @@ public class addWindow extends JFrame implements ActionListener{
 		try {
 			//Back button operation
 			if (e.getSource() == backButton) {
-				homeView.makeVisible();
-				this.dispose();
+				// homeView.makeVisible();
+				// this.dispose();
+				AppWindow.getWindow().loadPreviousWindow();
 				return;
 			}
 			JRadioButton button = (JRadioButton) e.getSource();
