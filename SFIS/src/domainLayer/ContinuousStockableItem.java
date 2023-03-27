@@ -61,4 +61,9 @@ public class ContinuousStockableItem extends StockableItem {
 		return new ContinuousStockableItem(this);
 	}
 
+	@Override
+	public StockableItem refillQuantity() {
+		return new DiscreteStockableItem(1);
+	}
+
 }

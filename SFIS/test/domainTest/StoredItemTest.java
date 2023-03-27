@@ -37,6 +37,7 @@ class StoredItemTest {
 			return "50%";
 		}
 		public StockableItem copy() { return null; }
+		public StockableItem refillQuantity() { return null; }
 	}
 	
 	@Test

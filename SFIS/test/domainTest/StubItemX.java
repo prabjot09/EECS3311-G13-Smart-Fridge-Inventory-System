@@ -19,6 +19,7 @@ class StubStock extends StockableItem {
 	public void decrement() { }
 	public String getDescription() { return null; }
 	public StockableItem copy() { return null; }
+	public StockableItem refillQuantity() { return null; }
 }
 
 class StubItemX extends StubBase {

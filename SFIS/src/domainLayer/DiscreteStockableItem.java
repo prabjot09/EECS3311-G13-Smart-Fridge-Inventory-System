@@ -52,4 +52,9 @@ public class DiscreteStockableItem extends StockableItem {
 	public DiscreteStockableItem copy() {
 		return new DiscreteStockableItem(this);
 	}
+
+	@Override
+	public StockableItem refillQuantity() {
+		return new DiscreteStockableItem(this.getMax() - this.getStock());
+	}
 }

@@ -8,6 +8,7 @@ public abstract class StockableItem {
 	public abstract void decrement();
 	public abstract String getDescription();
 	public abstract StockableItem copy();
+	public abstract StockableItem refillQuantity();
 	
 	public int getStock() {
 		return this.amount;
