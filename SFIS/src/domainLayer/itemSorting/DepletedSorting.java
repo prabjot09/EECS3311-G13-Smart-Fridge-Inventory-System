@@ -1,8 +1,10 @@
-package domainLayer;
+package domainLayer.itemSorting;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import domainLayer.StoredItem;
 
 public class DepletedSorting implements ISortingStrategy{
 	

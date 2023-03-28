@@ -1,9 +1,11 @@
-package domainLayer;
+package domainLayer.itemSorting;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import domainLayer.StoredItem;
 
 public class AlphabeticalSorting implements ISortingStrategy{
 

@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domainLayer.AlphabeticalSorting;
-import domainLayer.DepletedSorting;
 import domainLayer.FoodItem;
-import domainLayer.ISortingStrategy;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import domainLayer.itemSorting.AlphabeticalSorting;
+import domainLayer.itemSorting.DepletedSorting;
+import domainLayer.itemSorting.ISortingStrategy;
 
 class ItemManagerTest {
 

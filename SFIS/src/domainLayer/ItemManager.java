@@ -2,6 +2,8 @@ package domainLayer;
 
 import java.util.*;
 
+import domainLayer.itemSorting.ISortingStrategy;
+
 public class ItemManager implements Inventory {
 	private List<StoredItem> items;
 	private ISortingStrategy sortStrat;

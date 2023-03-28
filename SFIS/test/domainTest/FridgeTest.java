@@ -17,10 +17,10 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
-import domainLayer.AlphabeticalSorting;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
+import domainLayer.itemSorting.AlphabeticalSorting;
 
 public class FridgeTest {
 	
