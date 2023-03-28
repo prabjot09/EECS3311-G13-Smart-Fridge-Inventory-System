@@ -10,8 +10,10 @@ import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
 import domainLayer.StoredItem;
+import persistenceLayer.DB;
 import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
+import presentationLayer.AppWindow;
 import presentationLayer.DBLoginView;
 import presentationLayer.mainWindow;
 
@@ -31,24 +33,14 @@ public class App {
 	public static void main(String[] args) {
 		app = new App();
 		
-		// Uncomment this line to use RealDB
 		App.getInstance().login = new DBLoginView();
-		
-		// Uncomment this code to use StubDB only
-		//DBProxy.getInstance().setDB(new StubDB());
-//		
-//		app.db = DBProxy.getInstance();
-//		app.inv = new Fridge(app.db.loadItems());
-//		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
-//		app.groceries = new GroceryList(app.db.loadGroceryItems());
-//		new mainWindow();
-		
 	}
 	
 	public static App getInstance() {
 		if (app == null) {
 			app = new App();
 		}
+		
 		return app;
 	}
 	
@@ -56,12 +48,24 @@ public class App {
 		return app.inv;
 	}
 	
+	public void setInventory(Fridge inv) {
+		this.inv = inv;
+	}
+	
 	public FavoritesList getFavorites() {
 		return app.favorites;
 	}
 	
+	public void setFavorites(FavoritesList favorites) {
+		this.favorites = favorites;
+	}
+	
 	public GroceryList getGroceryList() {
 		return app.groceries;
+	}
+	
+	public void setGroceryList(GroceryList groceries) {
+		this.groceries = groceries;
 	}
 	
 	public void initializeApplication(String user, String pass) {
@@ -80,7 +84,9 @@ public class App {
 		
 		login.setVisible(false);
 		login.dispose();
-		new mainWindow();
+		
+		AppWindow.getWindow().openWindow();
+		AppWindow.getWindow().loadNewView(new mainWindow());
 		
 		checkExpirations();
 	}
@@ -98,8 +104,11 @@ public class App {
 										  "Warning", 
 										  JOptionPane.WARNING_MESSAGE);
 		}
-		
-		
-		
+	}
+
+	public void saveData() {
+		DBProxy.getInstance().updateFridge(inv);
+		DBProxy.getInstance().updateGroceryItems(groceries);
+		DBProxy.getInstance().updateFavoritedItems(favorites);
 	}
 }
