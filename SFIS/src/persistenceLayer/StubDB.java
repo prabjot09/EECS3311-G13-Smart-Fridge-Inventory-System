@@ -8,6 +8,7 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.GroceryList;
 import domainLayer.StoredItem;
+import domainLayer.UserHistory;
 
 
 public class StubDB implements DB {
@@ -53,6 +54,18 @@ public class StubDB implements DB {
 	@Override
 	public void updateGroceryItems(GroceryList groceries) {
 		groceriesDB.updateGroceryItems(groceries);
+	}
+
+	@Override
+	public UserHistory loadUserHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateUserHistory(UserHistory history) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

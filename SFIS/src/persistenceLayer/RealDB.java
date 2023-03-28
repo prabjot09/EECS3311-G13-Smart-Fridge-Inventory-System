@@ -21,6 +21,7 @@ import domainLayer.FridgeItem;
 import domainLayer.GroceryList;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
+import domainLayer.UserHistory;
 
 public class RealDB implements DB {
 //implementation of our real database, alot to go over here, many STrings where we hold sql commands to call
@@ -170,6 +171,18 @@ public class RealDB implements DB {
 
 		grocDB.updateGroceryItems(groceries, user, password);
 
+	}
+
+	@Override
+	public UserHistory loadUserHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateUserHistory(UserHistory history) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -7,6 +7,7 @@ import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
 import domainLayer.StoredItem;
+import domainLayer.UserHistory;
 
 public interface DB {
 	//Simple interface that contains our common DB methods
@@ -18,6 +19,9 @@ public interface DB {
 	public void updateFavoritedItems(FavoritesList favorites);
 	public List<StoredItem> loadGroceryItems();
 	public void updateGroceryItems(GroceryList groceries);
+	public UserHistory loadUserHistory();
+	public void updateUserHistory(UserHistory history);
+	
 	
 }
 
