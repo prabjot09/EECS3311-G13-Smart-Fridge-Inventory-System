@@ -66,7 +66,7 @@ public class ItemManager implements Inventory {
 		
 		for (StoredItem itemsInFridge : items) {
 			if (itemsInFridge.sameItemDescription(item)) {
-				throw new Exception("Item already exists within fridge");
+				throw new Exception("Item already exists.");
 			}
 		}
 		

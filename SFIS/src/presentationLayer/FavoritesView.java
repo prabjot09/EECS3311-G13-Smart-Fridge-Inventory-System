@@ -31,7 +31,7 @@ import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
-public class FavoritesView extends JFrame implements ActionListener, ListSelectionListener{
+public class FavoritesView extends JPanel implements ActionListener, ListSelectionListener{
 	private CompressedListView fridgeItems;
 	private ExpressiveListView favoritesView;
 	private mainWindow homeView;
@@ -46,8 +46,9 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 	public FavoritesView(mainWindow homeView) {	
 		this.homeView = homeView;
 		
-		BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
-		this.getContentPane().setLayout(overallLayout);
+		//BoxLayout overallLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
+		//this.getContentPane().setLayout(overallLayout);
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		titleBuilder();
 	    
@@ -61,20 +62,20 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 	    inputViewBuilder();
 	    
 	    //dispose on close while also opening mainwindow on close
-	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    this.addWindowListener(new WindowAdapter() {
-	    	@Override
-	    	public void windowClosing(WindowEvent e) {
-	    		DBProxy.getInstance().updateFavoritedItems(App.getInstance().getFavorites());
-	    		homeView.makeVisible();
-	    	}
-	    });
-	    this.getContentPane().setBackground(Color.black);
-	    // set the jframe size and location, and make it visible
-	    this.setPreferredSize(new Dimension(1300, 600));
-	    this.pack();
-	    this.setLocationRelativeTo(null);
-	    this.setVisible(true);
+//	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//	    this.addWindowListener(new WindowAdapter() {
+//	    	@Override
+//	    	public void windowClosing(WindowEvent e) {
+//	    		DBProxy.getInstance().updateFavoritedItems(App.getInstance().getFavorites());
+//	    		homeView.makeVisible();
+//	    	}
+//	    });
+//	    this.getContentPane().setBackground(Color.black);
+//	    // set the jframe size and location, and make it visible
+//	    this.setPreferredSize(new Dimension(1300, 600));
+//	    this.pack();
+//	    this.setLocationRelativeTo(null);
+//	    this.setVisible(true);
 	}
 
 	
@@ -157,9 +158,8 @@ public class FavoritesView extends JFrame implements ActionListener, ListSelecti
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
-			homeView.makeVisible();
 			DBProxy.getInstance().updateFavoritedItems(App.getInstance().getFavorites());
-			this.dispose();
+			AppWindow.getWindow().loadPreviousWindow();
 			return;
 		}
 		else if (e.getSource() == addButton) {

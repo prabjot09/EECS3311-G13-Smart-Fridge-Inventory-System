@@ -50,7 +50,7 @@ import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 import presentationLayer.swingExtensions.LabelledInputField;
 
-public class mainWindow implements ActionListener{	
+public class mainWindow extends JPanel implements ActionListener{	
 	// Input Components
 	private JTextField search;
 	private JButton addButton, searchButton, favoritesButton;
@@ -69,24 +69,19 @@ public class mainWindow implements ActionListener{
 	private ImageIcon compressedIcon;
 	private ImageIcon expressiveIcon;
 	
-	//frame
-	private JFrame jframe;
-	
 	
 	public mainWindow() {
 	    // create our jframe as usual
 		inv = App.getInstance().getInventory();
 		groc = App.getInstance().getGroceryList();
-		jframe = new JFrame("SFIS");
-		jframe.getContentPane().setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());
 		GroceryListView groceryView = new GroceryListView(groc);
 		
 		headerSetup();	 
 	    
 	    // START: Search and Item List Panel
 	    JPanel searchPanel = new CustomPanel(Color.black, new GridBagLayout(), 20);
-	    //searchPanel.setBounds(0,100,1000,500);
-	    jframe.add(searchPanel);
+	    this.add(searchPanel);
 	    
 	    
 	    topLayerSetup(searchPanel);
@@ -104,30 +99,12 @@ public class mainWindow implements ActionListener{
 	    rightPanel.add(groceryView);
 	    c = GridConstraintsSpec.stretchableFillConstraints(2, 1, 0.33, 1, GridBagConstraints.BOTH);
 	    searchPanel.add(rightPanel, c);
-	    
-	    // Update DB when closing the window
-	    jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    jframe.addWindowListener(new WindowAdapter() {
-	    	@Override
-	    	public void windowClosing(WindowEvent e) {
-	    		DBProxy.getInstance().updateFridge(mainWindow.this.inv);
-	    		DBProxy.getInstance().updateGroceryItems(groc);
-	    	}
-	    });
-	    
-	    // set the jframe size and location, and make it visible
-	    jframe.getContentPane().setBackground(Color.black);
-	    jframe.setPreferredSize(new Dimension(1140, 650));
-	    jframe.pack();
-	    jframe.setLocationRelativeTo(null);
-	    jframe.setVisible(true);
-		
 	}
 	
 	public void headerSetup() {
 		JPanel panel = new CustomPanel(Color.black, null);
 		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
-		jframe.add(panel,BorderLayout.NORTH);
+		this.add(panel,BorderLayout.NORTH);
 	    
 	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
 	    titleLabel.setForeground(Color.white);
@@ -181,7 +158,6 @@ public class mainWindow implements ActionListener{
 	    expressiveIcon = new ImageIcon(expressiveIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 	    viewToggler = new CustomButton(null, this, 3);
 	    viewToggler.setIcon(expressiveIcon);
-	    //viewToggler.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    topPanel2.add(viewToggler, BorderLayout.LINE_END);
 	}
 	
@@ -213,7 +189,6 @@ public class mainWindow implements ActionListener{
 	    JLabel sortLabel = new JLabel("Sort By: ");
 	    sortLabel.setForeground(Color.white);
 	    sortLabel.setFont(new Font("Arial", Font.BOLD, 16));
-	    //sortLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    sortPanel.add(sortLabel);
 	    
 	    sortPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -239,12 +214,12 @@ public class mainWindow implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
-			new addWindow(this);
-			jframe.setVisible(false);
+			JPanel addView = new addWindow(this);
+			AppWindow.getWindow().loadNewView(addView);
 		}
 		else if (e.getSource() == favoritesButton) {
-			new FavoritesView(this);
-			jframe.setVisible(false);
+			JPanel favoritesView = new FavoritesView(this);
+			AppWindow.getWindow().loadNewView(favoritesView);
 		}
 		else if (e.getSource() == searchButton) {		
 			mainSearchHandler();
@@ -293,10 +268,6 @@ public class mainWindow implements ActionListener{
 		viewManager.addItemToLists(inv.getItems().get(itemIndex));
 	}
 	
-	//makes frame visible
-	public void makeVisible() {
-		jframe.setVisible(true);
-	}
 	
 	public void reloadLists() {
 		viewManager.setViewLists(App.getInstance().getInventory().getItems());
