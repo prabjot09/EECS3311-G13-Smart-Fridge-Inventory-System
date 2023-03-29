@@ -1,15 +1,18 @@
 package appLayer;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import domainLayer.ApplicationClock;
 import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
 import domainLayer.StoredItem;
+import domainLayer.UserHistory;
 import persistenceLayer.DB;
 import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
@@ -25,6 +28,7 @@ public class App {
 	private FavoritesList favorites;
 	private DBLoginView login;
 	private GroceryList groceries;
+	private UserHistory history;
 	
 	private App() {
 		
@@ -68,6 +72,14 @@ public class App {
 		this.groceries = groceries;
 	}
 	
+	public UserHistory getHistory() {
+		return this.history;
+	}
+	
+	public void setHistory(UserHistory userHistory) {
+		this.history = userHistory;
+	}
+	
 	public void initializeApplication(String user, String pass) {
 		try {
 			DBProxy.getInstance().setDB(new RealDB(user, pass));
@@ -78,9 +90,12 @@ public class App {
 		}
 		
 		app.db = DBProxy.getInstance();
+		ApplicationClock.initRealClock();
+		
 		app.inv = new Fridge(app.db.loadItems());
 		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
 		app.groceries = new GroceryList(app.db.loadGroceryItems());
+		app.history = app.db.loadUserHistory();
 		
 		login.setVisible(false);
 		login.dispose();
@@ -110,5 +125,6 @@ public class App {
 		DBProxy.getInstance().updateFridge(inv);
 		DBProxy.getInstance().updateGroceryItems(groceries);
 		DBProxy.getInstance().updateFavoritedItems(favorites);
+		DBProxy.getInstance().updateUserHistory(history);
 	}
 }
