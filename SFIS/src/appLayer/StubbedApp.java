@@ -15,6 +15,7 @@ import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
 import presentationLayer.AppWindow;
 import presentationLayer.DBLoginView;
+import presentationLayer.HomePageWindow;
 import presentationLayer.mainWindow;
 
 public class StubbedApp {	
@@ -30,6 +31,6 @@ public class StubbedApp {
 		app.setHistory(DBProxy.getInstance().loadUserHistory());
 		
 		AppWindow.getWindow().openWindow();
-		AppWindow.getWindow().loadNewView(new mainWindow());
+		AppWindow.getWindow().loadNewView(new HomePageWindow());
 	}
 }

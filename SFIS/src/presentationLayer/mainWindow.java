@@ -54,7 +54,7 @@ import presentationLayer.swingExtensions.LabelledInputField;
 public class mainWindow extends JPanel implements ActionListener{	
 	// Input Components
 	private JTextField search;
-	private JButton addButton, searchButton, favoritesButton;
+	private JButton addButton, searchButton, favoritesButton, backButton;
 	private JComboBox<String> sortMethodType;
 	private Map<String, ISortingStrategy> sortMethodMap;
 	
@@ -92,19 +92,19 @@ public class mainWindow extends JPanel implements ActionListener{
 	    GridBagConstraints c = new GridBagConstraints();
 	    
 	    JPanel midPanel = new CustomPanel(Color.black, null);
-	    c = GridConstraintsSpec.stretchableFillConstraints(1, 1, 0.05, 0, GridBagConstraints.HORIZONTAL);
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 2, 0.05, 0, GridBagConstraints.HORIZONTAL);
 	    searchPanel.add(midPanel, c);
 	    
 	    // Grocery List Panel
 	    JPanel rightPanel = new CustomPanel(Color.BLACK, new BorderLayout(), 5);
 	    rightPanel.add(groceryView);
-	    c = GridConstraintsSpec.stretchableFillConstraints(2, 1, 0.33, 1, GridBagConstraints.BOTH);
+	    c = GridConstraintsSpec.stretchableFillConstraints(2, 2, 0.33, 1, GridBagConstraints.BOTH);
 	    searchPanel.add(rightPanel, c);
 	}
 	
 	public void headerSetup() {
 		JPanel panel = new CustomPanel(Color.black, null);
-		panel.setBorder(BorderFactory.createEmptyBorder(25,40,40,40));
+		panel.setBorder(BorderFactory.createEmptyBorder(25,40,10,40));
 		this.add(panel,BorderLayout.NORTH);
 	    
 	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
@@ -118,8 +118,16 @@ public class mainWindow extends JPanel implements ActionListener{
 		// START: Item Search Panel
 		GridBagConstraints c = new GridBagConstraints();
 		
+		JPanel backPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
+		backPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.HORIZONTAL);
+		parent.add(backPanel, c);
+		
+		backButton = new CustomButton("Back to Home Page", this, 10);
+		backPanel.add(backButton);
+		
 	    JPanel topPanel = new CustomPanel(Color.black, new GridBagLayout(), 10);
-	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 0.62, 0, GridBagConstraints.HORIZONTAL);
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 0.62, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(topPanel, c);
 	    
 	    LabelledInputField searchInputPanel = new LabelledInputField(Color.black, Color.white, "Search Item:", 16, 16, 5);
@@ -141,11 +149,11 @@ public class mainWindow extends JPanel implements ActionListener{
 	    
 	    
 	    JPanel midPanel = new CustomPanel(Color.black, null);
-	    c = GridConstraintsSpec.stretchableFillConstraints(1, 0, 0.05, 0, GridBagConstraints.HORIZONTAL);
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 1, 0.05, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(midPanel, c);
 	    
 	    JPanel topPanel2 = new CustomPanel(Color.black, new BorderLayout(), 10);
-	    c = GridConstraintsSpec.stretchableFillConstraints(2, 0, 0.33, 0, GridBagConstraints.HORIZONTAL);
+	    c = GridConstraintsSpec.stretchableFillConstraints(2, 1, 0.33, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(topPanel2, c);
 	    
 	    favoritesButton = new CustomButton("Favorites List", this, 10);
@@ -205,7 +213,7 @@ public class mainWindow extends JPanel implements ActionListener{
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.BOTH);
 	    viewPanel.add((JPanel) viewManager.getCurrentView(), c);
 	    
-	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 0.62, 1, GridBagConstraints.BOTH);
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 0.62, 1, GridBagConstraints.BOTH);
 	    parent.add(viewPanel, c);
 	    // END: Search and Item List Panel
 	}
@@ -219,7 +227,7 @@ public class mainWindow extends JPanel implements ActionListener{
 			AppWindow.getWindow().loadNewView(addView);
 		}
 		else if (e.getSource() == favoritesButton) {
-			JPanel favoritesView = new FavoritesView(this);
+			JPanel favoritesView = new FavoritesView();
 			AppWindow.getWindow().loadNewView(favoritesView);
 		}
 		else if (e.getSource() == searchButton) {		
@@ -227,6 +235,9 @@ public class mainWindow extends JPanel implements ActionListener{
 		}
 		else if (e.getSource() == viewToggler) {
 			this.mainViewToggleHandler();
+		}
+		else if (e.getSource() == backButton) {
+			AppWindow.getWindow().loadPreviousWindow();
 		}
 		else if (e.getSource() == this.sortMethodType) {
 			ISortingStrategy strat = this.sortMethodMap.get((String) sortMethodType.getSelectedItem());

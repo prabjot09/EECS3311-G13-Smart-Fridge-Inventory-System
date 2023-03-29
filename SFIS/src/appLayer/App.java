@@ -18,6 +18,7 @@ import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
 import presentationLayer.AppWindow;
 import presentationLayer.DBLoginView;
+import presentationLayer.HomePageWindow;
 import presentationLayer.mainWindow;
 
 public class App {
@@ -101,7 +102,7 @@ public class App {
 		login.dispose();
 		
 		AppWindow.getWindow().openWindow();
-		AppWindow.getWindow().loadNewView(new mainWindow());
+		AppWindow.getWindow().loadNewView(new HomePageWindow());
 		
 		checkExpirations();
 	}

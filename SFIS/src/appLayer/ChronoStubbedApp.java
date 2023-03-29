@@ -21,6 +21,7 @@ import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
 import presentationLayer.AppWindow;
 import presentationLayer.DBLoginView;
+import presentationLayer.HomePageWindow;
 import presentationLayer.mainWindow;
 
 public class ChronoStubbedApp {	
@@ -37,7 +38,7 @@ public class ChronoStubbedApp {
 		
 		
 		AppWindow.getWindow().openWindow();
-		AppWindow.getWindow().loadNewView(new mainWindow());
+		AppWindow.getWindow().loadNewView(new HomePageWindow());
 		
 		
 		JButton clockButton = new JButton("Increment Clock");

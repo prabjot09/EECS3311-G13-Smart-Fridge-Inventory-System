@@ -16,7 +16,7 @@ public class HistoryStubDB {
 	
 	public HistoryStubDB() {
 		data = new ArrayList<>();
-		lastSession = LocalDate.now().minusDays(1);
+		lastSession = LocalDate.now();
 		
 		FoodItem food1 = new FoodItem();
 		food1.setName("Milk - 3 Bags");

@@ -131,8 +131,6 @@ public class UserHistory {
 				entry.getB().setDayEnd(0, -1);
 			}
 		}
-		
-		lastUpdate = ApplicationClock.getDate();
 	}
 	
 	
@@ -172,6 +170,7 @@ public class UserHistory {
 			itemHistoryMapping.remove(emptyEntries.get(i).getA().getName());
 		}
 		
+		lastUpdate = ApplicationClock.getDate();
 	}
 	
 	
