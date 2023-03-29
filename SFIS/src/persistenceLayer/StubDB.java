@@ -17,7 +17,8 @@ public class StubDB implements DB {
 	FridgeStubDB FridgeDB = new FridgeStubDB();
 	FavoritesStubDB favoritesDB = new FavoritesStubDB();
 	GroceryStubDB groceriesDB = new GroceryStubDB();
-
+	HistoryStubDB historyDB = new HistoryStubDB();
+	
 	
 	//given a string, we use this code to return a matching food item in our db
 	public ArrayList<String> findMatchingFoods(String name) {
@@ -58,19 +59,12 @@ public class StubDB implements DB {
 
 	@Override
 	public UserHistory loadUserHistory() {
-		// TODO Auto-generated method stub
-		return null;
+		return new UserHistory(historyDB.getHistoryData(), historyDB.getLastSessionDate());
 	}
 
 	@Override
 	public void updateUserHistory(UserHistory history) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-
-
-
-	
+		historyDB.setHistoryData(history.getData());
+		historyDB.setLastSessionDate(history.getPreviousSession());
+	}	
 }

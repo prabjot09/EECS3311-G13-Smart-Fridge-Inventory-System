@@ -60,4 +60,11 @@ public class DBProxy {
 	public void updateGroceryItems(GroceryList groceries) {
 		db.updateGroceryItems(groceries);
 	}
+	
+	public UserHistory loadUserHistory() {
+		return db.loadUserHistory();
+	}
+	public void updateUserHistory(UserHistory history) {
+		db.updateUserHistory(history);
+	}
 }
