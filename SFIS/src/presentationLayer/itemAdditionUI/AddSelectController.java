@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemAdditionUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +16,7 @@ import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
+import presentationLayer.mainWindow;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;

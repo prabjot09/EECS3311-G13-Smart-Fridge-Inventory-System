@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemAdditionUI;
 
 import java.awt.Color;
 import java.awt.Dimension;

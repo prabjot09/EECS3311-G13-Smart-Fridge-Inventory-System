@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemAdditionUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
+import presentationLayer.StockInputField;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;

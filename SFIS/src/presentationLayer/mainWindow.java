@@ -44,6 +44,7 @@ import domainLayer.itemSorting.AlphabeticalSorting;
 import domainLayer.itemSorting.DepletedSorting;
 import domainLayer.itemSorting.ISortingStrategy;
 import domainLayer.itemSorting.UnalphabeticalSorting;
+import presentationLayer.itemAdditionUI.addWindow;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;

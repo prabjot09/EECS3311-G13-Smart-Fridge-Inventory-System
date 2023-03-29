@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemAdditionUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,6 +21,8 @@ import javax.swing.JRadioButton;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
+import presentationLayer.AppWindow;
+import presentationLayer.mainWindow;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
