@@ -238,7 +238,7 @@ public class mainWindow extends JPanel implements ActionListener{
 		}
 		else if (e.getSource() == backButton) {
 			AppWindow.getWindow().loadPreviousWindow();
-			App.getInstance().getHistory().updateHistory(inv);
+			App.getInstance().getHistory().updateHistory(inv, 0);
 		}
 		else if (e.getSource() == this.sortMethodType) {
 			ISortingStrategy strat = this.sortMethodMap.get((String) sortMethodType.getSelectedItem());

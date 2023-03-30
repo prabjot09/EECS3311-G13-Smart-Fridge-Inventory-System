@@ -81,26 +81,26 @@ public class ItemHistory {
 	}
 	
 	
-	public void distributeConsumption(int periodLength, int amount) {
+	public void distributeConsumption(int day, int periodLength, int amount) {
 		// TODO: Distribute the consumption. Distribution is longest continguous period starting from today without having any -1 entries in DAYEND.
 		//       This period is upperboounded by given periodLength
 		int distributionDepth = 0;
-		int startPoint = 0;
-		for (int i = 0; i < periodLength; i++) {
+		int startPoint = day;
+		for (int i = day; i < periodLength; i++) {
 			if (itemHistory.get(i).get(DAYEND) == -1) {
 				break;
 			}
 			
 			distributionDepth += 1;
-			if (startPoint == 0 && itemHistory.get(i).get(CONSUMPTION) < itemHistory.get(0).get(CONSUMPTION)) {
+			if (startPoint == day && itemHistory.get(i).get(CONSUMPTION) < itemHistory.get(day).get(CONSUMPTION)) {
 				startPoint = i;
 			}
 		}
 		
 		int amountLeft = amount;
-		for (int i = 0; i < distributionDepth; i++) {
+		for (int i = day; i < distributionDepth + day; i++) {
 			int amountPerDay = (int) Math.ceil( ((double) amountLeft) / (distributionDepth - i) );
-			int dayIndex = (startPoint + i) % distributionDepth;
+			int dayIndex = ((startPoint + i - day) % distributionDepth) + day;
 			
 			increaseConsumption(dayIndex, amountPerDay);
 			amountLeft -= amountPerDay;
@@ -124,12 +124,25 @@ public class ItemHistory {
 	}
 
 
-	public static ItemHistory createEmptyHistory() {
+	public static ItemHistory createEmptyHistory(int day) {
 		List<Integer> data = new ArrayList<>();
 		for (int i = 0; i < 21; i++) {
 			data.add(-1);
 		}
+		
+		for (int i = 0; i < day*3; i++) {
+			data.set(i, 0);
+		}
 		return new ItemHistory(data);
 	}
 	
+	public void recordItemDeletion(int day) {
+		setDayEnd(day, -1);
+		
+		for (int i = 0; i < day; i++) {
+			itemHistory.get(i).put(DAYEND, -1);
+			itemHistory.get(i).put(CONSUMPTION, -1);
+			itemHistory.get(i).put(RESTOCKING, -1);
+		}
+	}
 }

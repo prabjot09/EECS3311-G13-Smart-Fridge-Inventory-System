@@ -9,8 +9,8 @@ import java.util.Map;
 public class UserHistory {
 	private List<Pair<FoodItem, ItemHistory>> historyData;
 	private Map<String, ItemHistory> itemHistoryMapping;
-	private LocalDate previousSession;
-	private LocalDate lastUpdate;
+	private LocalDate lastModified;
+	private LocalDate lastRecalibrated;
 	
 	// If greater than 1, this means that user hasn't used the application in multiple days so we must distribute their food consumption evenly over this period.
 	private int periodOfUpdate;
@@ -18,8 +18,8 @@ public class UserHistory {
 	public UserHistory(List<Pair<FoodItem, ItemHistory>> data, LocalDate lastUpdate) {
 		this.historyData = data;
 		this.itemHistoryMapping = new HashMap<>();
-		this.previousSession = lastUpdate.plusDays(0);
-		this.lastUpdate = lastUpdate;
+		this.lastModified = lastUpdate.plusDays(0);
+		this.lastRecalibrated = lastUpdate;
 		this.periodOfUpdate = 1;
 		
 		for(Pair<FoodItem, ItemHistory> entry: historyData) {
@@ -36,7 +36,7 @@ public class UserHistory {
 	
 	
 	public LocalDate getLastUpdate() {
-		return lastUpdate;
+		return lastRecalibrated;
 	}
 	
 	public ItemHistory getItemHistory(String name) {
@@ -57,7 +57,7 @@ public class UserHistory {
 	}
 	
 	
-	public void updateHistory(Fridge inv) { 
+	public void updateHistory(Fridge inv, int day) { 
 		// TODO: Implement update
 		
 		/*
@@ -83,43 +83,46 @@ public class UserHistory {
 
 		// TODO 2: If day changes while application is on (lastUpdate != today), then prevSession is changed to be equal to lastUpdate
 		//         because this means that you had actually adjusted for any skipped days already since the lastUpdate
-		if (ApplicationClock.getDate() != lastUpdate) {
-			previousSession = lastUpdate.plusDays(0);
-		}
 		
 		recalibrateHistory();
+		this.lastModified = ApplicationClock.getDate();
 		
 		for (StoredItem item: inv.getItems()) {
 			ItemHistory history = itemHistoryMapping.get(item.getFoodItem().getName());
 			
 			// Add new items
 			if (history == null) {
-				history = ItemHistory.createEmptyHistory();
+				history = ItemHistory.createEmptyHistory(day);
 				historyData.add(new Pair<FoodItem, ItemHistory>(item.getFoodItem(), history));
 				itemHistoryMapping.put(item.getFoodItem().getName(), history);
 			}
 			
 			// restore if item was previously deleted or is newly created
-			if (history.getDayEndAmount(0) == -1) {
-				history.setDayEnd(0, 0);
+			if (history.getDayEndAmount(day) == -1) {
+				history.setDayEnd(day, 0);
 				
-				if (history.getConsumptionAmount(0) != -1) {
-					history.setDayEnd(0, history.getDayEndAmount(1) + history.getRestockingAmount(0) - history.getRestockingAmount(0));
+				if (history.getConsumptionAmount(day) != -1 && (day + 1 < 7)) {
+					history.setDayEnd(day, history.getDayEndAmount(day + 1) + history.getRestockingAmount(day) - history.getConsumptionAmount(day));
 				} else {
-					history.increaseConsumption(0, 1);
-					history.increaseRestocking(0, 1);
+					history.increaseConsumption(day, 1);
+					history.increaseRestocking(day, 1);
 				}
 			}
 			
 			// adjust history quantities
-			int stockChange = item.getStockableItem().getStock() - history.getDayEndAmount(0);
+			int stockChange = item.getStockableItem().getStock() - history.getDayEndAmount(day);
 			if (stockChange > 0) {
-				history.increaseRestocking(0, stockChange);
+				history.increaseRestocking(day, stockChange);
 			}
 			else {
-				history.distributeConsumption(periodOfUpdate, 0 - stockChange);
+				history.distributeConsumption(day, periodOfUpdate - day, 0 - stockChange);
 			}
-			history.setDayEnd(0, item.getStockableItem().getStock());
+			history.setDayEnd(day, item.getStockableItem().getStock());
+			
+			// propogate changes on a day to all subsequent days until today
+			for (int i = 0; i < day; i++) {
+				history.setDayEnd(i, history.getDayEndAmount(i) + stockChange);
+			}
 		}
 		
 		// Check for recently deleted items
@@ -127,8 +130,8 @@ public class UserHistory {
 			StoredItem comparisonItem = new FridgeItem();
 			comparisonItem.setFoodItem(entry.getA());
 			
-			if (entry.getB().getDayEndAmount(0) != -1 && inv.itemIndex(comparisonItem) == -1) {
-				entry.getB().setDayEnd(0, -1);
+			if (entry.getB().getDayEndAmount(day) != -1 && inv.itemIndex(comparisonItem) == -1) {
+				entry.getB().recordItemDeletion(day);
 			}
 		}
 	}
@@ -146,8 +149,8 @@ public class UserHistory {
 		*/
 		 
 		LocalDate today = ApplicationClock.getDate();
-		int daysSinceUpdate = Math.min(7, (int) lastUpdate.datesUntil(today).count());
-		int daysSinceLastSession = Math.min(7, (int) previousSession.datesUntil(today).count());
+		int daysSinceUpdate = Math.min(7, (int) lastRecalibrated.datesUntil(today).count());
+		int daysSinceLastSession = Math.min(7, (int) lastModified.datesUntil(today).count());
 		
 		this.periodOfUpdate = Math.max(1, daysSinceLastSession);
 		
@@ -170,7 +173,7 @@ public class UserHistory {
 			itemHistoryMapping.remove(emptyEntries.get(i).getA().getName());
 		}
 		
-		lastUpdate = ApplicationClock.getDate();
+		lastRecalibrated = ApplicationClock.getDate();
 	}
 	
 	
