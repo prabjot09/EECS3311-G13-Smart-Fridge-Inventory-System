@@ -31,6 +31,7 @@ public class RealDB implements DB {
 	FridgeRealDB fridgeDB = new FridgeRealDB();
 	FavoritesRealDB favDB = new FavoritesRealDB();
 	GroceryRealDB grocDB = new GroceryRealDB();
+	HistoryRealDB historyDB = new HistoryRealDB();
 	ItemStubDB dbPop = new ItemStubDB();
 	List<String> itemPop = dbPop.getDB();
 
@@ -48,6 +49,9 @@ public class RealDB implements DB {
 	String createItemTable = "Create Table if not exists itemDB" + "(name VARCHAR(255)," + "PRIMARY KEY ( name))";
 	String createGroceryTable = "Create Table if not exists groceryitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
+	String createHistoryTable = "Create Table if not exists userhistory" + "(name VARCHAR(255)," + "StockType INT,"
+			+ "Day INT," + "DayEnd INT," + "Consumption INT," + "Restocking INT," + "PRIMARY KEY (name))";
+	String createDateTable = "Create Table if not exists lastaccess" + "(Date DATE," +  "PRIMARY KEY(Date))";
 	String queryInsertItem = "insert into itemDB VALUES (?)" + "ON DUPLICATE KEY UPDATE name = ?;";
 	String queryInsertFav = "insert into favitem VALUES (?, ?, ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
@@ -76,6 +80,8 @@ public class RealDB implements DB {
 		createState.executeUpdate(createFavTable);
 		createState.executeUpdate(createItemTable);
 		createState.executeUpdate(createGroceryTable);
+		createState.executeUpdate(createHistoryTable);
+		createState.executeUpdate(createDateTable);
 		//populates our item table everytiem the program is ran, can probably do a way to check if htis has been done so
 		//we dont have to every time
 		for (int x = 0; x < itemPop.size(); x++) {
@@ -175,13 +181,15 @@ public class RealDB implements DB {
 
 	@Override
 	public UserHistory loadUserHistory() {
-		// TODO Auto-generated method stub
-		return null;
+		LocalDate date = historyDB.getLastAccessDate(user, password);
+		UserHistory history = new UserHistory(historyDB.loadHistory(user, password), date);
+		return history;
 	}
 
 	@Override
 	public void updateUserHistory(UserHistory history) {
-		// TODO Auto-generated method stub
+		historyDB.updateHistory(history, user, password);
+		historyDB.updateLastAccessDate(history.getLastUpdate(), user, password);
 		
 	}
 

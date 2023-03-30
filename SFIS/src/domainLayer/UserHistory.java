@@ -35,8 +35,8 @@ public class UserHistory {
 	}
 	
 	
-	public LocalDate getPreviousSession() {
-		return previousSession;
+	public LocalDate getLastUpdate() {
+		return lastUpdate;
 	}
 	
 	public ItemHistory getItemHistory(String name) {
@@ -171,6 +171,20 @@ public class UserHistory {
 		}
 		
 		lastUpdate = ApplicationClock.getDate();
+	}
+	
+	
+	public boolean isConsumptionAutomationComplete() {
+		boolean result = false;
+		
+		for (Pair<FoodItem, ItemHistory> entry: historyData) {
+			if (entry.getB().getConsumptionAmount(1) > 0) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
 	}
 	
 	

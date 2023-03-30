@@ -87,6 +87,7 @@ public class App {
 		} catch (Exception e) {
 			System.out.println("Failed login.");
 			login.loginFail();
+			e.printStackTrace();
 			return;
 		}
 		

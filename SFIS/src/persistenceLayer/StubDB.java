@@ -65,6 +65,6 @@ public class StubDB implements DB {
 	@Override
 	public void updateUserHistory(UserHistory history) {
 		historyDB.setHistoryData(history.getData());
-		historyDB.setLastSessionDate(history.getPreviousSession());
+		historyDB.setLastSessionDate(history.getLastUpdate());
 	}	
 }
