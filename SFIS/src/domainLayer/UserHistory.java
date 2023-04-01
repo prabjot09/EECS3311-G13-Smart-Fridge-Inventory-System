@@ -208,4 +208,8 @@ public class UserHistory {
 	}
 	
 	
+	public int daysSinceUpdated() {
+		return (int) lastModified.datesUntil(ApplicationClock.getDate()).count();
+	}
+	
 }
