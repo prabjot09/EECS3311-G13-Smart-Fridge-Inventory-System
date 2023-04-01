@@ -29,6 +29,9 @@ import presentationLayer.swingExtensions.GridConstraintsSpec;
 
 public class HistoryDayComponent extends JPanel {
 	
+	private JPanel restockingPanel;
+	private JPanel consumptionPanel;
+	
 	public static void main(String[] args) {
 		DBProxy.getInstance().setDB(new StubDB());
 		HistoryDayComponent lay = new HistoryDayComponent(DBProxy.getInstance().loadUserHistory(), 2);
@@ -60,20 +63,23 @@ public class HistoryDayComponent extends JPanel {
 		dateLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		datePanel.add(dateLabel);
 		
-		JPanel restockingPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 5);		
-		JPanel consumptionPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 5);
+		restockingPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);		
+		consumptionPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);	
 		
+		int consumptionRow = 0;
+		int restockingRow = 0;
 		for (Pair<FoodItem, ItemHistory> entry: data.getData()) {
 			ItemHistory itemData = entry.getB();
 			
 			if (itemData.getConsumptionAmount(day) > 0) {
-				JPanel consumptionLabel = buildUsageLabel(itemData.getConsumptionAmount(day), Color.red, "-", entry.getA());
-				consumptionPanel.add(consumptionLabel);
+				JPanel consumptionLabel = buildUsageLabel(consumptionPanel, itemData.getConsumptionAmount(day), consumptionRow, Color.red, "-", entry.getA());
+				consumptionRow++;
 			}
 			
 			if (itemData.getRestockingAmount(day) > 0) {
-				JPanel restockingLabel = buildUsageLabel(itemData.getRestockingAmount(day), Color.green, "+", entry.getA());
+				JPanel restockingLabel = buildUsageLabel(restockingPanel, itemData.getRestockingAmount(day), restockingRow, Color.green, "+", entry.getA());
 				restockingPanel.add(restockingLabel);
+				restockingRow++;
 			}
 		}
 		
@@ -85,24 +91,21 @@ public class HistoryDayComponent extends JPanel {
 	}
 	
 	
-	private JPanel buildUsageLabel(int amount, Color fontColor, String type, FoodItem item) {
+	private JPanel buildUsageLabel(JPanel parent, int amount, int row, Color fontColor, String type, FoodItem item) {
 		JPanel wrapperPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
 		
-		String text = type + amount;
+		String amountText = type + amount;
 		if (item.getStockType() == StockType.CONTINUOUS) {
-			text += "%";
+			amountText += "%";
 		}
-		else {
-			text += "  ";
-		}
-		text += "    " + item.getName();
+		String nameText = item.getName();
 		
-		JLabel usageLabel = new JLabel(text);
-		usageLabel.setForeground(fontColor);
-		usageLabel.setFont(new Font("Arial", Font.BOLD, 14));
-		usageLabel.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
+		JLabel amountLabel = new JLabel(amountText);
+		amountLabel.setForeground(fontColor);
+		amountLabel.setFont(new Font("Arial", Font.BOLD, 14));
+		amountLabel.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
 		
-		wrapperPanel.add(usageLabel);
+		wrapperPanel.add(amountLabel);
 		return wrapperPanel;
 	}
 	

@@ -145,4 +145,13 @@ public class ItemHistory {
 			itemHistory.get(i).put(RESTOCKING, -1);
 		}
 	}
+	
+	
+	public List<Integer> getRecentConsumption(int day) {
+		List<Integer> recentConsumption = new ArrayList<>();
+		for (int i = day; i < 7; i++) {
+			recentConsumption.add(itemHistory.get(i).get(CONSUMPTION));
+		}
+		return recentConsumption;
+	}
 }

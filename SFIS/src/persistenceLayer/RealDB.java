@@ -181,15 +181,16 @@ public class RealDB implements DB {
 
 	@Override
 	public UserHistory loadUserHistory() {
-		LocalDate date = historyDB.getLastAccessDate(user, password);
-		UserHistory history = new UserHistory(historyDB.loadHistory(user, password), date);
+		LocalDate modDate = historyDB.getModificationDate(user, password);
+		LocalDate recalibrationDate = historyDB.getRecalibrationDate(user, password);
+		UserHistory history = new UserHistory(historyDB.loadHistory(user, password), modDate, recalibrationDate);
 		return history;
 	}
 
 	@Override
 	public void updateUserHistory(UserHistory history) {
 		historyDB.updateHistory(history, user, password);
-		historyDB.updateLastAccessDate(history.getLastUpdate(), user, password);
+		historyDB.updateHistoryAccessTimes(history.getRecalibrationDate(), history.getModificationDate(), user, password);
 		
 	}
 

@@ -30,10 +30,11 @@ public class HistoryRealDB {
 			+ "Day INT," + "DayEnd INT," + "Consumption INT," + "Restocking INT," + "PRIMARY KEY (name, Day))";
 	String updateHistoryDrop = "drop table userhistory;";
 	
-	String createDateTable = "Create Table if not exists lastaccess" + "(Date DATE," +  "PRIMARY KEY(Date))";
+	String createDateTable = "Create Table if not exists lastaccess" + "(Recalibrate DATE," + "Modify DATE," +  "PRIMARY KEY(Date))";
 	String updateDateDrop = "drop table lastaccess";
-	String selectFromDate = "select Date from lastaccess";
-	String queryInsertDate = "insert into lastaccess (Date) VALUES (?);";
+	String selectModificationDate = "select Modify from lastaccess";
+	String selectRecalibrationDate = "select Recalibrate from lastaccess";
+	String queryInsertDate = "insert into lastaccess (Recalibrate, Modify) VALUES (?);";
 	
 	public HistoryRealDB() {
 		
@@ -127,15 +128,24 @@ public class HistoryRealDB {
 	}
 	
 	
-	public LocalDate getLastAccessDate(String user, String password) {
+	public LocalDate getModificationDate(String user, String password) {
+		return getDate(selectModificationDate, user, password);
+	}
+	
+	public LocalDate getRecalibrationDate(String user, String password) {
+		return getDate(selectRecalibrationDate, user, password);
+	}
+	
+	
+	public LocalDate getDate(String dateQuery, String user, String password) {
 		LocalDate date = null;
 		
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 			Statement createState = con.createStatement();
-			createState.execute(select);
+			createState.execute(dateQuery);
 			
-			ResultSet rs = createState.executeQuery(selectFromDate);
+			ResultSet rs = createState.executeQuery(selectModificationDate);
 			rs.next();
 			
 			try {
@@ -152,7 +162,7 @@ public class HistoryRealDB {
 	}
 	
 	
-	public void updateLastAccessDate(LocalDate date, String user, String password) {
+	public void updateHistoryAccessTimes(LocalDate recalibration, LocalDate modification, String user, String password) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, password);
 			Statement createState = con.createStatement();
@@ -162,7 +172,8 @@ public class HistoryRealDB {
 			createState.executeUpdate(createDateTable);
 			
 			PreparedStatement statement = con.prepareStatement(queryInsertDate);
-			statement.setDate(1, Date.valueOf(date));
+			statement.setDate(1, Date.valueOf(recalibration));
+			statement.setDate(2, Date.valueOf(modification));
 			statement.executeUpdate();
 			
 		} catch (SQLException e) {

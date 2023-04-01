@@ -12,11 +12,13 @@ import domainLayer.FoodItem.StockType;
 
 public class HistoryStubDB {
 	private List<Pair<FoodItem, ItemHistory>> data;
-	private LocalDate lastSession;
+	private LocalDate recalibration;
+	private LocalDate modification;
 	
 	public HistoryStubDB() {
 		data = new ArrayList<>();
-		lastSession = LocalDate.now();
+		recalibration = LocalDate.now();
+		modification = LocalDate.now();
 		
 		FoodItem food1 = new FoodItem();
 		food1.setName("Milk - 3 Bags");
@@ -49,18 +51,29 @@ public class HistoryStubDB {
 	}
 	
 	public List<Pair<FoodItem, ItemHistory>> getHistoryData() {
-		return this.data;
+		return data;
 	}
 	
-	public LocalDate getLastSessionDate() {
-		return this.lastSession;
+	public LocalDate getRecalibrationDate() {
+		return recalibration;
 	}
+	
+	public LocalDate getModificationDate() {
+		return modification;
+	}
+	
 	
 	public void setHistoryData(List<Pair<FoodItem, ItemHistory>> data) {
 		this.data = data;
 	}
 	
-	public void setLastSessionDate(LocalDate lastSession) {
-		this.lastSession = lastSession;
+	
+	public void setRecalibrationDate(LocalDate date) {
+		recalibration = date;
+	}
+	
+	
+	public void setModificationDate(LocalDate date) {
+		modification = date;
 	}
 }
