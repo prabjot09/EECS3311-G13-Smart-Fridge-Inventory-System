@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -124,11 +125,23 @@ public class GroceryListView extends JPanel implements ActionListener {
 		}
 		//Export button functionality 
 		if (e.getSource() == exportButton) {
+			JFileChooser fc = new JFileChooser();
+			fc.setDialogTitle("Grocery List Export Destination");
+		    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		    fc.setAcceptAllFileFilterUsed(false);
+		    
+			int result = fc.showOpenDialog(AppWindow.getWindow());
+			
+			if (result != JFileChooser.APPROVE_OPTION) {
+				JOptionPane.showMessageDialog(null, "File Not Exported.\n" + "Please select a valid file destination!", "Notice", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			if (exportDecision.getSelectedItem() == "Grocery List") {
-				new Export(groceryInv.getItems());
+				new Export(groceryInv.getItems(), fc.getSelectedFile());
 			}
 			if (exportDecision.getSelectedItem() == "Favorites List") {
-				new Export(App.getInstance().getFavorites().getItems());
+				new Export(App.getInstance().getFavorites().getItems(), fc.getSelectedFile());
 			}
 		}
 	}

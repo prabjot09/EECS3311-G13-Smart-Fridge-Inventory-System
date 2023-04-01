@@ -2,6 +2,7 @@ package domainLayer;
 
 import java.util.*;
 
+import domainLayer.itemSorting.AlphabeticalSorting;
 import domainLayer.itemSorting.ISortingStrategy;
 
 public class ItemManager implements Inventory {
@@ -9,10 +10,12 @@ public class ItemManager implements Inventory {
 	private ISortingStrategy sortStrat;
 
 	public ItemManager() {
-		
+		this.sortStrat = new AlphabeticalSorting();
 	}
 	
 	public ItemManager(List<StoredItem> items) {
+		this();
+		
 	    this.items = new ArrayList<StoredItem>();
 	    for (StoredItem item : items) {
 	        this.items.add(item.copy());
@@ -29,6 +32,9 @@ public class ItemManager implements Inventory {
 	
 
 	public void setItems(List<StoredItem> items) {
+		if (sortStrat != null)
+			items = sortStrat.sortItems(items);
+		
 		this.items = new ArrayList<StoredItem>();
 	    for (StoredItem item : items) {
 	        this.items.add(item.copy());
