@@ -124,7 +124,6 @@ public class UserHistory {
 			}
 			else {
 				history.distributeConsumption(day, periodOfUpdate - day, 0 - stockChange);
-				System.out.println(item.getDescription() + ", " + periodOfUpdate);
 			}
 			
 			if (stockChange != 0) {

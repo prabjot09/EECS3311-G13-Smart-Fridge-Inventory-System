@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -86,8 +87,14 @@ public class ExpressiveListView extends JPanel implements ListView{
 	}
 	
 	public void removeItem(ExpressiveItemComponent item) {
-		inv.remove(item.getItemObj());
+		int confirm = JOptionPane.showConfirmDialog(AppWindow.getWindow(), 
+                "Are you sure you want to remove " + item.getItemObj().getFoodItem().getName(), 
+                "Item Removal Confirmation", JOptionPane.YES_NO_OPTION);
+		if (confirm != 0) {
+			return;
+		}
 		
+		inv.remove(item.getItemObj());
 		listView.remove(item);
 		listView.repaint();
 		listView.revalidate();

@@ -152,9 +152,15 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.list.revalidate();
 		} else if (e.getSource() == remButton) {
 			int itemIndex = list.getSelectedIndex();
-			this.inv.remove(this.displayItems.get(itemIndex));
-			this.displayItems.remove(itemIndex);
-			this.stringItemList.remove(itemIndex);
+			int confirm = JOptionPane.showConfirmDialog(AppWindow.getWindow(), 
+	                "Are you sure you want to remove " + displayItems.get(itemIndex).getFoodItem().getName(), 
+	                "Item Removal Confirmation", JOptionPane.YES_NO_OPTION);
+			
+			if (confirm == 0) {
+				this.inv.remove(this.displayItems.get(itemIndex));
+				this.displayItems.remove(itemIndex);
+				this.stringItemList.remove(itemIndex);
+			}
 		} else if (e.getSource() == groceryListButton) {
 			int itemIndex = list.getSelectedIndex();
 			try {
