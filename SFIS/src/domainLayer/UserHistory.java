@@ -191,7 +191,7 @@ public class UserHistory {
 			itemHistoryMapping.remove(emptyEntries.get(i).getA().getName());
 		}
 		
-		lastRecalibrated = ApplicationClock.getDate();
+		lastRecalibrated = today;
 	}
 	
 	

@@ -30,11 +30,11 @@ public class HistoryRealDB {
 			+ "Day INT," + "DayEnd INT," + "Consumption INT," + "Restocking INT," + "PRIMARY KEY (name, Day))";
 	String updateHistoryDrop = "drop table userhistory;";
 	
-	String createDateTable = "Create Table if not exists lastaccess" + "(Recalibrate DATE," + "Modify DATE," +  "PRIMARY KEY(Date))";
+	String createDateTable = "Create Table if not exists lastaccess" + "(Recalibrate DATE," + "Modify DATE)";
 	String updateDateDrop = "drop table lastaccess";
 	String selectModificationDate = "select Modify from lastaccess";
 	String selectRecalibrationDate = "select Recalibrate from lastaccess";
-	String queryInsertDate = "insert into lastaccess (Recalibrate, Modify) VALUES (?);";
+	String queryInsertDate = "insert into lastaccess (Recalibrate, Modify) VALUES (?, ?);";
 	
 	public HistoryRealDB() {
 		

@@ -127,6 +127,7 @@ public class App {
 		DBProxy.getInstance().updateFridge(inv);
 		DBProxy.getInstance().updateGroceryItems(groceries);
 		DBProxy.getInstance().updateFavoritedItems(favorites);
+		history.updateHistory(inv, 0);
 		DBProxy.getInstance().updateUserHistory(history);
 	}
 }

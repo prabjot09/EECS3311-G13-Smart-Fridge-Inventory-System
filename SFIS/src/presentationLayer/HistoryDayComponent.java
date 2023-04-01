@@ -34,6 +34,7 @@ public class HistoryDayComponent extends JPanel {
 	
 	public static void main(String[] args) {
 		DBProxy.getInstance().setDB(new StubDB());
+		ApplicationClock.initRealClock();
 		HistoryDayComponent lay = new HistoryDayComponent(DBProxy.getInstance().loadUserHistory(), 2);
 		
 		
@@ -72,13 +73,12 @@ public class HistoryDayComponent extends JPanel {
 			ItemHistory itemData = entry.getB();
 			
 			if (itemData.getConsumptionAmount(day) > 0) {
-				JPanel consumptionLabel = buildUsageLabel(consumptionPanel, itemData.getConsumptionAmount(day), consumptionRow, Color.red, "-", entry.getA());
+				buildUsageLabel(consumptionPanel, itemData.getConsumptionAmount(day), consumptionRow, Color.red, "-", entry.getA());
 				consumptionRow++;
 			}
 			
 			if (itemData.getRestockingAmount(day) > 0) {
-				JPanel restockingLabel = buildUsageLabel(restockingPanel, itemData.getRestockingAmount(day), restockingRow, Color.green, "+", entry.getA());
-				restockingPanel.add(restockingLabel);
+				buildUsageLabel(restockingPanel, itemData.getRestockingAmount(day), restockingRow, Color.green, "+", entry.getA());
 				restockingRow++;
 			}
 		}
@@ -91,22 +91,27 @@ public class HistoryDayComponent extends JPanel {
 	}
 	
 	
-	private JPanel buildUsageLabel(JPanel parent, int amount, int row, Color fontColor, String type, FoodItem item) {
-		JPanel wrapperPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
-		
+	private void buildUsageLabel(JPanel parent, int amount, int row, Color fontColor, String type, FoodItem item) {
 		String amountText = type + amount;
 		if (item.getStockType() == StockType.CONTINUOUS) {
 			amountText += "%";
 		}
 		String nameText = item.getName();
 		
+		JPanel amountWrapper = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT), 1);
 		JLabel amountLabel = new JLabel(amountText);
-		amountLabel.setForeground(fontColor);
+		amountLabel.setForeground(new Color(fontColor.getRed() == 0 ? 100 : 255, fontColor.getGreen() == 0 ? 100 : 255, 80));
 		amountLabel.setFont(new Font("Arial", Font.BOLD, 14));
 		amountLabel.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
+		amountWrapper.add(amountLabel);
 		
-		wrapperPanel.add(amountLabel);
-		return wrapperPanel;
+		JLabel nameLabel = new JLabel(nameText);
+		nameLabel.setForeground(fontColor);
+		nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+		nameLabel.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
+		
+		parent.add(amountWrapper, GridConstraintsSpec.stretchableFillConstraints(0, row, 0.1, 0, GridBagConstraints.HORIZONTAL));
+		parent.add(nameLabel, GridConstraintsSpec.stretchableFillConstraints(1, row, 0.9, 0, GridBagConstraints.HORIZONTAL));
 	}
 	
 }

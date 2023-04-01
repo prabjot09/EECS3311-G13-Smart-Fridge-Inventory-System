@@ -51,7 +51,7 @@ public class RealDB implements DB {
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
 	String createHistoryTable = "Create Table if not exists userhistory" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Day INT," + "DayEnd INT," + "Consumption INT," + "Restocking INT," + "PRIMARY KEY (name))";
-	String createDateTable = "Create Table if not exists lastaccess" + "(Date DATE," +  "PRIMARY KEY(Date))";
+	String createDateTable = "Create Table if not exists lastaccess" + "(Recalibrate DATE," + "Modify DATE)";
 	String queryInsertItem = "insert into itemDB VALUES (?)" + "ON DUPLICATE KEY UPDATE name = ?;";
 	String queryInsertFav = "insert into favitem VALUES (?, ?, ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
