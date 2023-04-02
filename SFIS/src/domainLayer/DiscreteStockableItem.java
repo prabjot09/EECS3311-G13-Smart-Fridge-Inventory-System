@@ -33,7 +33,7 @@ public class DiscreteStockableItem extends StockableItem {
 	
 	@Override
 	public void increment() {
-		this.setStock(this.getStock() + INCREMENT);	
+		this.setStock(Math.min(this.getStock() + INCREMENT, MAXIMUM));	
 		
 		this.setMax(Math.max(this.getStock(), this.getMax()));
 	}

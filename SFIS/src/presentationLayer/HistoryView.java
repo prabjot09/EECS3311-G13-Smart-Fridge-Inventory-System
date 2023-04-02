@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import domainLayer.ApplicationClock;
 import domainLayer.DBProxy;
@@ -71,7 +73,11 @@ public class HistoryView extends JPanel implements ActionListener {
 			HistoryDayComponent dayPanel = new HistoryDayComponent(data, 6-day);
 			dataPanel.add(dayPanel, GridConstraintsSpec.stretchableFillConstraints(day, 0, 1, 1, GridBagConstraints.BOTH));
 		}
-		dataWrapper.add(dataPanel);
+		
+		JScrollPane scroll = new JScrollPane(dataPanel);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		dataWrapper.add(scroll);
 		this.add(dataWrapper, GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 0.9, GridBagConstraints.BOTH));
 	}
 
