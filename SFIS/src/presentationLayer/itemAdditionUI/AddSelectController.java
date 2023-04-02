@@ -59,6 +59,11 @@ public class AddSelectController implements ActionListener{
 			return false;
 		}
 		
+		if (itemName.length() > 40) {
+			JOptionPane.showMessageDialog(null, "Item Name is too long.", "Warning", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
 		String amountStr = this.addSelectView.getAmountField();
 		int amount;
 		try {

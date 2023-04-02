@@ -46,6 +46,11 @@ public class AddCreateController implements ActionListener {
 			return false;
 		}
 		
+		if (itemName.length() > 40) {
+			JOptionPane.showMessageDialog(null, "Item Name is too long.", "Warning", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
 		String amountType = this.addCreateView.getAmountType();
 		if (amountType == null) {
 			JOptionPane.showMessageDialog(null, "Please specify the amount type", "Error", JOptionPane.ERROR_MESSAGE);
