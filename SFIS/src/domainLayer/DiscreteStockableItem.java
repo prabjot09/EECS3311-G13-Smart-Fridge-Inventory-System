@@ -2,6 +2,7 @@ package domainLayer;
 
 public class DiscreteStockableItem extends StockableItem {
 	private static final int INCREMENT = 1;
+	private static final int MAXIMUM = 256;
 	
 	public DiscreteStockableItem() {
 		
@@ -56,5 +57,10 @@ public class DiscreteStockableItem extends StockableItem {
 	@Override
 	public StockableItem refillQuantity() {
 		return new DiscreteStockableItem(this.getMax() - this.getStock());
+	}
+	
+	@Override
+	public boolean stockWithinBounds() {
+		return this.getStock() <= MAXIMUM;
 	}
 }

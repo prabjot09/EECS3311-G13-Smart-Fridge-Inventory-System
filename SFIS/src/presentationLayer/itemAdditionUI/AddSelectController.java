@@ -20,6 +20,7 @@ import presentationLayer.mainWindow;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
+import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
 public class AddSelectController implements ActionListener{
@@ -64,6 +65,11 @@ public class AddSelectController implements ActionListener{
 			amount = Integer.parseInt(amountStr);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Please specify an integer amount", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		if (amount < 0 || !StockableItemFactory.createStockableItem(StockType.DISCRETE, amount).stockWithinBounds()) {
+			JOptionPane.showMessageDialog(null, "Item Quantity is out of Bounds", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		

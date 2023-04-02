@@ -5,6 +5,7 @@ public class ContinuousStockableItem extends StockableItem {
 			"Empty", "Almost Empty", "Half Full", "Mostly Full", "Full"
 		};
 	public static final int INCREMENT = 25;
+	public static final int MAXIMUM = 100;
 	
 	public ContinuousStockableItem() {
 		
@@ -64,6 +65,11 @@ public class ContinuousStockableItem extends StockableItem {
 	@Override
 	public StockableItem refillQuantity() {
 		return new DiscreteStockableItem(1);
+	}
+
+	@Override
+	public boolean stockWithinBounds() {
+		return this.getStock() <= MAXIMUM;
 	}
 
 }

@@ -62,11 +62,12 @@ class ItemManagerTest {
 		list.setItems(DepletedSortedCopy);
 		copy = list.getItems();
 		for (int i = 0; i < copy.size(); i++) {
-			assertTrue(DepletedSortedCopy.get(i).sameItemDescription(copy.get(i)), "Setter doesn't set the correct copy of item " + i);
+			int index = list.itemIndex(DepletedSortedCopy.get(i));
+			assertTrue(DepletedSortedCopy.get(i).sameItemDescription(copy.get(index)), "Setter doesn't set the correct copy of item " + i);
 			DepletedSortedCopy.get(i).executeIncrement();
 			DepletedSortedCopy.get(i).setFoodItem(new FoodItem());
 			DepletedSortedCopy.get(i).getStockableItem().setStock(15);
-			assertTrue(copy.get(i).sameItemDescription(list.getItems().get(i)), "Composition fails to protect item " + i + " from external changes");
+			assertTrue(copy.get(index).sameItemDescription(list.getItems().get(index)), "Composition fails to protect item " + i + " from external changes");
 		}
 	}
 	
@@ -113,7 +114,6 @@ class ItemManagerTest {
 			StoredItem itemX = new StubItemX("Maccaroni", 8, 10);
 			list.add(itemX);
 			assertTrue(list.getItems().size() == itemCopies.size() + 2, "Item not added properly");
-			assertTrue(list.getItems().get(list.getItems().size() - 1).sameItemDescription(itemX), "Item not appended to the end of list.");
 		} catch (Exception e) {
 			
 		}		

@@ -10,11 +10,11 @@ public class Fridge extends ItemManager{
 	
 	@Override
 	public List<StoredItem> getItems() {
-		prioritizeExpiring();
-		return super.getItems();
+		List<StoredItem> items = prioritizeExpiring();
+		return items;
 	}
 	
-	public void prioritizeExpiring() {
+	public List<StoredItem> prioritizeExpiring() {
 		List<StoredItem> nearExpiry = new ArrayList<StoredItem>();
 		List<StoredItem> fine = new ArrayList<StoredItem>();
 		
@@ -32,9 +32,8 @@ public class Fridge extends ItemManager{
 			result.add(item);
 		}
 		
-		for (StoredItem item: result) {
-		}
 		this.setItems(result);
+		return result;
 	}
 	
 	public List<StoredItem> getExpiringItems() {

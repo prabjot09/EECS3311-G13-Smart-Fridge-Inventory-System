@@ -50,11 +50,16 @@ public class AddCreateController implements ActionListener {
 		if (amountType == null) {
 			JOptionPane.showMessageDialog(null, "Please specify the amount type", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
-		}
+		}		
 		
 		Pair<StockType, Integer> amount = this.addCreateView.getAmount();
 		if (amount.getB() == null) {
 			JOptionPane.showMessageDialog(null, "Please specify a valid value", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		if (amount.getB() < 0 || !StockableItemFactory.createStockableItem(amount.getA(), amount.getB()).stockWithinBounds()) {
+			JOptionPane.showMessageDialog(null, "Item Quantity is out of Bounds", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		

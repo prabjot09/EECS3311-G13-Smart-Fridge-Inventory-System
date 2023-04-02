@@ -9,6 +9,7 @@ public abstract class StockableItem {
 	public abstract String getDescription();
 	public abstract StockableItem copy();
 	public abstract StockableItem refillQuantity();
+	public abstract boolean stockWithinBounds();
 	
 	public int getStock() {
 		return this.amount;
