@@ -31,6 +31,7 @@ public class HistoryDayComponent extends JPanel {
 	
 	private JPanel restockingPanel;
 	private JPanel consumptionPanel;
+	private Color bgColor;
 	
 	public static void main(String[] args) {
 		DBProxy.getInstance().setDB(new StubDB());
@@ -49,11 +50,14 @@ public class HistoryDayComponent extends JPanel {
 	}
 	
 	public HistoryDayComponent(UserHistory data, int day) {
+		int colorVal = 20 + 40 * (day % 2);
+		bgColor = new Color(colorVal, colorVal, colorVal);
+		
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.white));
-		this.setBackground(Color.black);
+		this.setBackground(bgColor);
 		
-		JPanel datePanel = new CustomPanel(Color.black, new FlowLayout());
+		JPanel datePanel = new CustomPanel(bgColor, new FlowLayout());
 		datePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.white));
 		this.add(datePanel, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.HORIZONTAL));
 		
@@ -64,8 +68,8 @@ public class HistoryDayComponent extends JPanel {
 		dateLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		datePanel.add(dateLabel);
 		
-		restockingPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);		
-		consumptionPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);	
+		restockingPanel = new CustomPanel(bgColor, new GridBagLayout(), 5);		
+		consumptionPanel = new CustomPanel(bgColor, new GridBagLayout(), 5);	
 		
 		int consumptionRow = 0;
 		int restockingRow = 0;
@@ -83,10 +87,10 @@ public class HistoryDayComponent extends JPanel {
 			}
 		}
 		
-		JPanel dataWrapper = new CustomPanel(Color.black, new GridBagLayout());
+		JPanel dataWrapper = new CustomPanel(bgColor, new GridBagLayout());
 		dataWrapper.add(restockingPanel, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.HORIZONTAL));
 		dataWrapper.add(consumptionPanel, GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 0, GridBagConstraints.HORIZONTAL));
-		dataWrapper.add(new CustomPanel(Color.black, new BorderLayout()), GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 1, GridBagConstraints.BOTH));
+		dataWrapper.add(new CustomPanel(bgColor, new BorderLayout()), GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 1, GridBagConstraints.BOTH));
 		this.add(dataWrapper, GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.VERTICAL));
 	}
 	
@@ -98,7 +102,7 @@ public class HistoryDayComponent extends JPanel {
 		}
 		String nameText = item.getName();
 		
-		JPanel amountWrapper = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT), 1);
+		JPanel amountWrapper = new CustomPanel(bgColor, new FlowLayout(FlowLayout.LEFT), 1);
 		JLabel amountLabel = new JLabel(amountText);
 		amountLabel.setForeground(new Color(fontColor.getRed() == 0 ? 100 : 255, fontColor.getGreen() == 0 ? 100 : 255, 80));
 		amountLabel.setFont(new Font("Arial", Font.BOLD, 14));

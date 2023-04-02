@@ -1,5 +1,6 @@
 package presentationLayer;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -45,28 +46,33 @@ public class HistoryView extends JPanel implements ActionListener {
 	
 	public HistoryView(UserHistory data) {
 		this.setBackground(Color.black);
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new GridBagLayout());
 		
 		data.recalibrateHistory();
 		
+		JPanel titleWrapper = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER));
 		JLabel titleLabel = new JLabel("User History");
 		titleLabel.setForeground(Color.white);
-		titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-		titleLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		this.add(titleLabel);
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+		titleLabel.setBorder(BorderFactory.createEmptyBorder(15, 5, 10, 5));
+		titleWrapper.add(titleLabel);
+		this.add(titleWrapper, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0.1, GridBagConstraints.HORIZONTAL));
 		
-		JPanel backPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT), 10);
+		JPanel backPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
+		backPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 		backButton = new CustomButton("Back", this, 10);
 		backPanel.add(backButton);
-		this.add(backPanel);
+		this.add(backPanel, GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 0, GridBagConstraints.HORIZONTAL));
 		
+		JPanel dataWrapper = new CustomPanel(Color.black, new BorderLayout(), 15);
 		JPanel dataPanel = new CustomPanel(Color.black, new GridBagLayout());
 		dataPanel.setBorder(BorderFactory.createMatteBorder(2, 1, 2, 1, Color.white));
 		for (int day = 0; day < 7; day++) {
 			HistoryDayComponent dayPanel = new HistoryDayComponent(data, 6-day);
 			dataPanel.add(dayPanel, GridConstraintsSpec.stretchableFillConstraints(day, 0, 1, 1, GridBagConstraints.BOTH));
 		}
-		this.add(dataPanel);
+		dataWrapper.add(dataPanel);
+		this.add(dataWrapper, GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 0.9, GridBagConstraints.BOTH));
 	}
 
 	@Override
