@@ -67,4 +67,11 @@ public class DBProxy {
 	public void updateUserHistory(UserHistory history) {
 		db.updateUserHistory(history);
 	}
+	
+	public void updateUserSettings(UserSettings settings) {
+        db.updateUserSettings(settings);
+    }
+	public UserSettings loadUserSettings() {
+        return db.loadUserSettings();
+    }
 }
