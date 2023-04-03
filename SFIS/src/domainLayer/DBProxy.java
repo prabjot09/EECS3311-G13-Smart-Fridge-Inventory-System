@@ -1,6 +1,7 @@
 package domainLayer;
 
 
+import java.io.File;
 import java.util.List;
 
 import persistenceLayer.StubDB;
@@ -74,4 +75,12 @@ public class DBProxy {
 	public UserSettings loadUserSettings() {
         return db.loadUserSettings();
     }
+	
+	public void exportData(String tables, File file) {
+		db.exportDB(tables, file);
+	}
+	
+	public void importData(File file) {
+		db.importDB(file);
+	}
 }

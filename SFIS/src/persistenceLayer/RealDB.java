@@ -1,5 +1,6 @@
 package persistenceLayer;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,6 +33,7 @@ public class RealDB implements DB {
 	FavoritesRealDB favDB = new FavoritesRealDB();
 	GroceryRealDB grocDB = new GroceryRealDB();
 	HistoryRealDB historyDB = new HistoryRealDB();
+	DBImportExport fileXfer = new DBImportExport();
 	ItemStubDB dbPop = new ItemStubDB();
 	List<String> itemPop = dbPop.getDB();
 
@@ -192,6 +194,14 @@ public class RealDB implements DB {
 		historyDB.updateHistory(history, user, password);
 		historyDB.updateHistoryAccessTimes(history.getRecalibrationDate(), history.getModificationDate(), user, password);
 		
+	}
+	
+	public void exportDB(String tables, File file) {
+		fileXfer.DBExport(user, password, tables, file);
+	}
+	
+	public void importDB(File file) {
+		fileXfer.DBImport(user, password, file);
 	}
 
 }

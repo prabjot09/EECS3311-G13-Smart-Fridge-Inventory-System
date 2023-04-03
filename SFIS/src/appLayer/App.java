@@ -1,5 +1,6 @@
 package appLayer;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -129,5 +130,9 @@ public class App {
 		DBProxy.getInstance().updateFavoritedItems(favorites);
 		history.updateHistory(inv, 0);
 		DBProxy.getInstance().updateUserHistory(history);
+	}
+	
+	public void exportData(String tables, File file) {
+		DBProxy.getInstance().exportData(tables, file);
 	}
 }
