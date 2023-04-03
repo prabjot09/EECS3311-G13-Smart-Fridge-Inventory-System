@@ -31,7 +31,7 @@ public class DBImportExport {
 	}
 	
 	public void DBImport (String user, String password, File file) {
-		String path = file.toString() + "/sifsDBBackup_" + ApplicationClock.getDate().toString() + ".sql";
+		String path = file.toString();
 		String dumpin = "mysql -u " + user + "-p" + password + " sifsDB < " + path;
 		try {
 			Process runtimeProcess = Runtime.getRuntime().exec(dumpin);
