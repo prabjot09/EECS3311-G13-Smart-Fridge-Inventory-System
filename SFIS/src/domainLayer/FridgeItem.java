@@ -43,12 +43,12 @@ public class FridgeItem extends StoredItem{
 	}
 	
 	public boolean isExpiring() {
-		if (LocalDate.now().until(this.expDate, ChronoUnit.WEEKS) < 1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	    int warningDays = UserSettings.getExpirationWarningDays();
+	    if (LocalDate.now().until(this.expDate, ChronoUnit.DAYS) < warningDays) {
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
 
 	@Override

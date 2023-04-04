@@ -12,6 +12,7 @@ import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
+import domainLayer.SmartFeature;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
 import persistenceLayer.DB;
@@ -95,7 +96,14 @@ public class App {
 		app.db = DBProxy.getInstance();
 		ApplicationClock.initRealClock();
 		
-		app.inv = new Fridge(app.db.loadItems());
+		if (app.db.loadUserSettings().isSmartFeaturesEnabled() == true) {
+			SmartFeature sf = new SmartFeature(app.db.loadItems());
+			app.inv = new Fridge(sf.performSmartFeature());
+			
+		}else {
+			app.inv = new Fridge(app.db.loadItems());
+		}
+		
 		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
 		app.groceries = new GroceryList(app.db.loadGroceryItems());
 		app.history = app.db.loadUserHistory();
