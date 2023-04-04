@@ -232,7 +232,7 @@ public class RealDB implements DB {
 	@Override
 	public UserSettings loadUserSettings() {
 		// TODO Auto-generated method stub
-		return null;
+		return new UserSettings();
 	}
 
 }

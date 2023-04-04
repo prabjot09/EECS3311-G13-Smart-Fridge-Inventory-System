@@ -12,6 +12,7 @@ import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
+import domainLayer.SmartFeature;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
 import domainLayer.UserSettings;
@@ -99,7 +100,7 @@ public class App {
 		app.db = DBProxy.getInstance();
 		ApplicationClock.initRealClock();
 		
-		loadData();
+		loadData();		
 		
 		login.setVisible(false);
 		login.dispose();
@@ -146,5 +147,10 @@ public class App {
 		
 		app.settings = new UserSettings();
 		app.settings.loadFromDatabase();
+		
+		if (DBProxy.getInstance().loadUserSettings().isSmartFeaturesEnabled() == true) {
+			SmartFeature sf = new SmartFeature(DBProxy.getInstance().loadItems());
+			app.inv = new Fridge(sf.performSmartFeature());
+		}
 	}
 }
