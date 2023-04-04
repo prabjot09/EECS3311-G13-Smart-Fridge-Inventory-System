@@ -23,6 +23,7 @@ import domainLayer.GroceryList;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
+import domainLayer.UserSettings;
 
 public class RealDB implements DB {
 //implementation of our real database, alot to go over here, many STrings where we hold sql commands to call
@@ -202,6 +203,18 @@ public class RealDB implements DB {
 	
 	public void importDB(File file) {
 		fileXfer.DBImport(user, password, file);
+	}
+
+	@Override
+	public void updateUserSettings(UserSettings settings) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UserSettings loadUserSettings() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

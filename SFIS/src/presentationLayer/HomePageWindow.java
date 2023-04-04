@@ -83,6 +83,9 @@ public class HomePageWindow extends JPanel implements ActionListener {
 		else if (e.getSource() == toSettingsButton) {
 			
 		}
+		else if (e.getSource() == toExportButton) {
+			AppWindow.getWindow().loadNewView(new ExportImportView());
+		}
 		
 	}
 
