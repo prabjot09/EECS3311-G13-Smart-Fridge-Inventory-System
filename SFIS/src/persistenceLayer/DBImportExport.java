@@ -27,7 +27,7 @@ public class DBImportExport {
 	//tables must be separated by single spaces
 	public void DBExport (String user, String password, String tables, File file) throws IOException {
 		String outputPath = file.toString() + File.separator + "sifsDBBackup_" + ApplicationClock.getDate().toString() + ".sql";
-		String dump = "mysqldump -u " + user + " -p" + password + " sifsDB " + tables + " > " + outputPath;
+		String dump = "mysqldump -u " + user + " -p" + password + " sifsDB " + tables + " --result-file=" + outputPath;
 		
 		   Runtime rt = Runtime.getRuntime();
 		   rt.exec("cmd /c " + dump);
