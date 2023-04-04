@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.Pair;
 import persistenceLayer.RealDB;
@@ -90,20 +91,10 @@ public class ImportPanel extends JPanel implements ActionListener{
 			}
 			
 			File importFile = new File(filePanel.getSelectedFilePath());
-			
-//			List<String> selectedTables = optionMenu.getSelectedValues();
-//			String tableList = "";
-//			for (int i = 0; i < selectedTables.size(); i++) {
-//				tableList += selectedTables.get(i);
-//				
-//				if (i < selectedTables.size() - 1)
-//					tableList += " ";
-//			}
-			
+
 			DBProxy.getInstance().importData(importFile);
 			
-			//DBProxy.getInstance().importData(importFile);
-			
+			App.getInstance().loadData();			
 		}
 		
 	}

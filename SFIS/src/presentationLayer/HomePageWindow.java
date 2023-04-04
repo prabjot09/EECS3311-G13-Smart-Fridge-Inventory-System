@@ -18,7 +18,7 @@ import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
-public class HomePageWindow extends JPanel implements ActionListener {
+public class HomePageWindow extends AppFrameView implements ActionListener {
 	
 	private JButton toFridgeButton;
 	private JButton toFavoritesButton;

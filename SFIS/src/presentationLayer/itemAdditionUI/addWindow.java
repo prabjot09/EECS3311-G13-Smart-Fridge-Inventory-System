@@ -21,13 +21,14 @@ import javax.swing.JRadioButton;
 
 import domainLayer.DBProxy;
 import domainLayer.Fridge;
+import presentationLayer.AppFrameView;
 import presentationLayer.AppWindow;
 import presentationLayer.mainWindow;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 
-public class addWindow extends JPanel implements ActionListener{
+public class addWindow extends AppFrameView implements ActionListener{
 	private JPanel addMethodPanel;
 	private mainWindow homeView;
 	

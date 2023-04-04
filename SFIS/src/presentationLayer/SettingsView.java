@@ -24,7 +24,7 @@ import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.DropDown;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
-public class SettingsView extends JPanel implements ActionListener {
+public class SettingsView extends AppFrameView implements ActionListener {
 	
 	private JButton backButton;
 	
@@ -127,7 +127,7 @@ public class SettingsView extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
-			// TODO: Implement App save
+			this.saveData();
 			AppWindow.getWindow().loadPreviousWindow();
 		}
 		else if (e.getSource() == smartFeatureToggle) {
@@ -149,4 +149,8 @@ public class SettingsView extends JPanel implements ActionListener {
 		}
 	}
 
+	@Override
+	public void saveData() {
+		App.getInstance().getSettings().saveToDatabase();
+	}
 }

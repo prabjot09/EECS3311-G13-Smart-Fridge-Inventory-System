@@ -19,7 +19,7 @@ import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
-public class ExportImportView extends JPanel implements ActionListener{
+public class ExportImportView extends AppFrameView implements ActionListener{
 	
 	private JButton exportButton;
 	private JButton importButton;
