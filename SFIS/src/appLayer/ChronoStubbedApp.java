@@ -31,11 +31,7 @@ public class ChronoStubbedApp {
 		DBProxy.getInstance().setDB(new StubDB());
 		ApplicationClock.initSimulatedClock();
 		
-		app.setInventory(new Fridge(DBProxy.getInstance().loadItems()));
-		app.setFavorites(new FavoritesList(DBProxy.getInstance().loadFavoritedItems()));
-		app.setGroceryList(new GroceryList(DBProxy.getInstance().loadGroceryItems()));
-		app.setHistory(DBProxy.getInstance().loadUserHistory());
-		
+		app.loadData();		
 		
 		AppWindow.getWindow().openWindow();
 		AppWindow.getWindow().loadNewView(new HomePageWindow());
