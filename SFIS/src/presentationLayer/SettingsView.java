@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import appLayer.App;
@@ -133,15 +134,7 @@ public class SettingsView extends AppFrameView implements ActionListener {
 			AppWindow.getWindow().loadPreviousWindow();
 		}
 		else if (e.getSource() == smartFeatureToggle) {
-			if (smartFeatureOn) {
-				smartFeatureToggle.setText("Off");
-			}
-			else {
-				smartFeatureToggle.setText("On");
-			}
-			smartFeatureOn = !smartFeatureOn;
-			
-			App.getInstance().getSettings().setSmartFeaturesEnabled(smartFeatureOn);
+			smartFeatureToggleHandler();
 		}
 		else if (e.getSource() == expiryOptions) {
 			int expiryThresholdValue = Integer.parseInt(expiryOptions.getInput());
@@ -151,6 +144,24 @@ public class SettingsView extends AppFrameView implements ActionListener {
 			int groceryThresholdValue = Integer.parseInt(groceryOptions.getInput());
 			App.getInstance().getSettings().setAddGroceryListThreshold(groceryThresholdValue);
 		}
+	}
+
+	
+	private void smartFeatureToggleHandler() {
+		if (smartFeatureOn) {
+			smartFeatureToggle.setText("Off");
+		}
+		else {
+			smartFeatureToggle.setText("On");
+			String message = " You are enabling the smart feature!\n" + 
+							 " This feature will predict your food consumption of the previous day and make automatic changes for you.\n" + 
+							 " Any manual adjustments can still be done, and these will be integrated to improve the feature.\n\n" +
+							 " Note that restocking items is still done for the current day.";
+			JOptionPane.showMessageDialog(AppWindow.getWindow(), message, "Notice", JOptionPane.PLAIN_MESSAGE);
+		}
+		smartFeatureOn = !smartFeatureOn;
+		
+		App.getInstance().getSettings().setSmartFeaturesEnabled(smartFeatureOn);
 	}
 
 	@Override
