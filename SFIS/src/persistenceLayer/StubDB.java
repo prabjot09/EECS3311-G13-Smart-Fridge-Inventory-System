@@ -20,6 +20,7 @@ public class StubDB implements DB {
 	FavoritesStubDB favoritesDB = new FavoritesStubDB();
 	GroceryStubDB groceriesDB = new GroceryStubDB();
 	HistoryStubDB historyDB = new HistoryStubDB();
+	SettingsStubDB settingsDB = new SettingsStubDB();
 	
 	
 	//given a string, we use this code to return a matching food item in our db
@@ -85,13 +86,11 @@ public class StubDB implements DB {
 
 	@Override
 	public void updateUserSettings(UserSettings settings) {
-		// TODO Auto-generated method stub
-		
+		settingsDB.updateUserSettings(settings);		
 	}
 
 	@Override
 	public UserSettings loadUserSettings() {
-		// TODO Auto-generated method stub
-		return new UserSettings();
+		return settingsDB.loadUserSettings();
 	}	
 }

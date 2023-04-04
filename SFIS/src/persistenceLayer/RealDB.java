@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.sql.Date;
 
 import domainLayer.FavoritesList;
@@ -43,6 +45,7 @@ public class RealDB implements DB {
 	GroceryRealDB grocDB = new GroceryRealDB();
 	HistoryRealDB historyDB = new HistoryRealDB();
 	DBImportExport fileXfer = new DBImportExport();
+	SettingsRealDB settingsDB = new SettingsRealDB();
 	ItemStubDB dbPop = new ItemStubDB();
 	List<String> itemPop = dbPop.getDB();
 
@@ -63,6 +66,8 @@ public class RealDB implements DB {
 	String createHistoryTable = "Create Table if not exists userhistory" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Day INT," + "DayEnd INT," + "Consumption INT," + "Restocking INT," + "PRIMARY KEY (name))";
 	String createDateTable = "Create Table if not exists lastaccess" + "(Recalibrate DATE," + "Modify DATE)";
+	String createSettingsTable = "Create Table if not exists " + SETTINGS + "(name VARCHAR(255)," + "Value INT," 
+			+ "PRIMARY KEY(name))";
 	String queryInsertItem = "insert into itemDB VALUES (?)" + "ON DUPLICATE KEY UPDATE name = ?;";
 	String queryInsertFav = "insert into favitem VALUES (?, ?, ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
 	String select = "use SIFSDB";
@@ -93,6 +98,7 @@ public class RealDB implements DB {
 		createState.executeUpdate(createGroceryTable);
 		createState.executeUpdate(createHistoryTable);
 		createState.executeUpdate(createDateTable);
+		createState.executeUpdate(createSettingsTable);
 		//populates our item table everytiem the program is ran, can probably do a way to check if htis has been done so
 		//we dont have to every time
 		for (int x = 0; x < itemPop.size(); x++) {
@@ -225,14 +231,25 @@ public class RealDB implements DB {
 
 	@Override
 	public void updateUserSettings(UserSettings settings) {
-		// TODO Auto-generated method stub
+		Map<String, Integer> data = new HashMap<>();
+		data.put(settingsDB.EXRIPY_THRESHOLD, settings.getExpirationWarningDays());
+		data.put(settingsDB.GROCERY_THRESHOLD, settings.getAddGroceryListThreshold());
+		data.put(settingsDB.SMART_FEATURE_ON, settings.isSmartFeaturesEnabled() ? 1 : 0);
+		settingsDB.updateSettings(user, password, data);
 		
 	}
 
 	@Override
 	public UserSettings loadUserSettings() {
-		// TODO Auto-generated method stub
-		return new UserSettings();
+		UserSettings loadedSettings = new UserSettings();
+		Map<String, Integer> data = settingsDB.loadSettings(user, password);
+		if (data.size() == 0)
+			return UserSettings.generateDefaultSettings();
+		
+		loadedSettings.setAddGroceryListThreshold(data.get(settingsDB.GROCERY_THRESHOLD));
+		loadedSettings.setExpirationWarningDays(data.get(settingsDB.EXRIPY_THRESHOLD));
+		loadedSettings.setSmartFeaturesEnabled(data.get(settingsDB.SMART_FEATURE_ON) == 1 ? true : false);
+		return loadedSettings;
 	}
 
 }
