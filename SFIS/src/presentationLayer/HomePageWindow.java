@@ -75,7 +75,7 @@ public class HomePageWindow extends JPanel implements ActionListener {
 			AppWindow.getWindow().loadNewView(new FavoritesView());
 		}
 		else if (e.getSource() == toRecipeButton) {
-			AppWindow.getWindow().loadNewView(new RecipeView(App.getInstance().getInventory()));
+			
 		}
 		else if (e.getSource() == toHistoryButton) {
 			AppWindow.getWindow().loadNewView(new HistoryView(App.getInstance().getHistory()));
