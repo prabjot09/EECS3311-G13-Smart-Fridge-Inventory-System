@@ -143,4 +143,11 @@ public class App {
 	public void exportData(String tables, File file) {
 		DBProxy.getInstance().exportData(tables, file);
 	}
+
+	public void loadData() {
+		app.inv = new Fridge(app.db.loadItems());
+		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
+		app.groceries = new GroceryList(app.db.loadGroceryItems());
+		app.history = app.db.loadUserHistory();
+	}
 }

@@ -24,7 +24,7 @@ public class Export {
 		this.items = items;
 		
 		try {
-			String outputPath = directory.toString() + "/GroceryList_" + ApplicationClock.getDate().toString() + ".pdf";
+			String outputPath = directory.toString() + File.pathSeparator + "GroceryList_" + ApplicationClock.getDate().toString() + ".pdf";
 			PdfWriter writer = new PdfWriter(outputPath);
 			PdfDocument pdfDoc = new PdfDocument(writer);
 			Document doc = new Document(pdfDoc);
