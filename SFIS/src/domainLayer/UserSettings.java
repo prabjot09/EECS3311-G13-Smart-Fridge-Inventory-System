@@ -4,18 +4,23 @@ import domainLayer.DBProxy;
 
 public class UserSettings {
 
-	private static int expirationWarningDays;
+	private int expirationWarningDays;
 	private boolean smartFeaturesEnabled; //auto adjust quantity
 	private int addGroceryListThreshold;
 
 	public UserSettings() {
 	    this.expirationWarningDays = 5;
-	    this.smartFeaturesEnabled = true;
-	    this.addGroceryListThreshold = 10; //percentage?
+	    this.smartFeaturesEnabled = false;
+	    this.addGroceryListThreshold = 20; //percentage?
 	}
 
-	static public int getExpirationWarningDays() {
-	    return UserSettings.expirationWarningDays;
+	
+	public static UserSettings generateDefaultSettings() {
+		return new UserSettings();
+	}
+	
+	public int getExpirationWarningDays() {
+	    return this.expirationWarningDays;
 	}
 
 	public void setExpirationWarningDays(int expirationWarningDays) {

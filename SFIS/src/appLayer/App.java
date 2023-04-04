@@ -112,7 +112,7 @@ public class App {
 			return;
 		}
 		
-		app.db = DBProxy.getInstance();
+		db = DBProxy.getInstance();
 		ApplicationClock.initRealClock();
 		
 		loadData();		
@@ -127,7 +127,7 @@ public class App {
 	}
 	
 	public void checkExpirations() {
-		List<StoredItem> expired = app.getInstance().inv.getExpiringItems();
+		List<StoredItem> expired = inv.getExpiringItems();
 		String expirations = "";
 		for (StoredItem item: expired) {
 			expirations += "\n" + item.getFoodItem().getName();
@@ -147,7 +147,7 @@ public class App {
 		DBProxy.getInstance().updateFavoritedItems(favorites);
 		history.updateHistory(inv, 0);
 		DBProxy.getInstance().updateUserHistory(history);
-		app.settings.saveToDatabase();
+		settings.saveToDatabase();
 	}
 	
 	public void exportData(String tables, File file) {
@@ -155,20 +155,24 @@ public class App {
 	}
 
 	public void loadData() {
-		app.inv = new Fridge(DBProxy.getInstance().loadItems());
-		app.favorites = new FavoritesList(DBProxy.getInstance().loadFavoritedItems());
-		app.groceries = new GroceryList(DBProxy.getInstance().loadGroceryItems());
-		app.history = DBProxy.getInstance().loadUserHistory();
+		inv = new Fridge(DBProxy.getInstance().loadItems());
+		favorites = new FavoritesList(DBProxy.getInstance().loadFavoritedItems());
+		groceries = new GroceryList(DBProxy.getInstance().loadGroceryItems());
+		history = DBProxy.getInstance().loadUserHistory();
 		
-		app.settings = new UserSettings();
-		app.settings.loadFromDatabase();
+		settings = new UserSettings();
+		settings.loadFromDatabase();
 		
-		app.pendingUserAdjustment = false;
+		pendingUserAdjustment = false;
 		
-		if (DBProxy.getInstance().loadUserSettings().isSmartFeaturesEnabled() == true && app.history.daysSinceUpdated() > 1) {
+		if (DBProxy.getInstance().loadUserSettings().isSmartFeaturesEnabled() == true && history.daysSinceUpdated() > 1) {
 			SmartFeature sf = new SmartFeature(inv.getItems());
-			app.pendingUserAdjustment = true;
-			app.inv = new Fridge(sf.performSmartFeature());
+			pendingUserAdjustment = true;
+			inv = new Fridge(sf.performSmartFeature());
+			history.updateHistory(inv, 1);
+			
+			DBProxy.getInstance().updateFridge(inv);
+			DBProxy.getInstance().updateUserHistory(history);
 		}
 	}
 }

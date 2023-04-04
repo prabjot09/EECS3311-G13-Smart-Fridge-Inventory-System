@@ -3,6 +3,8 @@ package domainLayer;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import appLayer.App;
+
 public class FridgeItem extends StoredItem{
 	
 	private LocalDate expDate;
@@ -43,8 +45,12 @@ public class FridgeItem extends StoredItem{
 	}
 	
 	public boolean isExpiring() {
-	    int warningDays = UserSettings.getExpirationWarningDays();
-	    if (LocalDate.now().until(this.expDate, ChronoUnit.DAYS) < warningDays) {
+		int warningDays = 5;
+		if (App.getInstance().getSettings() != null) {
+			warningDays = App.getInstance().getSettings().getExpirationWarningDays();
+		}
+		
+		if (LocalDate.now().until(this.expDate, ChronoUnit.DAYS) < warningDays) {
 	        return true;
 	    } else {
 	        return false;
