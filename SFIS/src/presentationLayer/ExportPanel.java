@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.Pair;
 import persistenceLayer.RealDB;
@@ -85,6 +86,8 @@ public class ExportPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Select a file location before proceeding", "Notice", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
+			App.getInstance().saveData();
 			
 			File exportFile = new File(filePanel.getSelectedFilePath());
 			
