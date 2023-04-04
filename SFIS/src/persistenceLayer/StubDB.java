@@ -1,5 +1,6 @@
 package persistenceLayer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import domainLayer.FridgeItem;
 import domainLayer.GroceryList;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
+import domainLayer.UserSettings;
 
 
 public class StubDB implements DB {
@@ -67,5 +69,29 @@ public class StubDB implements DB {
 		historyDB.setHistoryData(history.getData());
 		historyDB.setRecalibrationDate(history.getRecalibrationDate());
 		historyDB.setModificationDate(history.getModificationDate());
+	}
+
+	@Override
+	public void exportDB(String tables, File file) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void importDB(File file) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateUserSettings(UserSettings settings) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UserSettings loadUserSettings() {
+		// TODO Auto-generated method stub
+		return new UserSettings();
 	}	
 }

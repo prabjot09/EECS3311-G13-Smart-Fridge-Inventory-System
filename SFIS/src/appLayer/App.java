@@ -12,8 +12,10 @@ import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
+import domainLayer.SmartFeature;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
+import domainLayer.UserSettings;
 import persistenceLayer.DB;
 import persistenceLayer.RealDB;
 import persistenceLayer.StubDB;
@@ -25,12 +27,15 @@ import presentationLayer.mainWindow;
 public class App {
 	private static App app;
 	
-	private Fridge inv;
-	private DBProxy db;
-	private FavoritesList favorites;
 	private DBLoginView login;
+	
+	private DBProxy db;
+	
+	private Fridge inv;
+	private FavoritesList favorites;
 	private GroceryList groceries;
 	private UserHistory history;
+	private UserSettings settings;
 	
 	private App() {
 		
@@ -95,10 +100,7 @@ public class App {
 		app.db = DBProxy.getInstance();
 		ApplicationClock.initRealClock();
 		
-		app.inv = new Fridge(app.db.loadItems());
-		app.favorites = new FavoritesList(app.db.loadFavoritedItems());
-		app.groceries = new GroceryList(app.db.loadGroceryItems());
-		app.history = app.db.loadUserHistory();
+		loadData();		
 		
 		login.setVisible(false);
 		login.dispose();
@@ -130,9 +132,25 @@ public class App {
 		DBProxy.getInstance().updateFavoritedItems(favorites);
 		history.updateHistory(inv, 0);
 		DBProxy.getInstance().updateUserHistory(history);
+		app.settings.saveToDatabase();
 	}
 	
 	public void exportData(String tables, File file) {
 		DBProxy.getInstance().exportData(tables, file);
+	}
+
+	public void loadData() {
+		app.inv = new Fridge(DBProxy.getInstance().loadItems());
+		app.favorites = new FavoritesList(DBProxy.getInstance().loadFavoritedItems());
+		app.groceries = new GroceryList(DBProxy.getInstance().loadGroceryItems());
+		app.history = DBProxy.getInstance().loadUserHistory();
+		
+		app.settings = new UserSettings();
+		app.settings.loadFromDatabase();
+		
+		if (DBProxy.getInstance().loadUserSettings().isSmartFeaturesEnabled() == true) {
+			SmartFeature sf = new SmartFeature(DBProxy.getInstance().loadItems());
+			app.inv = new Fridge(sf.performSmartFeature());
+		}
 	}
 }

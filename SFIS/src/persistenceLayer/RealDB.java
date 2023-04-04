@@ -1,6 +1,7 @@
 package persistenceLayer;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,12 +24,20 @@ import domainLayer.GroceryList;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
+import domainLayer.UserSettings;
 
 public class RealDB implements DB {
 //implementation of our real database, alot to go over here, many STrings where we hold sql commands to call
 	// instantiate our 4 Databases where we deal with the fridge, teh favourties
 	// list, the grocerylist, and teh list of items we
 	// can add
+	public static String FRIDGE = "fridgeitem";
+	public static String FAVORITES = "favitem";
+	public static String GROCERIES = "groceryitem";
+	public static String HISTORY = "userhistory";
+	public static String DATE = "lastaccess";
+	public static String SETTINGS = "usersettings";
+	
 	FridgeRealDB fridgeDB = new FridgeRealDB();
 	FavoritesRealDB favDB = new FavoritesRealDB();
 	GroceryRealDB grocDB = new GroceryRealDB();
@@ -197,11 +206,33 @@ public class RealDB implements DB {
 	}
 	
 	public void exportDB(String tables, File file) {
-		fileXfer.DBExport(user, password, tables, file);
+		try {
+			fileXfer.DBExport(user, password, tables, file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void importDB(File file) {
-		fileXfer.DBImport(user, password, file);
+		try {
+			fileXfer.DBImport(user, password, file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateUserSettings(UserSettings settings) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UserSettings loadUserSettings() {
+		// TODO Auto-generated method stub
+		return new UserSettings();
 	}
 
 }
