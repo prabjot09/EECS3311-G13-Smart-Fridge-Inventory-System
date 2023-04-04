@@ -9,6 +9,8 @@ import java.io.OutputStreamWriter;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+
 import domainLayer.ApplicationClock;
 /*
  * This class requires mysql to be added to command line's PATH for windows devices
@@ -23,29 +25,20 @@ public class DBImportExport {
 	}
 	//Takes a series of tables and a designated filepath
 	//tables must be separated by single spaces
-	public void DBExport (String user, String password, String tables, File file) {
+	public void DBExport (String user, String password, String tables, File file) throws IOException {
 		String outputPath = file.toString() + File.separator + "sifsDBBackup_" + ApplicationClock.getDate().toString() + ".sql";
-		String dump = "mysqldump -u " + user + " -p" + password + " sifsDB " + tables + " --result-file=" + outputPath;
-		try {
-			System.out.println(outputPath);
-			Process runtimeProcess = Runtime.getRuntime().exec(dump);
-			int processComplete = runtimeProcess.waitFor();
-			System.out.println(processComplete);
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Error at Backuprestore");
-		}
+		String dump = "mysqldump -u " + user + " -p" + password + " sifsDB " + tables + " > " + outputPath;
+		
+		   Runtime rt = Runtime.getRuntime();
+		   rt.exec("cmd /c " + dump);
 	}
 	
-	public void DBImport (String user, String password, File file) {
+	public void DBImport (String user, String password, File file) throws IOException {
 		String path = file.toString();
-		String dumpin = "mysql -u " + user + " -p" + password + " sifsDB";
-		try {
-			Process runtimeProcess = Runtime.getRuntime().exec(dumpin);			
-			int processComplete = runtimeProcess.waitFor();
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			 JOptionPane.showMessageDialog(null, "Error at Backuprestore");
-		}
+	
+		String dumpin = "mysql -u " + user + " -p" + password + " sifsDB < " + path;
+		
+		 Runtime rt = Runtime.getRuntime();
+		   rt.exec("cmd /c " + dumpin);
 	}
 }

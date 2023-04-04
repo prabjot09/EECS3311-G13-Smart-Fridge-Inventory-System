@@ -23,6 +23,7 @@ public class ExportImportView extends JPanel implements ActionListener{
 	
 	private JButton exportButton;
 	private JButton importButton;
+	private JButton backButton;
 	
 	private JButton selectedButton;
 	
@@ -39,25 +40,32 @@ public class ExportImportView extends JPanel implements ActionListener{
 	    titleLabel.setForeground(Color.white);
 	    titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
 	    
-	    JPanel titlePanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER), 20);
+	    JPanel titlePanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER));
+	    titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 0, 30));
 	    titlePanel.add(titleLabel);
 	    this.add(titlePanel);
 	    
+	    JPanel backPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
+	    backPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
+	    this.add(backPanel);
+	    backButton = new CustomButton("Back", this);
+	    backPanel.add(backButton);
+	    
 	    // TODO: Add multi-select for import/export like addWindow
-	    JPanel selectionPanel = new CustomPanel(Color.black, new GridBagLayout(), 30);
+	    JPanel selectionPanel = new CustomPanel(Color.black, new GridBagLayout(), 20);
 	    this.add(selectionPanel);
 	    
 	    GridBagConstraints c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 0.5, 0.0, GridBagConstraints.HORIZONTAL);
-	    importButton = new CustomButton("Import", this, 20);
-	    importButton.setFont(new Font("Arial", Font.BOLD, 24));
+	    importButton = new CustomButton("Import", this, 15);
+	    importButton.setFont(new Font("Arial", Font.BOLD, 22));
 	    selectionPanel.add(importButton, c);
 	    
 	    c = GridConstraintsSpec.stretchableFillConstraints(1, 0, 0.5, 0.0, GridBagConstraints.HORIZONTAL);
-	    exportButton = new CustomButton("Export", this, 20);
-	    exportButton.setFont(new Font("Arial", Font.BOLD, 24));
+	    exportButton = new CustomButton("Export", this, 15);
+	    exportButton.setFont(new Font("Arial", Font.BOLD, 22));
 	    selectionPanel.add(exportButton, c);
 	    
-	    mainPanel = new CustomPanel(Color.white, new BorderLayout(), 10);
+	    mainPanel = new CustomPanel(Color.white, new BorderLayout(), 5);
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1.0, 1.0, GridBagConstraints.BOTH);
 	    c.gridwidth = 2;
 	    selectionPanel.add(mainPanel, c);
@@ -116,6 +124,9 @@ public class ExportImportView extends JPanel implements ActionListener{
 				return;
 			
 			selectOption(exportButton, exportPanel);
+		}
+		else if (e.getSource() == backButton) {
+			AppWindow.getWindow().loadPreviousWindow();
 		}
 	}
 }
