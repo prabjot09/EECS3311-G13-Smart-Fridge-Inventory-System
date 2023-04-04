@@ -1,6 +1,7 @@
 package persistenceLayer;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -205,11 +206,21 @@ public class RealDB implements DB {
 	}
 	
 	public void exportDB(String tables, File file) {
-		fileXfer.DBExport(user, password, tables, file);
+		try {
+			fileXfer.DBExport(user, password, tables, file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void importDB(File file) {
-		fileXfer.DBImport(user, password, file);
+		try {
+			fileXfer.DBImport(user, password, file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
