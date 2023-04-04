@@ -76,6 +76,7 @@ public class SettingsView extends AppFrameView implements ActionListener {
 	    String[] expiryOptionsArr = {"2", "3", "4", "5", "6", "7", "8", "9", "10"};
 	    expiryOptions = new DropDown<>(expiryOptionsArr);
 	    expiryOptions.setFont(new Font("Arial", Font.PLAIN, 16));
+	    expiryOptions.setSelectedItem("" + App.getInstance().getSettings().getExpirationWarningDays());
 	    expiryOptions.addActionListener(this);
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH);
 	    wrapperPanel.add(expiryOptions, c);
@@ -93,8 +94,8 @@ public class SettingsView extends AppFrameView implements ActionListener {
 	    wrapperPanel = new CustomPanel(settingsPanel.getBackground(), new GridBagLayout(), 20);
 	    c = GridConstraintsSpec.stretchableFillConstraints(1, 1, 0.1, 0, GridBagConstraints.HORIZONTAL);
 	    settingsPanel.add(wrapperPanel, c);
-	    smartFeatureToggle = new CustomButton("Off", this, 10);
-	    smartFeatureOn = false;	    
+	    smartFeatureOn = App.getInstance().getSettings().isSmartFeaturesEnabled();
+	    smartFeatureToggle = new CustomButton(smartFeatureOn ? "On" : "Off", this, 10);	    
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH);
 	    wrapperPanel.add(smartFeatureToggle, c);
 	    
@@ -116,6 +117,7 @@ public class SettingsView extends AppFrameView implements ActionListener {
 	    groceryOptions = new DropDown<>(groceryThresholdOptions);
 	    groceryOptions.setFont(new Font("Arial", Font.PLAIN, 16));
 	    groceryOptions.addActionListener(this);
+	    groceryOptions.setSelectedItem("" + App.getInstance().getSettings().getAddGroceryListThreshold());
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH);
 	    wrapperPanel.add(groceryOptions, c);
 	    
@@ -138,14 +140,16 @@ public class SettingsView extends AppFrameView implements ActionListener {
 				smartFeatureToggle.setText("On");
 			}
 			smartFeatureOn = !smartFeatureOn;
+			
+			App.getInstance().getSettings().setSmartFeaturesEnabled(smartFeatureOn);
 		}
 		else if (e.getSource() == expiryOptions) {
 			int expiryThresholdValue = Integer.parseInt(expiryOptions.getInput());
-			System.out.println(expiryThresholdValue );
+			App.getInstance().getSettings().setExpirationWarningDays(expiryThresholdValue);
 		}
 		else if (e.getSource() == groceryOptions) {
 			int groceryThresholdValue = Integer.parseInt(groceryOptions.getInput());
-			System.out.println(groceryThresholdValue);
+			App.getInstance().getSettings().setAddGroceryListThreshold(groceryThresholdValue);
 		}
 	}
 
