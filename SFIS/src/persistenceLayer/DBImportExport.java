@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
+import appLayer.App;
 import domainLayer.ApplicationClock;
 /*
  * This class requires mysql to be added to command line's PATH for windows devices
@@ -37,8 +38,16 @@ public class DBImportExport {
 		String path = file.toString();
 	
 		String dumpin = "mysql -u " + user + " -p" + password + " sifsDB < " + path;
+		App.getInstance().loadData();
 		
-		 Runtime rt = Runtime.getRuntime();
-		   rt.exec("cmd /c " + dumpin);
+		Runtime rt = Runtime.getRuntime();
+		
+		if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+			Process p = rt.exec(new String[]{"cmd.exe","/c", dumpin});
+		} else {
+			rt.exec(new String[]{"/bin/bash","-c", dumpin});
+		}
+		
+		
 	}
 }
