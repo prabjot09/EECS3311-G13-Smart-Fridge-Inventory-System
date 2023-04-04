@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -33,7 +34,6 @@ public class RecipeView extends JPanel implements ActionListener {
 	private Fridge inv;
 	private JButton backButton, randomButton, displayButton;
 	private List<Recipe> allRecipes;
-	private String recipeMissing;
 	private JList<String> recipeView;
 	private DefaultListModel<String> recipeViewItems;
 	private JList<String> fullRecipeView;
@@ -55,7 +55,7 @@ public class RecipeView extends JPanel implements ActionListener {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		//title
+		//titles
 		JPanel titleleftPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER));
 		titleleftPanel.setBorder(BorderFactory.createEmptyBorder(25,40,10,40));
 		this.add(titleleftPanel, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0.1, GridBagConstraints.HORIZONTAL));
@@ -74,7 +74,7 @@ public class RecipeView extends JPanel implements ActionListener {
 	    fullrecipeTitle.setFont(new Font("Arial", Font.BOLD, 36));
 	    titlerightPanel.add(fullrecipeTitle);
 	    
-	    //back button panel
+	    //buttons
 	    JPanel backleftPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
 		backleftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
 		backButton = new CustomButton("Back", this, 10);
@@ -108,12 +108,11 @@ public class RecipeView extends JPanel implements ActionListener {
 		
 		for (Recipe recipe : allRecipes) {
 			if (recipeChecker(recipe)) {
-				recipeMissing = "";
+				recipeViewItems.addElement("+ " + recipe.getRecipeName());
 			}
 			else {
-				recipeMissing = "(missing items)";
+				recipeViewItems.addElement("- " + recipe.getRecipeName() + "(missing items)");
 			}
-			recipeViewItems.addElement("- " + recipe.getRecipeName() + recipeMissing);
 		}
 		recipeView.setModel(recipeViewItems);
 		
@@ -147,6 +146,7 @@ public class RecipeView extends JPanel implements ActionListener {
 		}
 		return true;
 	}
+	
 	public boolean recipeItemChecker(StoredItem recipeItem) {
 		for (StoredItem fridgeItem : inv.getItems()) {
 			if (fridgeItem.getFoodItem().sameAs(recipeItem.getFoodItem())) {
@@ -159,19 +159,34 @@ public class RecipeView extends JPanel implements ActionListener {
 	}
 	
 	public void fullRecipeWindow(Recipe recipe) {
+		//clear window
 		fullRecipeItems.removeAllElements();
+		
+		//counter for number instructions number
 		int counter = 1;
+		
+		//name
+		fullRecipeItems.addElement(recipe.getRecipeName());
+		//divider
+		char[] tempC = new char[recipe.getRecipeName().length()];
+		Arrays.fill(tempC, '*');
+		String divide = new String(tempC);
+		fullRecipeItems.addElement(divide);
+		
+		//ingredients
+		fullRecipeItems.addElement("Ingredients:");
 		for (StoredItem recipeItem : recipe.getItems()) {
 			if (recipeItemChecker(recipeItem)) {
-				recipeMissing = "";
+				fullRecipeItems.addElement("+ " + recipeItem.getFoodItem().getName() + ", " + recipeItem.getStockableItem().getStock());
 			}
 			else {
-				recipeMissing = "(missing items)";
+				fullRecipeItems.addElement("- " + recipeItem.getFoodItem().getName() + ", " + recipeItem.getStockableItem().getStock() + "(missing items)");
 			}
-			fullRecipeItems.addElement("-" + recipeItem.getFoodItem().getName() + ", " + recipeItem.getStockableItem().getStock() + recipeMissing);
 		}
+		//instructions
+		fullRecipeItems.addElement("Instructions:");
 		for (String instruction : recipe.getInstructions()) {
-			fullRecipeItems.addElement(counter + ". " + instruction);
+			fullRecipeItems.addElement(counter + ") " + instruction);
 			counter++;
 		}
 		revalidate();
