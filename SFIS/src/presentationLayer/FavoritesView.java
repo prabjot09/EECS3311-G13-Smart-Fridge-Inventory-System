@@ -182,7 +182,7 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 		StockType type = selectedItem.getFoodItem().getStockType();
 		Pair<StockType, Integer> input = quantityInput.getAmountValue(type.toString());
 		
-		if (input.getB() == null) {
+		if (input.getB() == null || input.getB() < 0 || !StockableItemFactory.createStockableItem(input.getA(), input.getB()).stockWithinBounds()) {
 			JOptionPane.showMessageDialog(this, "Valid input quantity must be selected.", "Warning", JOptionPane.WARNING_MESSAGE);
 			return;
 		}

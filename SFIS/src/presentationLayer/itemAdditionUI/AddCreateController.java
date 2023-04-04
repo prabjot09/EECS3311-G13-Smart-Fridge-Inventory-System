@@ -51,6 +51,11 @@ public class AddCreateController implements ActionListener {
 			return false;
 		}
 		
+		if (itemName.replaceAll("\\P{Print}", "").equals(itemName) == false) {
+			JOptionPane.showMessageDialog(null, "Item Name should be composed of printable characters only.", "Warning", JOptionPane.WARNING_MESSAGE);
+			return false;			
+		}
+		
 		String amountType = this.addCreateView.getAmountType();
 		if (amountType == null) {
 			JOptionPane.showMessageDialog(null, "Please specify the amount type", "Error", JOptionPane.ERROR_MESSAGE);
