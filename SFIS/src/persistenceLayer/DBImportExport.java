@@ -23,6 +23,7 @@ public class DBImportExport {
 		String outputPath = file.toString() + "/sifsDBBackup_" + ApplicationClock.getDate().toString() + ".sql";
 		String dump = "mysqldump -u " + user + " -p" + password + " sifsDB " + tables + " > " + outputPath;
 		try {
+
 			Process runtimeProcess = Runtime.getRuntime().exec(dump);
 			int processComplete = runtimeProcess.waitFor();
 		} catch (IOException | InterruptedException e) {

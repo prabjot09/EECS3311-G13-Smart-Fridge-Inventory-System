@@ -30,6 +30,13 @@ public class RealDB implements DB {
 	// instantiate our 4 Databases where we deal with the fridge, teh favourties
 	// list, the grocerylist, and teh list of items we
 	// can add
+	public static String FRIDGE = "fridgeitem";
+	public static String FAVORITES = "favitem";
+	public static String GROCERIES = "groceryitem";
+	public static String HISTORY = "userhistory";
+	public static String DATE = "lastaccess";
+	public static String SETTINGS = "usersettings";
+	
 	FridgeRealDB fridgeDB = new FridgeRealDB();
 	FavoritesRealDB favDB = new FavoritesRealDB();
 	GroceryRealDB grocDB = new GroceryRealDB();
