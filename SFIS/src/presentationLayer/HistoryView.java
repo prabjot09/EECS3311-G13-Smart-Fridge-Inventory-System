@@ -27,7 +27,7 @@ import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
-public class HistoryView extends JPanel implements ActionListener {
+public class HistoryView extends AppFrameView implements ActionListener {
 	
 	private JButton backButton;
 	

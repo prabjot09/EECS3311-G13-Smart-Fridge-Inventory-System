@@ -31,7 +31,7 @@ import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 
-public class FavoritesView extends JPanel implements ActionListener, ListSelectionListener{
+public class FavoritesView extends AppFrameView implements ActionListener, ListSelectionListener{
 	private CompressedListView fridgeItems;
 	private ExpressiveListView favoritesView;
 	
@@ -137,7 +137,7 @@ public class FavoritesView extends JPanel implements ActionListener, ListSelecti
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
-			DBProxy.getInstance().updateFavoritedItems(App.getInstance().getFavorites());
+			this.saveData();
 			AppWindow.getWindow().loadPreviousWindow();
 			return;
 		}
@@ -200,5 +200,10 @@ public class FavoritesView extends JPanel implements ActionListener, ListSelecti
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+	}
+	
+	@Override
+	public void saveData() {
+		DBProxy.getInstance().updateFavoritedItems(App.getInstance().getFavorites());
 	}
 }

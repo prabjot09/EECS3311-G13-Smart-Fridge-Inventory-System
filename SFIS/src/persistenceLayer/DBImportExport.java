@@ -38,16 +38,21 @@ public class DBImportExport {
 		String path = file.toString();
 	
 		String dumpin = "mysql -u " + user + " -p" + password + " sifsDB < " + path;
-		App.getInstance().loadData();
 		
 		Runtime rt = Runtime.getRuntime();
 		
-		if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-			Process p = rt.exec(new String[]{"cmd.exe","/c", dumpin});
-		} else {
-			rt.exec(new String[]{"/bin/bash","-c", dumpin});
+		try {
+			Process p;
+			if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+				p = rt.exec(new String[]{"cmd.exe","/c", dumpin});
+				p.waitFor();
+			} else {
+				p = rt.exec(new String[]{"/bin/bash","-c", dumpin});
+				p.waitFor();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		
 		
 	}
 }

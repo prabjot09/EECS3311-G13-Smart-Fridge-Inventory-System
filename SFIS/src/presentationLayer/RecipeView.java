@@ -29,7 +29,7 @@ import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
-public class RecipeView extends JPanel implements ActionListener {
+public class RecipeView extends AppFrameView implements ActionListener {
 	
 	private Fridge inv;
 	private JButton backButton, randomButton, displayButton;

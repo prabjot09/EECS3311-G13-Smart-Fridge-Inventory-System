@@ -15,8 +15,8 @@ import appLayer.App;
 import domainLayer.DBProxy;
 
 public class AppWindow extends JFrame{
-	private JPanel currentView;
-	private List<JPanel> viewStack;
+	private AppFrameView currentView;
+	private List<AppFrameView> viewStack;
 	private static AppWindow window;
 	
 	private AppWindow() {
@@ -41,7 +41,7 @@ public class AppWindow extends JFrame{
 	    this.addWindowListener(new WindowAdapter() {
 	    	@Override
 	    	public void windowClosing(WindowEvent e) {
-	    		App.getInstance().saveData();
+	    		saveViews();
 	    	}
 	    });
 		    
@@ -68,7 +68,7 @@ public class AppWindow extends JFrame{
 	}
 	
 	
-	public void loadNewView(JPanel view) {
+	public void loadNewView(AppFrameView view) {
 		if (currentView != null) {
 			this.remove(currentView);
 		}
@@ -80,4 +80,10 @@ public class AppWindow extends JFrame{
 		this.revalidate();
 	}
 	
+	
+	public void saveViews() {
+		for (AppFrameView frame: viewStack) {
+			frame.saveData();
+		}
+	}
 }

@@ -51,7 +51,7 @@ import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 import presentationLayer.swingExtensions.LabelledInputField;
 
-public class mainWindow extends JPanel implements ActionListener{	
+public class mainWindow extends AppFrameView implements ActionListener{	
 	// Input Components
 	private JTextField search;
 	private JButton addButton, searchButton, favoritesButton, backButton;
@@ -100,6 +100,13 @@ public class mainWindow extends JPanel implements ActionListener{
 	    rightPanel.add(groceryView);
 	    c = GridConstraintsSpec.stretchableFillConstraints(2, 2, 0.33, 1, GridBagConstraints.BOTH);
 	    searchPanel.add(rightPanel, c);
+	    
+	    if (App.getInstance().getSettings().isSmartFeaturesEnabled() && App.getInstance().isPendingUserAdjustment()) {
+	    	String message = "The smart feature has automatically changed the stock of items in your fridge.\n" +
+	    					 "Please make any necessary changes to your fridge to reflect its actual state.\n" + 
+	    					 "These changes will also be incorporated to make the smart feature more acurate in the future!";
+	    	JOptionPane.showMessageDialog(AppWindow.getWindow(), message, "Notice", JOptionPane.INFORMATION_MESSAGE);
+	    }
 	}
 	
 	public void headerSetup() {
@@ -223,11 +230,11 @@ public class mainWindow extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == addButton) {
-			JPanel addView = new addWindow(this);
+			AppFrameView addView = new addWindow(this);
 			AppWindow.getWindow().loadNewView(addView);
 		}
 		else if (e.getSource() == favoritesButton) {
-			JPanel favoritesView = new FavoritesView();
+			AppFrameView favoritesView = new FavoritesView();
 			AppWindow.getWindow().loadNewView(favoritesView);
 		}
 		else if (e.getSource() == searchButton) {		
@@ -238,7 +245,7 @@ public class mainWindow extends JPanel implements ActionListener{
 		}
 		else if (e.getSource() == backButton) {
 			AppWindow.getWindow().loadPreviousWindow();
-			App.getInstance().getHistory().updateHistory(inv, 0);
+			saveData();
 		}
 		else if (e.getSource() == this.sortMethodType) {
 			ISortingStrategy strat = this.sortMethodMap.get((String) sortMethodType.getSelectedItem());
@@ -268,21 +275,28 @@ public class mainWindow extends JPanel implements ActionListener{
 	
 	
 	public void mainSearchHandler() {
-		//We want to ensure we can search our JList, and let it return to its former state if the search is cleared.
-		//We do this by passing our inventory and using .contains to add eveyrthing that matches to our JList 
-		
 		String searchString = search.getText();
 		List<StoredItem> matchingItems = inv.search(searchString);
 		viewManager.setViewLists(matchingItems);
 	}
 	
-	public void addNewItem() {
-		int itemIndex = inv.getItems().size() - 1;
-		viewManager.addItemToLists(inv.getItems().get(itemIndex));
-	}
-	
 	
 	public void reloadLists() {
 		viewManager.setViewLists(App.getInstance().getInventory().getItems());
+	}
+	
+	@Override
+	public void saveData() {
+		if (App.getInstance().getSettings().isSmartFeaturesEnabled() && App.getInstance().isPendingUserAdjustment()) {
+			App.getInstance().getHistory().updateHistory(inv, 1);
+		}
+		else {
+			App.getInstance().getHistory().updateHistory(inv, 0);
+		}
+
+
+		DBProxy.getInstance().updateFridge(inv);
+		DBProxy.getInstance().updateGroceryItems(App.getInstance().getGroceryList());
+		DBProxy.getInstance().updateUserHistory(App.getInstance().getHistory());
 	}
 }
