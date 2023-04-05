@@ -47,6 +47,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private GroceryListView groceryView;
 
 	private JPanel buttonPanel;
+	private JPanel groceryItemPanel;
 	private boolean buttonPanelFlag;
 
 	public CompressedListView(ItemManager inv) {
@@ -90,7 +91,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		remButton = new CustomButton("Remove", this, 10);
 		adjustPanel.add(remButton);
 
-		JPanel groceryItemPanel = new CustomPanel(Color.black, new BorderLayout());
+		groceryItemPanel = new CustomPanel(Color.black, new BorderLayout());
 		buttonPanel.add(groceryItemPanel , BorderLayout.LINE_START);
 		
 		groceryListButton = new CustomButton("Add to Grocery List", this, 10);
@@ -213,5 +214,12 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
 		incButton.setEnabled(incrementEnabled);
 		decButton.setEnabled(decrementEnabled);
+	}
+
+	@Override
+	public void removeGroceryLink() {
+		this.groceryItemPanel.remove(groceryListButton);
+		this.repaint();
+		this.revalidate();
 	}
 }

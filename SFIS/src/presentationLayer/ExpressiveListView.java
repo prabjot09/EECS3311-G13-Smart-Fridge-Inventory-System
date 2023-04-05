@@ -28,12 +28,10 @@ public class ExpressiveListView extends JPanel implements ListView{
 	private JScrollPane scroll;
 	private GroceryListView groceryView;
 	
-	private boolean fridgeFlag;
-	
 	public static void main(String[] args) {
 		JFrame jframe = new JFrame("Hi");
 		
-		jframe.add(new ExpressiveListView(new Fridge(DBProxy.getInstance().loadItems()), true));
+		jframe.add(new ExpressiveListView(new Fridge(DBProxy.getInstance().loadItems())));
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jframe.getContentPane().setBackground(Color.black);
 	    jframe.setPreferredSize(new Dimension(600, 600));
@@ -42,7 +40,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	    jframe.setVisible(true);
 	}
 	
-	public ExpressiveListView(ItemManager inv, boolean fridgeFlag) {
+	public ExpressiveListView(ItemManager inv) {
 		this.inv = inv;
 		this.itemUIList = new ArrayList<>();
 		
@@ -54,7 +52,6 @@ public class ExpressiveListView extends JPanel implements ListView{
 		scroll = new JScrollPane();
 		this.add(scroll);
 		
-		this.fridgeFlag = fridgeFlag;
 		this.generateList(inv.getItems());
 	}
 	
@@ -66,7 +63,8 @@ public class ExpressiveListView extends JPanel implements ListView{
 		listView.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
 		for (StoredItem item: items) {
-			ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this, fridgeFlag);
+			ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this);
+			
 			itemUIList.add(itemView);
 			listView.add(itemView);
 		}
@@ -79,7 +77,8 @@ public class ExpressiveListView extends JPanel implements ListView{
 	}
 	
 	public void addItem(StoredItem item) {
-		ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this, fridgeFlag);
+		ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this);
+	
 		listView.add(itemView);
 		
 		listView.revalidate();
@@ -121,6 +120,14 @@ public class ExpressiveListView extends JPanel implements ListView{
 		for (ExpressiveItemComponent component: itemUIList) {
 			component.setStockChangeMode(increment, decrement);
 		}
-		
+	}
+	
+	@Override
+	public void removeGroceryLink() {
+		for (ExpressiveItemComponent component: itemUIList) {
+			component.removeGroceryLink();
+		}
+		this.repaint();
+		this.revalidate();
 	}
 }

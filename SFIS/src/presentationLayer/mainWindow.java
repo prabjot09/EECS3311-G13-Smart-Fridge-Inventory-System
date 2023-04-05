@@ -190,7 +190,7 @@ public class mainWindow extends AppFrameView implements ActionListener{
 				
 	    List<ListView> views = new ArrayList<ListView>();
 	    views.add(new CompressedListView(inv));
-	    views.add(new ExpressiveListView(inv, true));
+	    views.add(new ExpressiveListView(inv));
 	    
 	    views.get(0).setGrocery(groceryView);
 	    views.get(1).setGrocery(groceryView);

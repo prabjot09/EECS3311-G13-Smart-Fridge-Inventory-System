@@ -38,6 +38,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private StoredItem itemObj;
 	
 	private JButton incButton, decButton, delButton, groceryListButton;
+	private JPanel rightPanel;
 	
 	private ExpressiveListView view;
 	
@@ -52,7 +53,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			item.setFoodItem(fItem);
 			item.setStockableItem(new DiscreteStockableItem(3));
 			item.getStockableItem().setMax(4);
-			ExpressiveItemComponent a = new ExpressiveItemComponent(item, null, true);
+			ExpressiveItemComponent a = new ExpressiveItemComponent(item, null);
 			
 			lay.add(a);			
 		}
@@ -69,7 +70,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    
 	}
 	
-	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveListView view, boolean fridgeFlag) {	
+	public ExpressiveItemComponent (StoredItem itemObj, ExpressiveListView view) {	
 		this.itemObj = itemObj;
 		this.view = view;
 		
@@ -77,12 +78,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    this.setBackground(new Color(20, 20, 20));
 	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	    
-	    itemInfoBuilder(fridgeFlag);
+	    itemInfoBuilder();
 	    itemQuantityControlBuilder();	    
 	}
 	
 	
-	public void itemInfoBuilder(boolean fridgeFlag) {
+	public void itemInfoBuilder() {
 		JPanel upperPanel = new CustomPanel(this.getBackground(), new BorderLayout());
 	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 0));
 	    this.add(upperPanel);
@@ -101,32 +102,28 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    infoPanel.add(quantity);
 	    
 	    try {
-	    	if (fridgeFlag) {
-		    	FridgeItem item = (FridgeItem) itemObj;
-		    	expiry = new JLabel("Best Before: " + item.getExpDate().toString());
-		    	expiry.setForeground(Color.white);
-		    	expiry.setFont(new Font("Arial", Font.BOLD, 16));
-		    	infoPanel.add(expiry);
-		    	
-		    	this.updateLabel();
-	    	}
+	    	FridgeItem item = (FridgeItem) itemObj;
+	    	expiry = new JLabel("Best Before: " + item.getExpDate().toString());
+	    	expiry.setForeground(Color.white);
+	    	expiry.setFont(new Font("Arial", Font.BOLD, 16));
+	    	infoPanel.add(expiry);
+	    	
+	    	this.updateLabel();
 	    } catch (Exception e) {
 	    	
 	    }
 	    
-	    JPanel rightPanel = new CustomPanel(this.getBackground(), BoxLayout.X_AXIS);
+	    rightPanel = new CustomPanel(this.getBackground(), BoxLayout.X_AXIS);
 	    upperPanel.add(rightPanel, BorderLayout.LINE_END);
 	    
 	    delButton = new CustomButton("Remove", this, 10);
 	    rightPanel.add(delButton);
 	    
-	    if (fridgeFlag) {
-	    	rightPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-	    	
-	    	groceryListButton = new CustomButton("Add to Grocery List", this, 10);
-		    rightPanel.add(groceryListButton);	
-	    }
+	    rightPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 	    
+	    groceryListButton = new CustomButton("Add to Grocery List", this, 10);
+		rightPanel.add(groceryListButton);	
+	    	    
 	}
 	
 	
@@ -229,5 +226,10 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
 		incButton.setEnabled(incrementEnabled);
 		decButton.setEnabled(decrementEnabled);		
+	}
+	
+	public void removeGroceryLink() {
+		rightPanel.remove(groceryListButton);
+		rightPanel.remove(rightPanel.countComponents()-1);
 	}
 }
