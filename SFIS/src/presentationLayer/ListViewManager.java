@@ -10,6 +10,13 @@ import domainLayer.Fridge;
 import domainLayer.StoredItem;
 
 public class ListViewManager{
+	public enum StockChangeMode {
+		INCREMENT_ONLY,
+		DECREMENT_ONLY,
+		INCREMENT_DECREMENT,
+		NONE;
+	}
+
 	private List<ListView> views;
 	
 	private int currentViewIndex;
@@ -45,5 +52,12 @@ public class ListViewManager{
 		for (ListView view: views) {
 			((JPanel) view).setPreferredSize(dimension);
 		}
+	}
+
+	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
+		for (ListView view: views) {
+			view.setStockChangeMode(incrementEnabled, decrementEnabled);
+		}
+		
 	}
 }

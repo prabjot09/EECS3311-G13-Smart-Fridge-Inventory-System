@@ -219,4 +219,9 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	public void updateItem() {
 		this.itemObj = view.retrieveObj(this.itemObj);
 	}
+
+	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
+		incButton.setEnabled(incrementEnabled);
+		decButton.setEnabled(decrementEnabled);		
+	}
 }

@@ -44,17 +44,19 @@ import domainLayer.itemSorting.AlphabeticalSorting;
 import domainLayer.itemSorting.DepletedSorting;
 import domainLayer.itemSorting.ISortingStrategy;
 import domainLayer.itemSorting.UnalphabeticalSorting;
+import presentationLayer.ListViewManager.StockChangeMode;
 import presentationLayer.itemAdditionUI.addWindow;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.CustomToggleButton;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 import presentationLayer.swingExtensions.LabelledInputField;
 
 public class mainWindow extends AppFrameView implements ActionListener{	
 	// Input Components
 	private JTextField search;
-	private JButton addButton, searchButton, favoritesButton, backButton;
+	private JButton addButton, searchButton, backButton;
 	private JComboBox<String> sortMethodType;
 	private Map<String, ISortingStrategy> sortMethodMap;
 	
@@ -63,18 +65,18 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	private GroceryList groc;
 	// Components required to manage the view for item list
 	private JPanel viewPanel;
-	private JButton viewToggler;
+	private CustomToggleButton viewToggler, adjustmentToggler;
 	private ListViewManager viewManager;
-	
-	// View Toggle Icons
-	private ImageIcon compressedIcon;
-	private ImageIcon expressiveIcon;
+
+	private boolean smartAdjustmentState;
 	
 	
 	public mainWindow() {
 	    // create our jframe as usual
 		inv = App.getInstance().getInventory();
 		groc = App.getInstance().getGroceryList();
+		smartAdjustmentState = App.getInstance().getSettings().isSmartFeaturesEnabled() && 
+								!App.getInstance().getHistory().isModifiedToday();
 		this.setLayout(new BorderLayout());
 		GroceryListView groceryView = new GroceryListView(groc);
 		
@@ -101,11 +103,12 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	    c = GridConstraintsSpec.stretchableFillConstraints(2, 2, 0.33, 1, GridBagConstraints.BOTH);
 	    searchPanel.add(rightPanel, c);
 	    
-	    if (App.getInstance().getSettings().isSmartFeaturesEnabled() && App.getInstance().isPendingUserAdjustment()) {
+	    if (smartAdjustmentState) {
 	    	String message = "The smart feature has automatically changed the stock of items in your fridge.\n" +
 	    					 "Please make any necessary changes to your fridge to reflect its actual state.\n" + 
-	    					 "These changes will also be incorporated to make the smart feature more acurate in the future!";
+	    					 "These changes will also be incorporated to make the smart feature more accurate in the future!";
 	    	JOptionPane.showMessageDialog(AppWindow.getWindow(), message, "Notice", JOptionPane.INFORMATION_MESSAGE);
+	    	viewManager.setStockChangeMode(false, true);
 	    }
 	}
 	
@@ -163,18 +166,21 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	    c = GridConstraintsSpec.stretchableFillConstraints(2, 1, 0.33, 0, GridBagConstraints.HORIZONTAL);
 	    parent.add(topPanel2, c);
 	    
-	    favoritesButton = new CustomButton("Favorites List", this, 10);
-	    topPanel2.add(favoritesButton, BorderLayout.LINE_START);
+	    boolean smartFeatureOn = App.getInstance().getSettings().isSmartFeaturesEnabled();
+	    JLabel smartLabel = new JLabel("Smart Feature: " + (smartFeatureOn ? "On" : "Off"));
+	    smartLabel.setForeground(smartFeatureOn ? Color.green : Color.red);
+	    smartLabel.setFont(new Font("Arial", Font.BOLD, 14));
+	    smartLabel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+	    topPanel2.add(smartLabel, BorderLayout.LINE_START);
 	    // END: Search Panel
 	    
-	    // Set up View Toggler Button
-	    compressedIcon = new ImageIcon("resources/CompressedViewIcon.png");
-	    compressedIcon = new ImageIcon(compressedIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	    expressiveIcon = new ImageIcon("resources/ExpressiveViewIcon.png");
-	    expressiveIcon = new ImageIcon(expressiveIcon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-	    viewToggler = new CustomButton(null, this, 3);
-	    viewToggler.setIcon(expressiveIcon);
-	    topPanel2.add(viewToggler, BorderLayout.LINE_END);
+	    String label1 = "Adjust Yesterday's Consumption";
+	    String label2 = "Save Adjustments";
+	    adjustmentToggler = new CustomToggleButton(label1, label2, label2, this, 5);
+	    if (smartAdjustmentState) {
+		    adjustmentToggler.initToggle(true);
+	    	topPanel2.add(adjustmentToggler, BorderLayout.LINE_END);
+	    }
 	}
 	
 	
@@ -199,15 +205,15 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	    viewLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	    labelPanel.add(viewLabel, BorderLayout.LINE_START);
 	    
-	    JPanel sortPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS);
-	    labelPanel.add(sortPanel, BorderLayout.LINE_END);
+	    JPanel functionPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS);
+	    labelPanel.add(functionPanel, BorderLayout.LINE_END);
 	    
 	    JLabel sortLabel = new JLabel("Sort By: ");
 	    sortLabel.setForeground(Color.white);
 	    sortLabel.setFont(new Font("Arial", Font.BOLD, 16));
-	    sortPanel.add(sortLabel);
+	    functionPanel.add(sortLabel);
 	    
-	    sortPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+	    functionPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 	    
 	    String[] values = {"Alphabetial", "Reverse Alphabetical", "Depletion"};
 	    sortMethodMap = new HashMap<>();
@@ -216,9 +222,15 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	    sortMethodMap.put(values[2], new DepletedSorting());
 	    sortMethodType = new JComboBox<String>(values);
 	    sortMethodType.addActionListener(this);
-	    sortPanel.add(sortMethodType);
+	    functionPanel.add(sortMethodType);
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.BOTH);
 	    viewPanel.add((JPanel) viewManager.getCurrentView(), c);
+	    
+	    functionPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
+	    viewToggler = new CustomToggleButton("Compressed View", "Expressive View", "Compressed View", this, 10);
+	    viewToggler.initToggle(true);
+	    functionPanel.add(viewToggler);
 	    
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 0.62, 1, GridBagConstraints.BOTH);
 	    parent.add(viewPanel, c);
@@ -233,15 +245,14 @@ public class mainWindow extends AppFrameView implements ActionListener{
 			AppFrameView addView = new addWindow(this);
 			AppWindow.getWindow().loadNewView(addView);
 		}
-		else if (e.getSource() == favoritesButton) {
-			AppFrameView favoritesView = new FavoritesView();
-			AppWindow.getWindow().loadNewView(favoritesView);
-		}
 		else if (e.getSource() == searchButton) {		
 			mainSearchHandler();
 		}
 		else if (e.getSource() == viewToggler) {
-			this.mainViewToggleHandler();
+			mainViewToggleHandler();
+		}
+		else if (e.getSource() == adjustmentToggler) {
+			smartAdjustmentToggleHandler();
 		}
 		else if (e.getSource() == backButton) {
 			AppWindow.getWindow().loadPreviousWindow();
@@ -255,12 +266,20 @@ public class mainWindow extends AppFrameView implements ActionListener{
 		}
 	}
 	
-	public void mainViewToggleHandler() {
-		if (viewToggler.getIcon() == compressedIcon) {
-			viewToggler.setIcon(expressiveIcon);
+	private void smartAdjustmentToggleHandler() {
+		if (adjustmentToggler.isOn()) {
+			App.getInstance().getHistory().updateHistory(inv, 1);
+			viewManager.setStockChangeMode(true, false);
 		} else {
-			viewToggler.setIcon(compressedIcon);
+			App.getInstance().getHistory().updateHistory(inv, 0);
+			viewManager.setStockChangeMode(false, true);
 		}
+		
+		adjustmentToggler.toggle();
+	}
+
+	public void mainViewToggleHandler() {
+		viewToggler.toggle();
 		
 		viewPanel.remove((JPanel) viewManager.getCurrentView());
 		viewManager.toggle();
@@ -287,7 +306,7 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	
 	@Override
 	public void saveData() {
-		if (App.getInstance().getSettings().isSmartFeaturesEnabled() && App.getInstance().isPendingUserAdjustment()) {
+		if (smartAdjustmentState && adjustmentToggler.isOn()) {
 			App.getInstance().getHistory().updateHistory(inv, 1);
 		}
 		else {

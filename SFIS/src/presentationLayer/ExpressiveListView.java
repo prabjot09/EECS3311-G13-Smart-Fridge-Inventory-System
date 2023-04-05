@@ -3,6 +3,7 @@ package presentationLayer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -23,6 +24,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	
 	private ItemManager inv;
 	private JPanel listView;
+	private List<ExpressiveItemComponent> itemUIList;
 	private JScrollPane scroll;
 	private GroceryListView groceryView;
 	
@@ -42,6 +44,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 	
 	public ExpressiveListView(ItemManager inv, boolean fridgeFlag) {
 		this.inv = inv;
+		this.itemUIList = new ArrayList<>();
 		
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -69,6 +72,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		
 		for (StoredItem item: items) {
 			ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this, fridgeFlag);
+			itemUIList.add(itemView);
 			listView.add(itemView);
 		}
 		
@@ -111,5 +115,13 @@ public class ExpressiveListView extends JPanel implements ListView{
 	
 	public void groceryVisualAdd(StoredItem item) {
 		groceryView.visualAdd(item);
+	}
+
+	@Override
+	public void setStockChangeMode(boolean increment, boolean decrement) {
+		for (ExpressiveItemComponent component: itemUIList) {
+			component.setStockChangeMode(increment, decrement);
+		}
+		
 	}
 }

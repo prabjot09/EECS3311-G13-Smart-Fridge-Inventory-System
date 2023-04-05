@@ -86,7 +86,7 @@ public class ItemHistory {
 		//       This period is upperboounded by given periodLength
 		int distributionDepth = 0;
 		int startPoint = day;
-		for (int i = day; i < periodLength; i++) {
+		for (int i = day; i < Math.max(day + 1, periodLength); i++) {
 			if (itemHistory.get(i).get(DAYEND) == -1) {
 				break;
 			}
@@ -99,7 +99,7 @@ public class ItemHistory {
 		
 		int amountLeft = amount;
 		for (int i = day; i < distributionDepth + day; i++) {
-			int amountPerDay = (int) Math.ceil( ((double) amountLeft) / (distributionDepth - i) );
+			int amountPerDay = (int) Math.ceil( ((double) amountLeft) / (distributionDepth + day - i) );
 			int dayIndex = ((startPoint + i - day) % distributionDepth) + day;
 			
 			increaseConsumption(dayIndex, amountPerDay);

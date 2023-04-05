@@ -37,8 +37,6 @@ public class App {
 	private UserHistory history;
 	private UserSettings settings;
 	
-	private boolean pendingUserAdjustment;
-	
 	private App() {
 		
 	}
@@ -95,10 +93,6 @@ public class App {
 	
 	public void setSettings(UserSettings settings) {
 		this.settings = settings;
-	}
-	
-	public boolean isPendingUserAdjustment() {
-		return this.pendingUserAdjustment;
 	}
 	
 	
@@ -163,11 +157,8 @@ public class App {
 		settings = new UserSettings();
 		settings.loadFromDatabase();
 		
-		pendingUserAdjustment = false;
-		
 		if (DBProxy.getInstance().loadUserSettings().isSmartFeaturesEnabled() == true && history.daysSinceUpdated() > 1) {
 			SmartFeature sf = new SmartFeature(inv.getItems());
-			pendingUserAdjustment = true;
 			inv = new Fridge(sf.performSmartFeature());
 			history.updateHistory(inv, 1);
 			

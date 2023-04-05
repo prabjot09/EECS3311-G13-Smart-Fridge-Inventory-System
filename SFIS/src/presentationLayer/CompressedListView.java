@@ -27,6 +27,7 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.ListViewManager.StockChangeMode;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
@@ -206,5 +207,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 
 	public void setListListener(ListSelectionListener listener) {
 		list.addListSelectionListener(listener);
+	}
+
+	@Override
+	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
+		incButton.setEnabled(incrementEnabled);
+		decButton.setEnabled(decrementEnabled);
 	}
 }

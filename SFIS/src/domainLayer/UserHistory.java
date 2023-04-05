@@ -118,11 +118,11 @@ public class UserHistory {
 			}
 			
 			// adjust history quantities
-			int stockChange = item.getStockableItem().getStock() - history.getDayEndAmount(day);
+			int stockChange = item.getStockableItem().getStock() - history.getDayEndAmount(0);
 			if (stockChange > 0) {
 				history.increaseRestocking(day, stockChange);
 			}
-			else {
+			else if (stockChange < 0) {
 				history.distributeConsumption(day, periodOfUpdate - day, 0 - stockChange);
 			}
 			
@@ -194,11 +194,11 @@ public class UserHistory {
 	}
 	
 	
-	public boolean isModifiedYesterday() {
+	public boolean isModifiedToday() {
 		boolean result = false;
 		
 		for (Pair<FoodItem, ItemHistory> entry: historyData) {
-			if (entry.getB().getConsumptionAmount(1) > 0) {
+			if (entry.getB().getConsumptionAmount(0) > 0) {
 				result = true;
 				break;
 			}

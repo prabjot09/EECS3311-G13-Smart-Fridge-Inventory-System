@@ -7,6 +7,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class CustomButton extends JButton {
+	public CustomButton() {
+		
+	}
+	
 	public CustomButton(String text, ActionListener listener) {
 		if (text != null)
 			this.setText(text);
