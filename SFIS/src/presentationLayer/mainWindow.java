@@ -189,8 +189,12 @@ public class mainWindow extends AppFrameView implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 				
 	    List<ListView> views = new ArrayList<ListView>();
-	    views.add(new CompressedListView(inv, groceryView));
-	    views.add(new ExpressiveListView(inv, true, groceryView));
+	    views.add(new CompressedListView(inv));
+	    views.add(new ExpressiveListView(inv, true));
+	    
+	    views.get(0).setGrocery(groceryView);
+	    views.get(1).setGrocery(groceryView);
+	    
 	    viewManager = new ListViewManager(views);
 	    viewManager.setSizes(new Dimension(750, 400));
 	    viewPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);

@@ -99,11 +99,6 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		this.buttonPanelFlag = true;
 		this.generateList(displayItems);
 	}
-	
-	public CompressedListView(ItemManager inv, GroceryListView groceryView) {
-		this(inv);
-		this.groceryView = groceryView;
-	}
 
 	public void generateList(List<StoredItem> items) {
 		this.displayItems = items;
@@ -181,6 +176,10 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		list.setModel(stringItemList);
 		// list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 		list.revalidate();
+	}
+	
+	public void setGrocery(GroceryListView grocery) {
+		this.groceryView = grocery;
 	}
 
 	public void setButtonPanelFlag(boolean flag) {

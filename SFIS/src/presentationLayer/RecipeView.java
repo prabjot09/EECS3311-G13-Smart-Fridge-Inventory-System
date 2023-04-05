@@ -22,9 +22,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import appLayer.App;
+import domainLayer.FoodItem;
 import domainLayer.Fridge;
+import domainLayer.FridgeItem;
 import domainLayer.Recipe;
+import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
+import domainLayer.FoodItem.StockType;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
@@ -44,11 +48,50 @@ public class RecipeView extends AppFrameView implements ActionListener {
 		this.inv = inv;
 		this.allRecipes = new ArrayList<Recipe>();
 		currentFullIndex = -1;
+		
 		//temp hard code recipe
-		Recipe temp = new Recipe("Fried Eggs", App.getInstance().getFavorites().getItems());
-		Recipe temp2 = new Recipe("juicejuice", App.getInstance().getGroceryList().getItems());
-		allRecipes.add(temp);
-		allRecipes.add(temp2);
+		//pbj
+		List<StoredItem> pbj = new ArrayList<StoredItem>();
+		List<String> pbjInstructions = new ArrayList<String>();
+		FoodItem pb = new FoodItem();
+		pb.setName("Peanut Butter - Jar");
+		pb.setStockType(StockType.values()[1]);
+		FridgeItem pbItem = new FridgeItem();
+		pbItem.setStockableItem(StockableItemFactory.createStockableItem(pb.getStockType(), 1));
+		pbItem.setFoodItem(pb);
+		pbj.add(pbItem);
+		FoodItem jam = new FoodItem();
+		jam.setName("Sweet Jam - Jar");
+		jam.setStockType(StockType.values()[1]);
+		FridgeItem jamItem = new FridgeItem();
+		jamItem.setStockableItem(StockableItemFactory.createStockableItem(jam.getStockType(), 1));
+		jamItem.setFoodItem(jam);
+		pbj.add(jamItem);
+		FoodItem whiteBread = new FoodItem();
+		whiteBread.setName("White Bread - Loafs");
+		whiteBread.setStockType(StockType.values()[1]);
+		FridgeItem whiteBreadItem = new FridgeItem();
+		whiteBreadItem.setStockableItem(StockableItemFactory.createStockableItem(whiteBread.getStockType(), 2));
+		whiteBreadItem.setFoodItem(whiteBread);
+		pbj.add(whiteBreadItem);
+		pbjInstructions.add("Put peanut butter on bread");
+		pbjInstructions.add("Put jam on bread");
+		Recipe pbjRecipe = new Recipe("PB&J", pbj, pbjInstructions);
+		allRecipes.add(pbjRecipe);
+		//fried egg
+		List<StoredItem> friedEgg = new ArrayList<StoredItem>();
+		List<String> friedEggInstructions = new ArrayList<String>();
+		FoodItem egg = new FoodItem();
+		egg.setName("Eggs - Single");
+		egg.setStockType(StockType.values()[1]);
+		FridgeItem eggItem = new FridgeItem();
+		eggItem.setStockableItem(StockableItemFactory.createStockableItem(egg.getStockType(), 1));
+		eggItem.setFoodItem(egg);
+		friedEgg.add(eggItem);
+		friedEggInstructions.add("Heat up pan with oil");
+		friedEggInstructions.add("Crack egg onto pan and fry");
+		Recipe friedEggRecipe = new Recipe("Fried Egg", friedEgg, friedEggInstructions);
+		allRecipes.add(friedEggRecipe);
 		
 		//main panel setup
 		this.setBackground(Color.BLACK);

@@ -13,10 +13,10 @@ public class Recipe extends ItemManager{
 		this.instructions = new ArrayList<String>();
 	}
 	
-	public Recipe(String name, List<StoredItem> items) {
+	public Recipe(String name, List<StoredItem> items, List<String> instructions) {
 		super(items);
 		this.recipeName = name;
-		this.instructions = new ArrayList<String>();
+		this.instructions = instructions;
 	}
 	
 	public String getRecipeName() {
