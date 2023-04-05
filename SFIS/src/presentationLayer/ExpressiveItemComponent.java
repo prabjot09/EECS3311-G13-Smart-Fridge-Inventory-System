@@ -197,18 +197,24 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			
 			this.updateItem();
 			this.updateLabel();
+			
+			StockableItem stock = this.itemObj.getStockableItem();
+		    int percentQuantity = stock.calculatePercent();
+		    quantityVisual.setValue(percentQuantity);
+			
+			int itemStockPercent = this.itemObj.getStockableItem().calculatePercent();
+			int groceryThreshold = App.getInstance().getSettings().getAddGroceryListThreshold();
+			
+			//condition. stock lower than threshold and item is not in grocery list
+			if ( (itemStockPercent < groceryThreshold) && (App.getInstance().getGroceryList().itemIndex(this.itemObj) == -1) ) {
+				view.groceryVisualAdd(this.itemObj);
+			}
 		}
 		else if (clicked == delButton) {
 			view.removeItem(this);
 		}
 		else if (clicked == groceryListButton) {
-			try {
-				App.getInstance().getGroceryList().add(this.getItemObj());
-				view.groceryVisualAdd(this.getItemObj());
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
-			}
-			
+			view.groceryVisualAdd(this.getItemObj());
 		}
 	}
 	

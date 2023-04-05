@@ -151,6 +151,13 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
+			
+			int itemStockPercent = item.getStockableItem().calculatePercent();
+			int groceryThreshold = App.getInstance().getSettings().getAddGroceryListThreshold();
+			
+			if ( (itemStockPercent < groceryThreshold) && (App.getInstance().getGroceryList().itemIndex(item) == -1) ) {
+				groceryView.visualAdd(item);
+			}
 		} else if (e.getSource() == remButton) {
 			int itemIndex = list.getSelectedIndex();
 			int confirm = JOptionPane.showConfirmDialog(AppWindow.getWindow(), 
@@ -164,13 +171,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			}
 		} else if (e.getSource() == groceryListButton) {
 			int itemIndex = list.getSelectedIndex();
-			try {
-				App.getInstance().getGroceryList().add(this.displayItems.get(itemIndex));
-				groceryView.visualAdd(this.displayItems.get(itemIndex));
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
-			}
-
+			groceryView.visualAdd(this.displayItems.get(itemIndex));
 		}
 	}
 

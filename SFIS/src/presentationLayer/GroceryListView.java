@@ -146,13 +146,14 @@ public class GroceryListView extends JPanel implements ActionListener {
 		}
 	}
 	public void visualAdd(StoredItem item) {
-		if (groceryInv.itemIndex(item) != -1) {
+		try {
+			App.getInstance().getGroceryList().add(item);
 			viewListItems.addElement("- " + item.getFoodItem().getName());
 			revalidate();
 		}
-		else {
-			JOptionPane.showMessageDialog(null, "Item is not in grocery list and therefore cannot be displayed", "Notice", JOptionPane.WARNING_MESSAGE);
-		}
+		catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
+		}	
 	}
-
+	
 }
