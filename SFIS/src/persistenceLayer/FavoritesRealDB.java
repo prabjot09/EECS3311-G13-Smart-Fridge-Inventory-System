@@ -33,45 +33,10 @@ public class FavoritesRealDB {
 
 	}
 
-	//method to add af avorited item to teh sql database
+	//method to add a favorited item to the sql database
 	public void addFavItem(StoredItem Fridge, String user, String password) {
-		String name = Fridge.getFoodItem().getName();
-		int fridgeEnum;
-		int creationEnum;
-		int amount = Fridge.getStockableItem().getStock();
-		LocalDate date = ((FridgeItem) Fridge).getExpDate();
-		if (Fridge.getFoodItem().getStockType() == StockType.values()[0]) {
-			fridgeEnum = 0;
-		} else {
-			fridgeEnum = 1;
-		}
-
-		if (Fridge.getFoodItem().getCreator() == CreationType.values()[0]) {
-			creationEnum = 0;
-		} else {
-			creationEnum = 1;
-		}
-
-		try {
-			Connection con = DriverManager.getConnection(url, user, password);
-
-			PreparedStatement statement = con.prepareStatement(queryInsertFav);
-
-			statement.setString(1, name);
-			statement.setInt(2, fridgeEnum);
-			statement.setInt(3, amount);
-			statement.setInt(4, creationEnum);
-			if (date == null) {
-				statement.setDate(5, null);
-			} else {
-				statement.setDate(5, Date.valueOf(date));
-			}
-			statement.setInt(6, amount);
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String type = "favitem";
+		helper.adder(type, user, password, (FridgeItem) Fridge);
 
 	}
 

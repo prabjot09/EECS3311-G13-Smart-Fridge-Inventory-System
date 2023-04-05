@@ -33,43 +33,8 @@ public class GroceryRealDB {
 	}
 	
 	public void addGroceryItem(FridgeItem Fridge, String user, String password) {
-		String name = Fridge.getFoodItem().getName();
-		int fridgeEnum;
-		int creationEnum;
-		int amount = Fridge.getStockableItem().getStock();
-		LocalDate date = Fridge.getExpDate();
-		if (Fridge.getFoodItem().getStockType() == StockType.values()[0]) {
-			fridgeEnum = 0;
-		} else {
-			fridgeEnum = 1;
-		}
-
-		if (Fridge.getFoodItem().getCreator() == CreationType.values()[0]) {
-			creationEnum = 0;
-		} else {
-			creationEnum = 1;
-		}
-
-		try {
-			Connection con = DriverManager.getConnection(url, user, password);
-
-			PreparedStatement statement = con.prepareStatement(queryInsert);
-
-			statement.setInt(2, fridgeEnum);
-			statement.setString(1, name);
-			statement.setInt(3, amount);
-			statement.setInt(4, creationEnum);
-			statement.setInt(6, amount);
-			if (date == null) {
-				statement.setDate(5, null);
-			} else {
-				statement.setDate(5, Date.valueOf(date));
-			}
-			statement.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String type = "groceryitem";
+		helper.adder(type, user, password, Fridge);
 	}
 	
 	public List<StoredItem> loadGroceryItems(String user, String password) {
