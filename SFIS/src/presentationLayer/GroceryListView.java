@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 
 import appLayer.App;
 import domainLayer.Export;
+import domainLayer.GroceryList;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
 import presentationLayer.swingExtensions.CustomPanel;
@@ -36,12 +37,12 @@ public class GroceryListView extends JPanel implements ActionListener {
 	//variables
 	private JButton removeGroceryButton, exportButton;
 	private JComboBox<String> exportDecision;
-	private ItemManager groceryInv;
+	private GroceryList groceryInv;
 	private JList<String> viewList;
 	private List<StoredItem> items;
 	private DefaultListModel<String> viewListItems;
 	
-	public GroceryListView(ItemManager inv) {
+	public GroceryListView(GroceryList inv) {
 		this.groceryInv = inv;
 	    //this.setBounds(0, 0, 500, 500);
 	    this.setBackground(Color.BLACK);
@@ -147,8 +148,12 @@ public class GroceryListView extends JPanel implements ActionListener {
 	}
 	public void visualAdd(StoredItem item) {
 		try {
-			App.getInstance().getGroceryList().add(item);
-			viewListItems.addElement("- " + item.getFoodItem().getName());
+			groceryInv.add(item);
+			viewListItems.clear();
+			items = this.groceryInv.getItems();
+		    for (StoredItem storedItem : items) {
+		    	viewListItems.addElement("- " + storedItem.getFoodItem().getName());
+		    }
 			revalidate();
 		}
 		catch (Exception e1) {
