@@ -219,7 +219,7 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	    
 	    functionPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 	    
-	    String[] values = {"Alphabetial", "Reverse Alphabetical", "Depletion"};
+	    String[] values = {"Alphabetical", "Reverse Alphabetical", "Depletion"};
 	    sortMethodMap = new HashMap<>();
 	    sortMethodMap.put(values[0], new AlphabeticalSorting());
 	    sortMethodMap.put(values[1], new UnalphabeticalSorting());
