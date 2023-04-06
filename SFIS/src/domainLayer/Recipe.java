@@ -20,6 +20,7 @@ public class Recipe extends ItemManager{
 		this.recipeName = name;
 		this.instructions = new ArrayList<String>();
 		
+
 	}
 	
 	public String getRecipeName() {
