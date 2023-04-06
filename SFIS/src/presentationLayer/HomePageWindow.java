@@ -60,6 +60,7 @@ public class HomePageWindow extends AppFrameView implements ActionListener {
 		JPanel paddingWrapper = new CustomPanel(Color.black, new BorderLayout(), 30);
 	    JButton button = new CustomButton(buttonTxt, this, 10);
 	    button.setFont(new Font("Arial", Font.PLAIN, 20));
+	    button.setOpaque(true);
 	    paddingWrapper.add(button);
 	    parent.add(paddingWrapper, GridConstraintsSpec.stretchableFillConstraints(column, row, 0.5, 1, GridBagConstraints.BOTH));
 	    
