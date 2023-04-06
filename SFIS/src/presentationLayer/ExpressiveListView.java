@@ -59,6 +59,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		if (listView != null) 
 			this.remove(scroll);
 			
+		itemUIList = new ArrayList<>();
 		listView = new CustomBoxPanel(new Color(20, 20, 20), BoxLayout.Y_AXIS, -1);
 		listView.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
@@ -80,6 +81,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this);
 	
 		listView.add(itemView);
+		itemUIList.add(itemView);
 		
 		listView.revalidate();
 	}
@@ -93,6 +95,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 		}
 		
 		inv.remove(item.getItemObj());
+		itemUIList.remove(item);
 		listView.remove(item);
 		listView.repaint();
 		listView.revalidate();

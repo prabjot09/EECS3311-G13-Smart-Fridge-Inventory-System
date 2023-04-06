@@ -230,6 +230,6 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	
 	public void removeGroceryLink() {
 		rightPanel.remove(groceryListButton);
-		rightPanel.remove(rightPanel.countComponents()-1);
+		rightPanel.remove(rightPanel.getComponentCount()-1);
 	}
 }

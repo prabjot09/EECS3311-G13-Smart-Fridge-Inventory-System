@@ -171,6 +171,7 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 		inputPanel.add(addButton);
 		addButton.setEnabled(true);
 		inputPanel.revalidate();
+		inputPanel.repaint();
 	}
 	
 	private void addHandler() {
@@ -197,6 +198,7 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 			favorites.add(newItem);
 			
 			favoritesView.generateList(favorites.getItems());
+			favoritesView.removeGroceryLink();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return;
