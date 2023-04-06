@@ -189,8 +189,12 @@ public class mainWindow extends AppFrameView implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 				
 	    List<ListView> views = new ArrayList<ListView>();
-	    views.add(new CompressedListView(inv, groceryView));
-	    views.add(new ExpressiveListView(inv, true, groceryView));
+	    views.add(new CompressedListView(inv));
+	    views.add(new ExpressiveListView(inv));
+	    
+	    views.get(0).setGrocery(groceryView);
+	    views.get(1).setGrocery(groceryView);
+	    
 	    viewManager = new ListViewManager(views);
 	    viewManager.setSizes(new Dimension(750, 400));
 	    viewPanel = new CustomPanel(Color.black, new GridBagLayout(), 5);
@@ -215,7 +219,7 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	    
 	    functionPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 	    
-	    String[] values = {"Alphabetial", "Reverse Alphabetical", "Depletion"};
+	    String[] values = {"Alphabetical", "Reverse Alphabetical", "Depletion"};
 	    sortMethodMap = new HashMap<>();
 	    sortMethodMap.put(values[0], new AlphabeticalSorting());
 	    sortMethodMap.put(values[1], new UnalphabeticalSorting());

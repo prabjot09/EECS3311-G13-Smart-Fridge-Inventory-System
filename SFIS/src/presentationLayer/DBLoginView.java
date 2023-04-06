@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 import appLayer.App;
 import domainLayer.DBProxy;
@@ -27,7 +28,7 @@ public class DBLoginView extends JFrame implements ActionListener {
 	
 	private JButton loginButton;
 	private TextInput userField;
-	private TextInput passField;
+	private JPasswordField passField;
 	
 	public static void main(String[] args) {
 		new DBLoginView();
@@ -74,7 +75,7 @@ public class DBLoginView extends JFrame implements ActionListener {
 		passLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    passInput.add(passLabel);
 	    
-	    passField = new TextInput("");
+	    passField = new JPasswordField();
 	    passField.setFont(new Font("Arial", Font.PLAIN, 16));
 	    passField.setBackground(Color.gray);
 	    //passField.setBounds(0,100,300,500);
@@ -107,7 +108,7 @@ public class DBLoginView extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this, "Please enter a username.", "Warning", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
-		else if (passField.getInput().equals("")) {
+		else if (passField.getPassword().length == 0) {
 			JOptionPane.showMessageDialog(this, "Please enter a password.", "Warning", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
@@ -121,12 +122,12 @@ public class DBLoginView extends JFrame implements ActionListener {
 			return;
 		}
 		
-		App.getInstance().initializeApplication(userField.getInput(), passField.getInput());		
+		App.getInstance().initializeApplication(userField.getInput(), String.copyValueOf(passField.getPassword()));		
 	}
 
 	public void loginFail() {
 		userField.clearField();
-		passField.clearField();
+		passField.setText("");
 		
 		JOptionPane.showMessageDialog(this, "Wrong user or password for SQL Database.", "Error", JOptionPane.ERROR_MESSAGE);
 	}

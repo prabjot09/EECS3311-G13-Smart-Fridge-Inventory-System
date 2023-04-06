@@ -108,7 +108,8 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 	    favoritesLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    labelWrap.add(favoritesLabel);
 	    
-	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites(), false);
+	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites());
+	    favoritesView.removeGroceryLink();
 	    favoritesPanel.add(favoritesView);
 	}
 	

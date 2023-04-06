@@ -47,6 +47,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private GroceryListView groceryView;
 
 	private JPanel buttonPanel;
+	private JPanel groceryItemPanel;
 	private boolean buttonPanelFlag;
 
 	public CompressedListView(ItemManager inv) {
@@ -90,7 +91,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		remButton = new CustomButton("Remove", this, 10);
 		adjustPanel.add(remButton);
 
-		JPanel groceryItemPanel = new CustomPanel(Color.black, new BorderLayout());
+		groceryItemPanel = new CustomPanel(Color.black, new BorderLayout());
 		buttonPanel.add(groceryItemPanel , BorderLayout.LINE_START);
 		
 		groceryListButton = new CustomButton("Add to Grocery List", this, 10);
@@ -98,11 +99,6 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 
 		this.buttonPanelFlag = true;
 		this.generateList(displayItems);
-	}
-	
-	public CompressedListView(ItemManager inv, GroceryListView groceryView) {
-		this(inv);
-		this.groceryView = groceryView;
 	}
 
 	public void generateList(List<StoredItem> items) {
@@ -151,6 +147,13 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
+			
+			int itemStockPercent = item.getStockableItem().calculatePercent();
+			int groceryThreshold = App.getInstance().getSettings().getAddGroceryListThreshold();
+			
+			if ( (itemStockPercent < groceryThreshold) && (App.getInstance().getGroceryList().itemIndex(item) == -1) ) {
+				groceryView.visualAdd(item);
+			}
 		} else if (e.getSource() == remButton) {
 			int itemIndex = list.getSelectedIndex();
 			int confirm = JOptionPane.showConfirmDialog(AppWindow.getWindow(), 
@@ -164,13 +167,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			}
 		} else if (e.getSource() == groceryListButton) {
 			int itemIndex = list.getSelectedIndex();
-			try {
-				App.getInstance().getGroceryList().add(this.displayItems.get(itemIndex));
-				groceryView.visualAdd(this.displayItems.get(itemIndex));
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "Item already exists within the grocery list", "Notice", JOptionPane.WARNING_MESSAGE);
-			}
-
+			groceryView.visualAdd(this.displayItems.get(itemIndex));
 		}
 	}
 
@@ -180,6 +177,10 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		list.setModel(stringItemList);
 		// list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
 		list.revalidate();
+	}
+	
+	public void setGrocery(GroceryListView grocery) {
+		this.groceryView = grocery;
 	}
 
 	public void setButtonPanelFlag(boolean flag) {
@@ -213,5 +214,12 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
 		incButton.setEnabled(incrementEnabled);
 		decButton.setEnabled(decrementEnabled);
+	}
+
+	@Override
+	public void removeGroceryLink() {
+		this.groceryItemPanel.remove(groceryListButton);
+		this.repaint();
+		this.revalidate();
 	}
 }
