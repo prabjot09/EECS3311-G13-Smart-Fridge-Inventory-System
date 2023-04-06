@@ -87,6 +87,11 @@ public class ExportPanel extends JPanel implements ActionListener {
 				return;
 			}
 			
+			if (optionMenu.getSelectedValues().size() == 0) {
+				JOptionPane.showMessageDialog(this, "Choose what data to export before proceeding", "Notice", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			App.getInstance().saveData();
 			
 			File exportFile = new File(filePanel.getSelectedFilePath());
