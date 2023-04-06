@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
-public class CustomToggleButton extends JButton {
+public class CustomToggleButton extends CustomButton {
 	private String label1;
 	private String label2;
 	

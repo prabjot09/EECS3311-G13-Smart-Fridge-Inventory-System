@@ -8,10 +8,12 @@ import javax.swing.JButton;
 
 public class CustomButton extends JButton {
 	public CustomButton() {
-		
+		this.setOpaque(true);
 	}
 	
 	public CustomButton(String text, ActionListener listener) {
+		this();
+		
 		if (text != null)
 			this.setText(text);
 		

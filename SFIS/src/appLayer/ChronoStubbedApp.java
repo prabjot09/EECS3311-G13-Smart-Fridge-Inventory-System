@@ -23,6 +23,7 @@ import presentationLayer.AppWindow;
 import presentationLayer.DBLoginView;
 import presentationLayer.HomePageWindow;
 import presentationLayer.mainWindow;
+import presentationLayer.swingExtensions.CustomButton;
 
 public class ChronoStubbedApp {	
 	public static void main(String[] args) {
@@ -37,7 +38,8 @@ public class ChronoStubbedApp {
 		AppWindow.getWindow().loadNewView(new HomePageWindow());
 		
 		
-		JButton clockButton = new JButton("Increment Clock");
+		JButton clockButton = new CustomButton();
+		clockButton.setText("Increment Clock");
 		clockButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationClock.incrementClock();

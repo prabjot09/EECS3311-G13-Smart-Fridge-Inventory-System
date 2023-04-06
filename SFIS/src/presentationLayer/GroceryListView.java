@@ -19,6 +19,7 @@ import domainLayer.Export;
 import domainLayer.GroceryList;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
@@ -87,9 +88,8 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 0, GridBagConstraints.HORIZONTAL);
 	    this.add(buttonsPanel, c);
 	    //Remove grocery button
-	    removeGroceryButton = new JButton("Remove Grocery Item");
+	    removeGroceryButton = new CustomButton("Remove Grocery Item", this);
 	    removeGroceryButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	    removeGroceryButton.addActionListener(this);
 	    buttonsPanel.add(removeGroceryButton, BorderLayout.LINE_END);
 	    //Export choices combo box
 	    
