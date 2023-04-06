@@ -23,6 +23,7 @@ import domainLayer.FoodItem.StockType;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.GroceryList;
+import domainLayer.Recipe;
 import domainLayer.StockableItemFactory;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
@@ -47,8 +48,9 @@ public class RealDB implements DB {
 	DBImportExport fileXfer = new DBImportExport();
 	SettingsRealDB settingsDB = new SettingsRealDB();
 	ItemStubDB dbPop = new ItemStubDB();
+	RecipeStubDB rdbPop = new RecipeStubDB();
 	List<String> itemPop = dbPop.getDB();
-
+	
 	// bunch of sql commands
 	String firsttimeurl = "jdbc:mysql://localhost:3306/";
 	String url = "jdbc:mysql://localhost:3306/SIFSDB";
@@ -250,6 +252,10 @@ public class RealDB implements DB {
 		loadedSettings.setExpirationWarningDays(data.get(settingsDB.EXRIPY_THRESHOLD));
 		loadedSettings.setSmartFeaturesEnabled(data.get(settingsDB.SMART_FEATURE_ON) == 1 ? true : false);
 		return loadedSettings;
+	}
+	
+	public List<Recipe> getRecipeDB(){
+		return rdbPop.getRecipeDB();
 	}
 
 }

@@ -8,6 +8,7 @@ import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.GroceryList;
+import domainLayer.Recipe;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
 import domainLayer.UserSettings;
@@ -16,6 +17,7 @@ import domainLayer.UserSettings;
 public class StubDB implements DB {
 	//We instatiate our stub here to ensure we get one instance of our database when we call our proxy
 	ItemStubDB ItemDB = new ItemStubDB();
+	RecipeStubDB RecipeDB = new RecipeStubDB();
 	FridgeStubDB FridgeDB = new FridgeStubDB();
 	FavoritesStubDB favoritesDB = new FavoritesStubDB();
 	GroceryStubDB groceriesDB = new GroceryStubDB();
@@ -92,5 +94,10 @@ public class StubDB implements DB {
 	@Override
 	public UserSettings loadUserSettings() {
 		return settingsDB.loadUserSettings();
+	}
+
+	@Override
+	public List<Recipe> getRecipeDB(){
+		return RecipeDB.getRecipeDB();
 	}	
 }

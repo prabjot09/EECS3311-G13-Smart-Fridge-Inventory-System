@@ -7,6 +7,7 @@ import java.util.List;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
+import domainLayer.Recipe;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
 import domainLayer.UserSettings;
@@ -27,6 +28,7 @@ public interface DB {
 	public void importDB(File file);
 	public void updateUserSettings(UserSettings settings);
 	public UserSettings loadUserSettings();
-	
+	public List<Recipe> getRecipeDB();
+		
 }
 

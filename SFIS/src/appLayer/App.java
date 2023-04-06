@@ -12,6 +12,7 @@ import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.Fridge;
 import domainLayer.GroceryList;
+import domainLayer.Recipe;
 import domainLayer.SmartFeature;
 import domainLayer.StoredItem;
 import domainLayer.UserHistory;
@@ -36,7 +37,7 @@ public class App {
 	private GroceryList groceries;
 	private UserHistory history;
 	private UserSettings settings;
-	
+	private List<Recipe> Recipes;
 	private App() {
 		
 	}
@@ -61,6 +62,10 @@ public class App {
 	
 	public void setInventory(Fridge inv) {
 		this.inv = inv;
+	}
+	
+	public List<Recipe> getRecipes(){
+		return app.Recipes;
 	}
 	
 	public FavoritesList getFavorites() {
@@ -153,7 +158,7 @@ public class App {
 		favorites = new FavoritesList(DBProxy.getInstance().loadFavoritedItems());
 		groceries = new GroceryList(DBProxy.getInstance().loadGroceryItems());
 		history = DBProxy.getInstance().loadUserHistory();
-		
+		Recipes = DBProxy.getInstance().loadRecipes();
 		settings = new UserSettings();
 		settings.loadFromDatabase();
 		

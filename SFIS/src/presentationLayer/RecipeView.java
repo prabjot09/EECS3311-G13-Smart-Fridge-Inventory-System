@@ -42,13 +42,10 @@ public class RecipeView extends AppFrameView implements ActionListener {
 	
 	public RecipeView(Fridge inv) {
 		this.inv = inv;
-		this.allRecipes = new ArrayList<Recipe>();
+		this.allRecipes = App.getInstance().getRecipes();
 		currentFullIndex = -1;
-		//temp hard code recipe
-		Recipe temp = new Recipe("Fried Eggs", App.getInstance().getFavorites().getItems());
-		Recipe temp2 = new Recipe("juicejuice", App.getInstance().getGroceryList().getItems());
-		allRecipes.add(temp);
-		allRecipes.add(temp2);
+		
+		
 		
 		//main panel setup
 		this.setBackground(Color.BLACK);

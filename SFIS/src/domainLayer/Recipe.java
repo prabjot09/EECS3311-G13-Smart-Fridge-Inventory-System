@@ -6,17 +6,20 @@ import java.util.List;
 public class Recipe extends ItemManager{
 	private String recipeName;
 	private List<String> instructions;
+
 	
 	public Recipe(String name) {
 		super();
 		this.recipeName = name;
 		this.instructions = new ArrayList<String>();
+	
 	}
 	
 	public Recipe(String name, List<StoredItem> items) {
 		super(items);
 		this.recipeName = name;
 		this.instructions = new ArrayList<String>();
+		
 	}
 	
 	public String getRecipeName() {
@@ -34,4 +37,6 @@ public class Recipe extends ItemManager{
 	public void setInstructions(List<String> newInstructions) {
 		instructions = new ArrayList<String>(newInstructions);
 	}
+	
+	
 }

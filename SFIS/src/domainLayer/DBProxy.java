@@ -62,6 +62,10 @@ public class DBProxy {
 		db.updateGroceryItems(groceries);
 	}
 	
+	public List<Recipe> loadRecipes(){
+		return db.getRecipeDB();
+	}
+	
 	public UserHistory loadUserHistory() {
 		return db.loadUserHistory();
 	}
