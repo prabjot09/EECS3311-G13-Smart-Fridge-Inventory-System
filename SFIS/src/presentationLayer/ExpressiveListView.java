@@ -104,11 +104,6 @@ public class ExpressiveListView extends JPanel implements ListView{
 	public void updateList(StoredItem itemObj) {
 		inv.updateItem(itemObj);		
 	}
-
-	public StoredItem retrieveObj(StoredItem itemObj) {
-		return inv.getItems().get(inv.itemIndex(itemObj));
-		
-	}
 	
 	public void setGrocery(GroceryListView grocery) {
 		this.groceryView = grocery;

@@ -8,8 +8,8 @@ public class Fridge extends ItemManager{
 		super(items);
 	}
 	
-	@Override
-	public List<StoredItem> getItems() {
+	
+	public List<StoredItem> getItemsExpiryPrioritized() {
 		List<StoredItem> items = prioritizeExpiring();
 		return items;
 	}
@@ -45,6 +45,5 @@ public class Fridge extends ItemManager{
 		}
 		return items;
 	}
-	
 }
 

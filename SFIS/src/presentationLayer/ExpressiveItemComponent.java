@@ -185,14 +185,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			this.itemObj.executeIncrement();
 			view.updateList(itemObj);
 			
-			this.updateItem();
 			this.updateLabel();
 		}
 		else if (clicked == decButton) {
 			this.itemObj.executeDecrement();
 			view.updateList(itemObj);
 			
-			this.updateItem();
 			this.updateLabel();
 			
 			StockableItem stock = this.itemObj.getStockableItem();
@@ -217,10 +215,6 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	
 	public StoredItem getItemObj() {
 		return this.itemObj;
-	}
-	
-	public void updateItem() {
-		this.itemObj = view.retrieveObj(this.itemObj);
 	}
 
 	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {

@@ -130,7 +130,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			item.executeIncrement();
 			this.inv.updateItem(item);
 
-			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
+			this.displayItems.set(itemIndex, item);
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 		} else if (e.getSource() == decButton) {
@@ -139,12 +139,12 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 				JOptionPane.showMessageDialog(null, "Item is at 0 stock", "Notice", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-
+			
 			StoredItem item = this.displayItems.get(itemIndex);
 			item.executeDecrement();
 			this.inv.updateItem(item);
 
-			this.displayItems.set(itemIndex, inv.getItems().get(inv.itemIndex(item)));
+			this.displayItems.set(itemIndex, item);
 			this.stringItemList.set(itemIndex, this.displayItems.get(itemIndex).getDescription());
 			this.list.revalidate();
 			
