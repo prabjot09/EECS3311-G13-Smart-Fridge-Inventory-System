@@ -13,6 +13,8 @@ Dependencies:
  - JUnit 5
  - JDBC 8.0.23
  - MySQL on local machine
+ - Java 9 or above
+ - MySQL added to windows PATH for windows devices, instructions in wiki
  
  ## Database Access
  As a user, you must use a valid user and password to access the system. Such as username "**root**" and your SQL root password.
