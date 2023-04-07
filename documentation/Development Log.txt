@@ -131,3 +131,16 @@ Meeting 7: March 18, 2023 - 1hr 15 min
   4) Adjusting to User Food Consumption: The stock of items in the fridge are automatically decremented daily by the program. The user can manually make adjustments to ensure that the current state of the fridge matches what the user has. These manual adjustments will be integrated into the automatic decrements into the future to adjust for the user's food consumption.
 * UI Design: Create a new home page to function simply as an interface to bring up new windows which will display the actual features of the application.
 
+
+ITERATION 3 DEVELOPER TASKS
+
+Prabjot Dhaliwal
+* Task Chosen: Export/Import GUI, Settings GUI, History End-to-End, Apply QA fixes
+* Related User Stories: View Consumption History, User Specifies Which Data To Export
+* Expected Dev Times: Export/Import GUI (3 days), Settings GUI (1 day), History End-to-End (6 days), Apply QA fixes (1 day)
+* Actual Dev Times: Export/Import GUI (2 days), Settings GUI (2 day), History End-to-End (8 days), Apply QA fixes (0.5 day)
+
+
+
+
+ITERATION 3 END
