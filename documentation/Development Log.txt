@@ -140,7 +140,11 @@ Prabjot Dhaliwal
 * Expected Dev Times: Export/Import GUI (3 days), Settings GUI (1 day), History End-to-End (6 days), Apply QA fixes (1 day)
 * Actual Dev Times: Export/Import GUI (2 days), Settings GUI (2 day), History End-to-End (8 days), Apply QA fixes (0.5 day)
 
-
+Abdirahman Farah
+* Task Chosen: Export/Import functionality work, Recipe database and implementation
+* Related User Stories:Personalised Recipe reccomendation, Export/Import Tracking Data
+* Expected Dev Times: Export functionality work (2 days), Recipe implementation (5 days)
+* Actual Dev Times: Export (3 days), Recipe (4 days)
 
 
 ITERATION 3 END
