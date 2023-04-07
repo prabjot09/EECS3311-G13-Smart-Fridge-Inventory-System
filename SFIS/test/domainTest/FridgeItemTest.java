@@ -10,6 +10,7 @@ import org.junit.Test;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
+import domainLayer.UserSettings;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
 
@@ -51,7 +52,8 @@ public class FridgeItemTest {
 	
 	@Test
 	public void testIsExpiring() {
-		LocalDate expDate = LocalDate.now().plusDays(6);
+		LocalDate expDate = LocalDate.now().plusDays(UserSettings.generateDefaultSettings().getExpirationWarningDays() - 1);
+		
 		fridgeItem.setExpDate(expDate);
 		assertTrue(fridgeItem.isExpiring());
 	}
