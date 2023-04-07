@@ -62,31 +62,6 @@ public class UserHistory {
 	
 	
 	public void updateHistory(Fridge inv, int day) { 
-		// TODO: Implement update
-		
-		/*
-		 0) If date has changed since last update, then must recalibrate (shift table and weight distribution factor)
-		 
-		 1a) Update existing items day-end and consumption/restocking (Consumption must be distributed, restocking is only for today)
-		 	- 	Distrubution must be even. 
-		 		Ex: 
-		 			If current consumption over 4 days is: 1, 2, 2, 2.
-		 			Need to distribute 5 over past 4 days.
-		 			Resulted Increments: 1, 1, 1, 2
-		 			Resulted Consumption: 3, 3, 3, 3
-		 	- If item had been previously deleted, first set all of its values back to 0, then adjust quantities.
-		 	- If deleted today, then use prev day + today's data to regenerate the day-end and resume with the distribution.
-		 			
-		 1b) Add new items into the table. (Create new Pair<FoodItem, ItemHistory> and ItemHistory must init distributed days, the other 6 days are just -1)
-		 
-		 2) Items that have been deleted 7+ days ago must be removed 
-		 	- removed at end of day -> DAYEND = -1 (all other values static)
-		 	- all subsequent days -> DAYEND = -1, RESTOCK = -1, CONSUMPTION = -1
-		 */
-		
-
-		// TODO 2: If day changes while application is on (lastUpdate != today), then prevSession is changed to be equal to lastUpdate
-		//         because this means that you had actually adjusted for any skipped days already since the lastUpdate
 		
 		recalibrateHistory();
 		
@@ -159,11 +134,6 @@ public class UserHistory {
 	 * is dependent only on days since last session to adjust for skipped days.
 	 */
 	public void recalibrateHistory() {
-		/* TODO: 	Check the current date and the last history update date.
-		If date is same (current day) -> then take data directly.
-		If data is different -> must shift data by days accordingly and must redistribute all of todays changes over skipped days evenly.
-		
-		*/
 		 
 		LocalDate today = ApplicationClock.getDate();
 		int daysSinceRecalibration = Math.min(7, (int) lastRecalibrated.datesUntil(today).count());
