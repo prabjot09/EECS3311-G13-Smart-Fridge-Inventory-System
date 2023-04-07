@@ -146,5 +146,13 @@ Abdirahman Farah
 * Expected Dev Times: Export functionality work (2 days), Recipe implementation (5 days)
 * Actual Dev Times: Export (3 days), Recipe (4 days)
 
+Karim Jaouhar
+*Task Chosen: automatically adjust the stock amount of items automatically based on user consumption, set certain user preferences such as when expiring items should be highlighted, grocery list generation
+*Related User Stories: Adjusting Food Consumption Rate Based on Habits, User Customize Settings
+* Expected Dev Times: User Settings (1 Day), Consumption Rate Adjustment (3 days)
+* Actual Dev Times: User Settings (1 Day), Consumption Rate Adjustment (2 days)
+
+
+
 
 ITERATION 3 END
