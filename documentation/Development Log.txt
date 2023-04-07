@@ -152,7 +152,11 @@ Karim Jaouhar
 * Expected Dev Times: User Settings (1 Day), Consumption Rate Adjustment (3 days)
 * Actual Dev Times: User Settings (1 Day), Consumption Rate Adjustment (2 days)
 
-
+Eric Cha
+* Task Chosen: Recipe GUI, Cookable Recipes Function, Automatic Grocery List Add Function
+* Related User Stories: Recipe Browsing, Recipe Recommendations, Automatic Low Stock Restocking
+* Expected Dev Times: Recipe Browsing (12 days), Recipe Recommendations (18 days), Automatic Low Stock Restocking (12 days) 
+* Actual Dev Times: Recipe Browsing (6 days), Recipe Recommendations (3 days), Automatic Low Stock Restocking (2 days) 
 
 
 ITERATION 3 END
