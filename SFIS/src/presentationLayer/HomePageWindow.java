@@ -70,7 +70,7 @@ public class HomePageWindow extends AppFrameView implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == toFridgeButton) {
-			AppWindow.getWindow().loadNewView(new mainWindow());
+			AppWindow.getWindow().loadNewView(new MainFridgeView());
 		}
 		else if (e.getSource() == toFavoritesButton) {
 			AppWindow.getWindow().loadNewView(new FavoritesView());

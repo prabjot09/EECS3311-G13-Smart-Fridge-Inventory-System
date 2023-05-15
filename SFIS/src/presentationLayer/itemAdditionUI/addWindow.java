@@ -23,21 +23,21 @@ import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import presentationLayer.AppFrameView;
 import presentationLayer.AppWindow;
-import presentationLayer.mainWindow;
+import presentationLayer.MainFridgeView;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
 
 public class addWindow extends AppFrameView implements ActionListener{
 	private JPanel addMethodPanel;
-	private mainWindow homeView;
+	private MainFridgeView homeView;
 	
 	private ActionListener addMethodController;
 	
 	//back button
 	private JButton backButton;
 	
-	public addWindow(mainWindow homeView) {	
+	public addWindow(MainFridgeView homeView) {	
 		this.homeView = homeView;
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

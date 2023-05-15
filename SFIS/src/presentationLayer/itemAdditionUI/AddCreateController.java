@@ -11,7 +11,7 @@ import appLayer.App;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
-import presentationLayer.mainWindow;
+import presentationLayer.MainFridgeView;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.Pair;
@@ -19,10 +19,10 @@ import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
 
 public class AddCreateController implements ActionListener {
-	private mainWindow homeView;
+	private MainFridgeView homeView;
 	private AddCreateView addCreateView;
 
-	public AddCreateController(addWindow addWindowView, mainWindow homeView) {
+	public AddCreateController(addWindow addWindowView, MainFridgeView homeView) {
 		this.addCreateView = new AddCreateView(this);
 		this.homeView = homeView;
 		

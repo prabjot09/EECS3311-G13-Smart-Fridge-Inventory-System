@@ -16,7 +16,7 @@ import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.CreationType;
 import domainLayer.FoodItem.StockType;
-import presentationLayer.mainWindow;
+import presentationLayer.MainFridgeView;
 import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.StockableItem;
@@ -25,9 +25,9 @@ import domainLayer.StoredItem;
 
 public class AddSelectController implements ActionListener{
 	private AddSelectView addSelectView;
-	private mainWindow homeView;
+	private MainFridgeView homeView;
 	
-	public AddSelectController(addWindow addWindowView, mainWindow homeView) {
+	public AddSelectController(addWindow addWindowView, MainFridgeView homeView) {
 		this.addSelectView = new AddSelectView(this);
 		this.homeView = homeView;
 		

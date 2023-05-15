@@ -16,7 +16,7 @@ import persistenceLayer.StubDB;
 import presentationLayer.AppWindow;
 import presentationLayer.DBLoginView;
 import presentationLayer.HomePageWindow;
-import presentationLayer.mainWindow;
+import presentationLayer.MainFridgeView;
 
 public class StubbedApp {	
 	public static void main(String[] args) {
