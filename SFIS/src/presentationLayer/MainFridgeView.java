@@ -53,7 +53,7 @@ import presentationLayer.swingExtensions.CustomToggleButton;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 import presentationLayer.swingExtensions.LabelledInputField;
 
-public class mainWindow extends AppFrameView implements ActionListener{	
+public class MainFridgeView extends AppFrameView implements ActionListener{	
 	// Input Components
 	private JTextField search;
 	private JButton addButton, searchButton, backButton;
@@ -71,7 +71,7 @@ public class mainWindow extends AppFrameView implements ActionListener{
 	private boolean smartAdjustmentState;
 	
 	
-	public mainWindow() {
+	public MainFridgeView() {
 	    // create our jframe as usual
 		inv = App.getInstance().getInventory();
 		groc = App.getInstance().getGroceryList();
