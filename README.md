@@ -2,6 +2,9 @@
 Welcome to the SFIS (Smart Fridge Inventory System) application.
 Here, we will describe how to get started with our application.
 
+# Group Members:
+Abdirahman Farah, Eric Cha, Karim Jaouhar, Prabjot Dhaliwal
+
 ## TA Instructions
 - To run the Integration Tests, you must enter your root password into the variables in the relevant files under /test/IntegrationTests
 - Peer Evaluation is found under the documentation directory.
