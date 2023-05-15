@@ -60,7 +60,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		GridBagConstraints c = new GridBagConstraints();
 
 		list = new JList<String>();
-		list.setBackground(Color.gray);
+		list.setBackground(new Color(185, 185, 185));
 		list.setFont(new Font("Arial", Font.BOLD, 18));
 
 		scroll = new JScrollPane(list);

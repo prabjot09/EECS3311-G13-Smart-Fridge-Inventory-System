@@ -96,7 +96,7 @@ public class RecipeView extends AppFrameView implements ActionListener {
 		//available recipes
 		recipeViewItems = new DefaultListModel<String>();
 		recipeView = new JList<String>();
-		recipeView.setBackground(Color.GRAY);
+		recipeView.setBackground(new Color(185, 185, 185));
 		recipeView.setFont(new Font("Arial", Font.BOLD, 18));
 		JScrollPane recipeViewingPane = new JScrollPane(recipeView);
 		recipeViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -122,7 +122,7 @@ public class RecipeView extends AppFrameView implements ActionListener {
 		//full recipe view
 		fullRecipeItems = new DefaultListModel<String>();
 		fullRecipeView = new JList<String>();
-		fullRecipeView.setBackground(Color.GRAY);
+		fullRecipeView.setBackground(new Color(185, 185, 185));
 		fullRecipeView.setFont(new Font("Arial", Font.BOLD, 18));
 		JScrollPane fullRecipePane = new JScrollPane(fullRecipeView);
 		fullRecipePane.setBorder(BorderFactory.createLineBorder(Color.WHITE));

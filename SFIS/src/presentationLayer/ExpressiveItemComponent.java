@@ -9,6 +9,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,11 +25,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 
 import appLayer.App;
 import domainLayer.DiscreteStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FridgeItem;
+import domainLayer.Pair;
 import domainLayer.StockableItem;
 import domainLayer.StoredItem;
 import presentationLayer.swingExtensions.CustomBoxPanel;
@@ -42,6 +49,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	
 	private ExpressiveListView view;
 	
+	private static List<Pair<Pair<Integer, Integer>, Color>> barColors = Arrays.asList(
+		new Pair<>(new Pair<>(67, 100), new Color(33, 237, 84)),
+		new Pair<>(new Pair<>(34, 66), new Color(237, 196, 26)),
+		new Pair<>(new Pair<>(0, 33), new Color(247, 23, 26))
+	);
+	
 	public static void main(String[] args) {
 		JPanel lay = new JPanel();
 		lay.setLayout(new BoxLayout(lay, BoxLayout.Y_AXIS));
@@ -51,7 +64,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			FoodItem fItem = new FoodItem();
 			fItem.setName("a - " + i);
 			item.setFoodItem(fItem);
-			item.setStockableItem(new DiscreteStockableItem(3));
+			item.setStockableItem(new DiscreteStockableItem(1));
 			item.getStockableItem().setMax(4);
 			ExpressiveItemComponent a = new ExpressiveItemComponent(item, null);
 			
@@ -74,8 +87,8 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		this.itemObj = itemObj;
 		this.view = view;
 		
-		this.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(50, 50, 50)));
-	    this.setBackground(new Color(20, 20, 20));
+		this.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(80, 80, 80)));
+	    this.setBackground(new Color(40, 40, 40));
 	    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	    
 	    itemInfoBuilder();
@@ -113,16 +126,16 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    	
 	    }
 	    
-	    rightPanel = new CustomPanel(this.getBackground(), BoxLayout.X_AXIS);
+	    rightPanel = new CustomPanel(this.getBackground(), new GridBagLayout());
 	    upperPanel.add(rightPanel, BorderLayout.LINE_END);
 	    
 	    delButton = new CustomButton("Remove", this, 10);
-	    rightPanel.add(delButton);
+	    rightPanel.add(delButton, GridConstraintsSpec.coordinateConstraints(0, 0));
 	    
-	    rightPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+	    rightPanel.add(Box.createRigidArea(new Dimension(8, 8)), GridConstraintsSpec.coordinateConstraints(1, 0));
 	    
 	    groceryListButton = new CustomButton("Add to Grocery List", this, 10);
-		rightPanel.add(groceryListButton);	
+		rightPanel.add(groceryListButton, GridConstraintsSpec.coordinateConstraints(2, 0));	
 	    	    
 	}
 	
@@ -136,7 +149,10 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    	    
 	    quantityVisual = new JProgressBar(SwingConstants.HORIZONTAL);
 	    quantityVisual.setStringPainted(true);
-	    quantityVisual.setForeground(Color.BLUE);
+	    quantityVisual.setUI(new BasicProgressBarUI() {
+	        protected Color getSelectionBackground() { return Color.gray; }
+	        protected Color getSelectionForeground() { return Color.gray; }
+	      });
 	    StockableItem stock = this.itemObj.getStockableItem();
 	    int percentQuantity = stock.calculatePercent();
 	    quantityVisual.setValue(percentQuantity);
@@ -152,6 +168,8 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    c = GridConstraintsSpec.stretchableFillConstraints(2, 0, 0.06, 1, GridBagConstraints.HORIZONTAL);
 	    c.insets = new Insets(0, 12, 0, 0);
 	    quantityPanel.add(decButton, c);
+	    
+	    colorProgressBar();
 	}
 	
 	
@@ -172,10 +190,26 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		
 		StockableItem stock = this.itemObj.getStockableItem();
 	    int percentQuantity = stock.calculatePercent();
+	    
 	    quantityVisual.setValue(percentQuantity);
+	    colorProgressBar();
 		
 		this.revalidate();
 	}
+	
+	
+	public void colorProgressBar() {
+		int amt = quantityVisual.getValue();
+		
+		for(Pair<Pair<Integer, Integer>, Color> entry: barColors) {
+			Pair<Integer, Integer> range = entry.getA();
+			if (amt >= range.getA() && amt <= range.getB()) {
+				quantityVisual.setForeground(entry.getB());
+				break;
+			}	
+		}
+	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

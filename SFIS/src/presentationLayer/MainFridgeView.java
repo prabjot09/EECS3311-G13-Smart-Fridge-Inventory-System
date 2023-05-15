@@ -114,7 +114,7 @@ public class MainFridgeView extends AppFrameView implements ActionListener{
 	
 	public void headerSetup() {
 		JPanel panel = new CustomPanel(Color.black, null);
-		panel.setBorder(BorderFactory.createEmptyBorder(25,40,10,40));
+		panel.setBorder(BorderFactory.createEmptyBorder(15,40,0,40));
 		this.add(panel,BorderLayout.NORTH);
 	    
 	    JLabel titleLabel = new JLabel("Smart Fridge Tracker");
@@ -141,7 +141,7 @@ public class MainFridgeView extends AppFrameView implements ActionListener{
 	    parent.add(topPanel, c);
 	    
 	    LabelledInputField searchInputPanel = new LabelledInputField(Color.black, Color.white, "Search Item:", 16, 16, 5);
-	    searchInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	    searchInputPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.BOTH);
 	    topPanel.add(searchInputPanel, c);
 	    
@@ -153,8 +153,11 @@ public class MainFridgeView extends AppFrameView implements ActionListener{
 	    c = GridConstraintsSpec.coordinateConstraints(1, 0);
 	    topPanel.add(buttonWrapper, c);
 	    
+	    c = GridConstraintsSpec.stretchableFillConstraints(2, 0, 0.05, 0, GridBagConstraints.HORIZONTAL);
+	    topPanel.add(new CustomPanel(Color.black, null), c);
+	    
 	    addButton = new CustomButton("Add Item", this, 10);
-	    c = GridConstraintsSpec.coordinateConstraints(2, 0);
+	    c = GridConstraintsSpec.coordinateConstraints(3, 0);
 	    topPanel.add(addButton, c);
 	    
 	    
@@ -232,7 +235,7 @@ public class MainFridgeView extends AppFrameView implements ActionListener{
 	    
 	    functionPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
-	    viewToggler = new CustomToggleButton("Compressed View", "Expressive View", "Compressed View", this, 10);
+	    viewToggler = new CustomToggleButton("View Layout: Compressed", "View Layout: Expressive", "View Layout: Compressed", this, 10);
 	    viewToggler.initToggle(true);
 	    functionPanel.add(viewToggler);
 	    

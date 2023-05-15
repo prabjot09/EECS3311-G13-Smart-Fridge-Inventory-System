@@ -60,7 +60,7 @@ public class ExpressiveListView extends JPanel implements ListView{
 			this.remove(scroll);
 			
 		itemUIList = new ArrayList<>();
-		listView = new CustomBoxPanel(new Color(20, 20, 20), BoxLayout.Y_AXIS, -1);
+		listView = new CustomBoxPanel(new Color(40, 40, 40), BoxLayout.Y_AXIS, -1);
 		listView.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
 		for (StoredItem item: items) {
