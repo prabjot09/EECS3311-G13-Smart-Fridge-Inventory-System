@@ -19,14 +19,14 @@ import domainLayer.FoodItem.StockType;
 //Databaswe for our favourites list, very similar to our other 2 databases, probably a better way to do this 
 //as the logic is the same, can just pass a different select form the realdb maybe?
 public class FavoritesRealDB {
-	DBHelpers helper = new DBHelpers();
-	String url = "jdbc:mysql://localhost:3306/SIFSDB";
-	String select = "use SIFSDB";
-	String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
-	String selectFromFav = "select name, StockType, Amount, CreationType, Date from favitem;";
-	String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
+	private DBHelpers helper = new DBHelpers();
+	private String url = "jdbc:mysql://localhost:3306/SIFSDB";
+	private String select = "use SIFSDB";
+	private String queryInsertFav = "insert into favitem VALUES (?, ? , ?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = ?;";
+	private String selectFromFav = "select name, StockType, Amount, CreationType, Date from favitem;";
+	private String createFavTable = "Create Table if not exists favitem" + "(name VARCHAR(255)," + "StockType INT,"
 			+ "Amount INT," + "CreationType INT," + "Date DATE DEFAULT NULL," + "PRIMARY KEY ( name))";
-	String updateFavDrop = "drop table favitem;";
+	private String updateFavDrop = "drop table favitem;";
 
 	//each method takes the user and password given at the program launch
 	public FavoritesRealDB() {

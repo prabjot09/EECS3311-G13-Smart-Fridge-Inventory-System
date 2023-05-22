@@ -76,7 +76,7 @@ public class HomePageWindow extends AppFrameView implements ActionListener {
 			AppWindow.getWindow().loadNewView(new FavoritesView());
 		}
 		else if (e.getSource() == toRecipeButton) {
-			AppWindow.getWindow().loadNewView(new RecipeView(App.getInstance().getInventory()));
+			AppWindow.getWindow().loadNewView(new RecipeView());
 		}
 		else if (e.getSource() == toHistoryButton) {
 			AppWindow.getWindow().loadNewView(new HistoryView(App.getInstance().getHistory()));

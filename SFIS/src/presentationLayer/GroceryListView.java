@@ -66,7 +66,6 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    
 	    String exportChoices[] = {"Grocery List", "Favorites List"};
 	    exportDecision = new JComboBox<String>(exportChoices);
-	    //exportDecision.setPreferredSize(new Dimension(110,20));
 	    topPanel.add(exportDecision, BorderLayout.LINE_END);
 	    
 	    //Grocery viewing  
@@ -75,7 +74,6 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    viewList.setFont(new Font("Arial", Font.BOLD, 18));
 	    JScrollPane scrollViewingPane = new JScrollPane(viewList);
 	    scrollViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-	    //scrollViewingPane.setPreferredSize(new Dimension(400,280));
 	    
 	    JPanel viewWrapper = new CustomPanel(Color.black, new BorderLayout(), 5);
 	    viewWrapper.add(scrollViewingPane);
@@ -87,6 +85,7 @@ public class GroceryListView extends JPanel implements ActionListener {
 	    JPanel buttonsPanel = new CustomPanel(Color.black, new BorderLayout(), 5);
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 0, GridBagConstraints.HORIZONTAL);
 	    this.add(buttonsPanel, c);
+	    
 	    //Remove grocery button
 	    removeGroceryButton = new CustomButton("Remove Grocery Item", this);
 	    removeGroceryButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
