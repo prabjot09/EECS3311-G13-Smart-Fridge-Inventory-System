@@ -150,67 +150,6 @@ public class RecipeView extends AppFrameView implements ActionListener {
 	    
 	    generateRecipeDesc();
 	    
-	    
-//	    //buttons
-//	    JPanel backleftPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
-//		backleftPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
-//		backButton = new CustomButton("Back", this, 10);
-//		backleftPanel.add(backButton);
-//		
-//		displayButton = new CustomButton("Display Recipe", this, 10);
-//		backleftPanel.add(displayButton);
-//		
-//		this.add(backleftPanel, GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 0, GridBagConstraints.HORIZONTAL));
-//		
-//		JPanel randomrightPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
-//		randomrightPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
-//		randomButton = new CustomButton("Surprise me", this, 10);
-//		randomrightPanel.add(randomButton);	
-//		this.add(randomrightPanel, GridConstraintsSpec.stretchableFillConstraints(1, 1, 1, 0, GridBagConstraints.HORIZONTAL));
-//		
-//		
-//		//available recipes
-//		recipeViewItems = new DefaultListModel<String>();
-//		recipeView = new JList<String>();
-//		recipeView.setBackground(new Color(185, 185, 185));
-//		recipeView.setFont(new Font("Arial", Font.BOLD, 18));
-//		JScrollPane recipeViewingPane = new JScrollPane(recipeView);
-//		recipeViewingPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//		
-//		JPanel viewWrapper = new CustomPanel(Color.black, new BorderLayout(), 5);
-//		viewWrapper.add(recipeViewingPane);
-//		
-//		//c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 1, GridBagConstraints.BOTH);
-//		//this.add(viewWrapper, c);
-//		
-//		for (Recipe recipe : allRecipes) {
-//			if (recipeChecker(recipe)) {
-//				recipeViewItems.addElement("+ " + recipe.getRecipeName());
-//			}
-//			else {
-//				recipeViewItems.addElement("- " + recipe.getRecipeName() + "(missing items)");
-//			}
-//		}
-//		recipeView.setModel(recipeViewItems);
-//		
-//		recipeView.addListSelectionListener(null);
-//		
-//		//full recipe view
-//		fullRecipeItems = new DefaultListModel<String>();
-//		fullRecipeView = new JList<String>();
-//		fullRecipeView.setBackground(new Color(185, 185, 185));
-//		fullRecipeView.setFont(new Font("Arial", Font.BOLD, 18));
-//		JScrollPane fullRecipePane = new JScrollPane(fullRecipeView);
-//		fullRecipePane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//		
-//		JPanel fullWrapper = new CustomPanel(Color.black, new BorderLayout(), 5);
-//		fullWrapper.add(fullRecipePane);
-//		
-//		//c = GridConstraintsSpec.stretchableFillConstraints(1, 2, 1, 1, GridBagConstraints.BOTH);
-//		//this.add(fullWrapper, c);
-//		
-//		fullRecipeView.setModel(fullRecipeItems);
-		
 		revalidate();
 		
 	}
@@ -337,31 +276,6 @@ public class RecipeView extends AppFrameView implements ActionListener {
 		instructionsPanel.add(whiteSpaceConsumer, c);
 		
 		recipeDescription.revalidate();
-//		//name
-//		fullRecipeItems.addElement(recipe.getRecipeName());
-//		//divider
-//		char[] tempC = new char[recipe.getRecipeName().length()];
-//		Arrays.fill(tempC, '*');
-//		String divide = new String(tempC);
-//		fullRecipeItems.addElement(divide);
-//		
-//		//ingredients
-//		fullRecipeItems.addElement("Ingredients:");
-//		for (StoredItem recipeItem : recipe.getItems()) {
-//			if (recipeItemChecker(recipeItem)) {
-//				fullRecipeItems.addElement("+ " + recipeItem.getFoodItem().getName() + ", " + recipeItem.getStockableItem().getStock());
-//			}
-//			else {
-//				fullRecipeItems.addElement("- " + recipeItem.getFoodItem().getName() + ", " + recipeItem.getStockableItem().getStock() + "(missing items)");
-//			}
-//		}
-//		//instructions
-//		fullRecipeItems.addElement("Instructions:");
-//		for (String instruction : recipe.getInstructions()) {
-//			fullRecipeItems.addElement(counter + ") " + instruction);
-//			counter++;
-//		}
-//		revalidate();
 	}
 
 	@Override
