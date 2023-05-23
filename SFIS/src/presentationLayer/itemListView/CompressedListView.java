@@ -28,6 +28,7 @@ import domainLayer.FridgeItem;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
 import presentationLayer.AppWindow;
+import presentationLayer.EditItemWindow;
 import presentationLayer.GroceryListView;
 import presentationLayer.itemListView.ListViewManager.StockChangeMode;
 import presentationLayer.swingExtensions.CustomBoxPanel;
@@ -40,10 +41,7 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	private ItemManager inv;
 	private JScrollPane scroll;
 	private JList<String> list;
-	private JButton incButton;
-	private JButton decButton;
-	private JButton remButton;
-	private JButton groceryListButton;
+	private JButton incButton, decButton, remButton, editButton, groceryListButton;
 	private List<StoredItem> displayItems;
 	private DefaultListModel<String> stringItemList;
 	private GroceryListView groceryView;
@@ -88,6 +86,11 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		decButton = new CustomButton("Decr", this, 10);
 		adjustPanel.add(decButton);
 
+		adjustPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+		
+		editButton = new CustomButton("Edit", this, 10);
+		adjustPanel.add(editButton);
+		
 		adjustPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 		
 		remButton = new CustomButton("Remove", this, 10);
@@ -167,6 +170,8 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 				this.displayItems.remove(itemIndex);
 				this.stringItemList.remove(itemIndex);
 			}
+		} else if (e.getSource() == editButton) {
+			AppWindow.getWindow().initPopup(new EditItemWindow(this, this.displayItems.get(list.getSelectedIndex())));
 		} else if (e.getSource() == groceryListButton) {
 			int itemIndex = list.getSelectedIndex();
 			groceryView.visualAdd(this.displayItems.get(itemIndex));
@@ -208,6 +213,10 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
 		incButton.setEnabled(incrementEnabled);
 		decButton.setEnabled(decrementEnabled);
+		if (!incrementEnabled || !decrementEnabled)
+			editButton.setEnabled(false);
+		else 
+			editButton.setEnabled(true);
 	}
 
 	@Override
@@ -215,5 +224,25 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 		this.groceryItemPanel.remove(groceryListButton);
 		this.repaint();
 		this.revalidate();
+	}
+
+	@Override
+	public void updateItem(StoredItem item) {
+		this.inv.updateItem(item);
+		
+		int index = -1;
+		for (int i = 0; i < displayItems.size(); i++) {
+			if (displayItems.get(i).sameItemDescription(item))
+				index = i;
+		}
+		
+		if (index == -1) {
+			new ArrayIndexOutOfBoundsException(-1).printStackTrace();
+			return;
+		}
+		
+		this.displayItems.set(index, item);
+		this.stringItemList.set(index, this.displayItems.get(index).getDescription());
+		this.list.revalidate();
 	}
 }

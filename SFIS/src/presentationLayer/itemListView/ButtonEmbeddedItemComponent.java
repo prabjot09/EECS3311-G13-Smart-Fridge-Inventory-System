@@ -114,6 +114,10 @@ public class ButtonEmbeddedItemComponent extends JPanel implements ActionListene
 		generateButtonPanel();
 	}
 	
+	public StoredItem getItem() {
+		return item;
+	}
+	
 	public void generateButtonPanel() {
 		int count = buttonPanel.getComponentCount();
 		for (int i = 0; i < count; i++) {
@@ -151,12 +155,10 @@ public class ButtonEmbeddedItemComponent extends JPanel implements ActionListene
 		if (e.getSource() == incButton) {
 			item.executeIncrement();
 			list.updateItem(item);
-			this.updateText();
 		}
 		else if (e.getSource() == decButton) {
 			item.executeDecrement();
 			list.updateItem(item);
-			this.updateText();
 		}
 		else if (e.getSource() == delButton) {
 			list.removeItem(item);

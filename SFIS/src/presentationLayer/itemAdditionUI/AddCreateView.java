@@ -73,7 +73,7 @@ public class AddCreateView extends JPanel{
 		expiryLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 	    expiryPanel.add(expiryLabel);
 	    
-		dateField = new DateInputField();
+		dateField = new DateInputField(Color.black);
 		dateField.setBackground(Color.black);
 		expiryPanel.add(dateField);
 	    

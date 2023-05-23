@@ -1,5 +1,6 @@
 package presentationLayer.swingExtensions;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.time.LocalDate;
@@ -15,8 +16,9 @@ public class DateInputField extends JPanel {
 	
 	private JComboBox<String> dateField, monthField, yearField;
 	
-	public DateInputField () {
+	public DateInputField (Color bg) {
 		
+		this.setBackground(bg);
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -58,6 +60,14 @@ public class DateInputField extends JPanel {
 		this.add(yearField);		
 	}
 	
+	public void setSelectedDate(LocalDate date) {
+		if (date == null)
+			return;
+		
+		dateField.setSelectedItem("" + date.getDayOfMonth());
+		monthField.setSelectedItem("" + date.getMonthValue());
+		yearField.setSelectedItem("" + date.getYear());
+	}
 	
 	public boolean isUnused() {
 		return (dateField.getSelectedIndex() == 0 &&

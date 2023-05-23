@@ -94,8 +94,20 @@ public class ExpressiveListView extends JPanel implements ListView{
 		listView.revalidate();
 	}
 
-	public void updateList(StoredItem itemObj) {
-		inv.updateItem(itemObj);		
+	public void updateItem(StoredItem item) {
+		inv.updateItem(item);
+		
+		int index = -1;
+		for (int i = 0; i < itemUIList.size(); i++) {
+			if (itemUIList.get(i).getItemObj().sameItemDescription(item))
+				index = i;
+		}
+		
+		if (index == -1) {
+			new ArrayIndexOutOfBoundsException(-1).printStackTrace();
+			return;
+		}
+		itemUIList.get(index).updateLabel();
 	}
 	
 	public void setGrocery(GroceryListView grocery) {

@@ -18,6 +18,7 @@ import domainLayer.ContinuousStockableItem;
 import domainLayer.FoodItem;
 import domainLayer.FoodItem.StockType;
 import domainLayer.Pair;
+import domainLayer.StockableItem;
 import presentationLayer.swingExtensions.DropDown;
 import presentationLayer.swingExtensions.InputField;
 import presentationLayer.swingExtensions.TextInput;
@@ -94,6 +95,27 @@ public class StockInputField {
 		
 		return new Pair<>(result.getA(), value);
 	}
+	
+	
+	public void setFieldValue(String type, int stock) {
+		Pair<StockType, Component> result = inputFieldMap.get(type);
+		if (result == null) {
+			return;
+		}
+		
+		if (result.getB() == this.discreteAmtField) {
+			discreteAmtField.setText("" + stock);
+		}
+		else if (result.getB() == this.continuousAmtField) {
+			for (String key: this.continuousValueMap.keySet()) {
+				if (continuousValueMap.get(key) == stock) {
+					continuousAmtField.setSelectedItem(key);
+					break;
+				}
+			}
+		}
+	}
+	
 	
 	public void clear() {
 		discreteAmtField.clearField();

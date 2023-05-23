@@ -34,8 +34,11 @@ import domainLayer.FridgeItem;
 import domainLayer.Pair;
 import domainLayer.StockableItem;
 import domainLayer.StoredItem;
+import presentationLayer.AppWindow;
+import presentationLayer.EditItemWindow;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
+import presentationLayer.swingExtensions.CustomLabel;
 import presentationLayer.swingExtensions.CustomPanel;
 import presentationLayer.swingExtensions.GridConstraintsSpec;
 
@@ -44,8 +47,8 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	private JProgressBar quantityVisual;
 	private StoredItem itemObj;
 	
-	private JButton incButton, decButton, delButton, groceryListButton;
-	private JPanel rightPanel;
+	private JButton incButton, decButton, delButton, editButton, groceryListButton;
+	private JPanel rightPanel, infoPanel;
 	
 	private ExpressiveListView view;
 	
@@ -101,7 +104,7 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    upperPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 0));
 	    this.add(upperPanel);
 	    
-	    JPanel infoPanel = new CustomBoxPanel(this.getBackground(), BoxLayout.Y_AXIS);
+	    infoPanel = new CustomBoxPanel(this.getBackground(), BoxLayout.Y_AXIS);
 	    upperPanel.add(infoPanel, BorderLayout.LINE_START);
 	    
 	    name = new JLabel("Name: " + itemObj.getFoodItem().getName());
@@ -129,13 +132,18 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	    rightPanel = new CustomPanel(this.getBackground(), new GridBagLayout());
 	    upperPanel.add(rightPanel, BorderLayout.LINE_END);
 	    
-	    delButton = new CustomButton("Remove", this, 10);
-	    rightPanel.add(delButton, GridConstraintsSpec.coordinateConstraints(0, 0));
+	    editButton = new CustomButton("Edit", this, 10);
+	    rightPanel.add(editButton, GridConstraintsSpec.coordinateConstraints(0, 0));
 	    
 	    rightPanel.add(Box.createRigidArea(new Dimension(8, 8)), GridConstraintsSpec.coordinateConstraints(1, 0));
 	    
+	    delButton = new CustomButton("Remove", this, 10);
+	    rightPanel.add(delButton, GridConstraintsSpec.coordinateConstraints(2, 0));
+	    
+	    rightPanel.add(Box.createRigidArea(new Dimension(8, 8)), GridConstraintsSpec.coordinateConstraints(3, 0));
+	    
 	    groceryListButton = new CustomButton("Add to Grocery List", this, 10);
-		rightPanel.add(groceryListButton, GridConstraintsSpec.coordinateConstraints(2, 0));	
+		rightPanel.add(groceryListButton, GridConstraintsSpec.coordinateConstraints(4, 0));	
 	    	    
 	}
 	
@@ -177,6 +185,17 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 	public void updateLabel() {
 		name.setText("Name: " + itemObj.getFoodItem().getName());
 		quantity.setText("Quantity: " + itemObj.getStockableItem().getDescription());
+		try {
+			FridgeItem item  = (FridgeItem) itemObj;
+			if (expiry != null && item.getExpDate() == null) {
+				infoPanel.remove(expiry);
+				expiry = null;
+			} else if (expiry == null && item.getExpDate() != null){
+				expiry = new CustomLabel("Best Before: " + item.getExpDate().toString(), "Arial", Font.BOLD, 16, Color.white);
+				infoPanel.add(expiry);
+			}
+		} catch (Exception e) {}
+		
 		if (expiry != null) {
 			FridgeItem item = (FridgeItem) itemObj;
 			expiry.setText("Best Before: " + item.getExpDate().toString());
@@ -216,20 +235,12 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 		JButton clicked = (JButton) e.getSource();
 		
 		if (clicked == incButton) {
-			this.itemObj.executeIncrement();
-			view.updateList(itemObj);
-			
-			this.updateLabel();
+			itemObj.executeIncrement();
+			view.updateItem(itemObj);
 		}
 		else if (clicked == decButton) {
-			this.itemObj.executeDecrement();
-			view.updateList(itemObj);
-			
-			this.updateLabel();
-			
-			StockableItem stock = this.itemObj.getStockableItem();
-		    int percentQuantity = stock.calculatePercent();
-		    quantityVisual.setValue(percentQuantity);
+			itemObj.executeDecrement();
+			view.updateItem(itemObj);
 			
 			int itemStockPercent = this.itemObj.getStockableItem().calculatePercent();
 			int groceryThreshold = App.getInstance().getSettings().getAddGroceryListThreshold();
@@ -238,6 +249,9 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 			if ( (itemStockPercent < groceryThreshold) && (App.getInstance().getGroceryList().itemIndex(this.itemObj) == -1) ) {
 				view.groceryVisualAdd(this.itemObj);
 			}
+		}
+		else if (clicked == editButton) {
+			AppWindow.getWindow().initPopup(new EditItemWindow(this.view, this.itemObj));
 		}
 		else if (clicked == delButton) {
 			view.removeItem(this);
@@ -253,7 +267,8 @@ public class ExpressiveItemComponent extends JPanel implements ActionListener{
 
 	public void setStockChangeMode(boolean incrementEnabled, boolean decrementEnabled) {
 		incButton.setEnabled(incrementEnabled);
-		decButton.setEnabled(decrementEnabled);		
+		decButton.setEnabled(decrementEnabled);
+		editButton.setEnabled(incrementEnabled && decrementEnabled);
 	}
 	
 	public void removeGroceryLink() {

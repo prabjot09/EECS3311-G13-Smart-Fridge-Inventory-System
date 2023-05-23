@@ -91,7 +91,6 @@ public class AppWindow extends JFrame{
 	
 	public void initPopup(JFrame popup) {
 		this.setEnabled(false);
-		popup.setAlwaysOnTop(true);
 		popup.setLocationRelativeTo(null);
 		popup.setVisible(true);	
 		this.addWindowListener(new WindowListener() {

@@ -107,6 +107,19 @@ public class ButtonEmbeddedListView extends JPanel implements ListView{
 
 	public void updateItem(StoredItem item) {
 		itemList.updateItem(item);	
+		
+		int index = 0;
+		for (int i = 0; i < itemComponents.size(); i++) {
+			if (itemComponents.get(i).getItem().sameItemDescription(item))
+				index = i;
+		}
+		
+		if (index == -1) {
+			new ArrayIndexOutOfBoundsException(-1).printStackTrace();
+			return;
+		}
+		
+		itemComponents.get(index).updateText();
 	}
 
 	public void removeItem(StoredItem item) {
