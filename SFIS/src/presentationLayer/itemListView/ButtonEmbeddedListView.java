@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemListView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.AppWindow;
+import presentationLayer.GroceryListView;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;

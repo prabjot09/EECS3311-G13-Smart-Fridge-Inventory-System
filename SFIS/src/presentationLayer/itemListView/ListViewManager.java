@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemListView;
 
 import java.awt.Dimension;
 import java.util.ArrayList;

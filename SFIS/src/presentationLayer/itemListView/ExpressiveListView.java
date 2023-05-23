@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemListView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +18,8 @@ import domainLayer.DBProxy;
 import domainLayer.Fridge;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
+import presentationLayer.AppWindow;
+import presentationLayer.GroceryListView;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 
 public class ExpressiveListView extends JPanel implements ListView{

@@ -1,4 +1,4 @@
-package presentationLayer;
+package presentationLayer.itemListView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,7 +27,9 @@ import domainLayer.Fridge;
 import domainLayer.FridgeItem;
 import domainLayer.ItemManager;
 import domainLayer.StoredItem;
-import presentationLayer.ListViewManager.StockChangeMode;
+import presentationLayer.AppWindow;
+import presentationLayer.GroceryListView;
+import presentationLayer.itemListView.ListViewManager.StockChangeMode;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;

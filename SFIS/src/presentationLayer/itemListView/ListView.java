@@ -1,11 +1,12 @@
-package presentationLayer;
+package presentationLayer.itemListView;
 
 import java.util.List;
 
 import javax.swing.JPanel;
 
 import domainLayer.StoredItem;
-import presentationLayer.ListViewManager.StockChangeMode;
+import presentationLayer.GroceryListView;
+import presentationLayer.itemListView.ListViewManager.StockChangeMode;
 
 public interface ListView{
 	
