@@ -7,11 +7,13 @@ public class UserSettings {
 	private int expirationWarningDays;
 	private boolean smartFeaturesEnabled; //auto adjust quantity
 	private int addGroceryListThreshold;
-
+	private int favoritesListThreshold;
+	
 	public UserSettings() {
 	    this.expirationWarningDays = 5;
 	    this.smartFeaturesEnabled = false;
 	    this.addGroceryListThreshold = 20; //percentage?
+	    this.favoritesListThreshold = 50;
 	}
 
 	
@@ -42,6 +44,15 @@ public class UserSettings {
 	public void setAddGroceryListThreshold(int addGroceryListThreshold) {
 		this.addGroceryListThreshold = addGroceryListThreshold;
 	}
+	
+	public int getFavoritesListThreshold() {
+		return this.favoritesListThreshold;
+	}
+	
+	public void setFavoritesListThreshold(int threshold) {
+		this.favoritesListThreshold = threshold;
+	}
+	
 
 	public void saveToDatabase() {
 		DBProxy.getInstance().updateUserSettings(this);
@@ -52,6 +63,8 @@ public class UserSettings {
 		this.expirationWarningDays = settings.getExpirationWarningDays();
 		this.smartFeaturesEnabled = settings.isSmartFeaturesEnabled();
 		this.addGroceryListThreshold = settings.getAddGroceryListThreshold();
+		this.favoritesListThreshold = settings.getFavoritesListThreshold();
 	}
+
 }
 

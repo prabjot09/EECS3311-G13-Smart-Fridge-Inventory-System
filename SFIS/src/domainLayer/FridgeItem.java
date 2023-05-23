@@ -68,4 +68,16 @@ public class FridgeItem extends StoredItem{
 		}
 		return desc;
 	}
+	
+	public String getShortDesc() {
+		if (this.expDate == null)
+			return super.getShortDesc();
+		
+		String desc = super.getShortDesc() + " [BB:" + expDate.toString();
+		if (this.isExpiring()) {
+			desc += " - EXPIRING";
+		}
+		desc += "]";
+		return desc;
+	}
 }

@@ -29,6 +29,7 @@ public class SettingsRealDB {
 	public final String EXRIPY_THRESHOLD = "Expiry Warning Threshold";
 	public final String SMART_FEATURE_ON = "Smart Feature Enabled Bit";
 	public final String GROCERY_THRESHOLD = "Automated Grocery Addition Threshold";
+	public final String FAVORITES_THRESHOLD = "Favorited Item Grocery List Add Threshold";
 	
 	public SettingsRealDB() {
 		
@@ -80,6 +81,11 @@ public class SettingsRealDB {
 			statement3.setString(1, SMART_FEATURE_ON);
 			statement3.setInt(2, data.get(SMART_FEATURE_ON));
 			statement3.executeUpdate();
+			
+			PreparedStatement statement4 = con.prepareStatement(queryInsertSettings);
+			statement4.setString(1, FAVORITES_THRESHOLD);
+			statement4.setInt(2, data.get(FAVORITES_THRESHOLD));
+			statement4.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

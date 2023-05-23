@@ -2,7 +2,7 @@ package presentationLayer.swingExtensions;
 
 import javax.swing.JTextField;
 
-public class TextInput extends JTextField implements InputField {
+public class TextInput extends PromptText implements InputField {
 	public TextInput(String string) { 
 		super(string); 
 	}

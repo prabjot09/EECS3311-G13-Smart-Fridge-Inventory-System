@@ -33,10 +33,11 @@ public class StockInputField {
 	public StockInputField() {
 		discreteAmtField = new TextInput("Amount Remaining");
 	    discreteAmtField.setFont(new Font("Arial", Font.PLAIN, 16));
-	    discreteAmtField.setBackground(Color.gray);
-		discreteAmtField.setBounds(0,100,300,500);
-	    discreteAmtField.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		discreteAmtField.setPreferredSize(new Dimension(300,50));
+	    discreteAmtField.setBackground(new Color(185, 185, 185));
+		//discreteAmtField.setBounds(0,100,300,500);
+	    discreteAmtField.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+	    discreteAmtField.setPreferredSize(new Dimension(discreteAmtField.getPreferredSize().width, discreteAmtField.getPreferredSize().height));
+		//discreteAmtField.setPreferredSize(new Dimension(300,50));
 		
 		List<String> continuousValues = new ArrayList<>();
 	    continuousValueMap = new HashMap<>();
@@ -54,7 +55,7 @@ public class StockInputField {
 	    
 	    continuousAmtField = new DropDown<>(valuesCopy);
 	    continuousAmtField.setFont(new Font("Arial", Font.PLAIN, 16));
-	    continuousAmtField.setPreferredSize(new Dimension(300,50));
+	    //continuousAmtField.setPreferredSize(new Dimension(300,50));
 	    
 	    inputFieldMap = new HashMap<>();
 		inputFieldMap.put(StockType.CONTINUOUS.toString(), new Pair<>(StockType.CONTINUOUS, continuousAmtField));

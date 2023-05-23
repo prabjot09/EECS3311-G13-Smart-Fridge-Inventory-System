@@ -21,6 +21,7 @@ class StubStock extends StockableItem {
 	public StockableItem copy() { return null; }
 	public StockableItem refillQuantity() { return null; }
 	public boolean stockWithinBounds() { return true; }
+	public String getShortDesc() { return null; }
 }
 
 class StubItemX extends StubBase {

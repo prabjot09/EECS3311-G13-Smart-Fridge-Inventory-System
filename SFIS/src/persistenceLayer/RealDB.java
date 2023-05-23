@@ -237,6 +237,7 @@ public class RealDB implements DB {
 		data.put(settingsDB.EXRIPY_THRESHOLD, settings.getExpirationWarningDays());
 		data.put(settingsDB.GROCERY_THRESHOLD, settings.getAddGroceryListThreshold());
 		data.put(settingsDB.SMART_FEATURE_ON, settings.isSmartFeaturesEnabled() ? 1 : 0);
+		data.put(settingsDB.FAVORITES_THRESHOLD, settings.getFavoritesListThreshold());
 		settingsDB.updateSettings(user, password, data);
 		
 	}
@@ -251,6 +252,7 @@ public class RealDB implements DB {
 		loadedSettings.setAddGroceryListThreshold(data.get(settingsDB.GROCERY_THRESHOLD));
 		loadedSettings.setExpirationWarningDays(data.get(settingsDB.EXRIPY_THRESHOLD));
 		loadedSettings.setSmartFeaturesEnabled(data.get(settingsDB.SMART_FEATURE_ON) == 1 ? true : false);
+		loadedSettings.setFavoritesListThreshold(data.get(settingsDB.FAVORITES_THRESHOLD));
 		return loadedSettings;
 	}
 	

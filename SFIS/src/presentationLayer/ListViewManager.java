@@ -41,12 +41,6 @@ public class ListViewManager{
 			view.generateList(items);
 		}
 	}
-
-	public void addItemToLists(StoredItem item) {
-		for (ListView view: views) {
-			view.addItem(item);
-		}
-	}
 	
 	public void setSizes(Dimension dimension) {
 		for (ListView view: views) {

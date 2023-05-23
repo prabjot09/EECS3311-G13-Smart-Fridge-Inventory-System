@@ -63,4 +63,9 @@ public class DiscreteStockableItem extends StockableItem {
 	public boolean stockWithinBounds() {
 		return this.getStock() <= MAXIMUM;
 	}
+
+	@Override
+	public String getShortDesc() {
+		return "" + this.getStock();
+	}
 }

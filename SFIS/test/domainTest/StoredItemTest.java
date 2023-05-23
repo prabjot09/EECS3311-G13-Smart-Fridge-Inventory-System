@@ -39,6 +39,7 @@ class StoredItemTest {
 		public StockableItem copy() { return null; }
 		public StockableItem refillQuantity() { return null; }
 		public boolean stockWithinBounds() { return true; }
+		public String getShortDesc() { return null; }
 	}
 	
 	@Test

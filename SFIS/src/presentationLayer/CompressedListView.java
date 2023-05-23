@@ -170,14 +170,6 @@ public class CompressedListView extends JPanel implements ActionListener, ListVi
 			groceryView.visualAdd(this.displayItems.get(itemIndex));
 		}
 	}
-
-	public void addItem(StoredItem item) {
-		displayItems.add(item);
-		stringItemList.addElement(item.getDescription());
-		list.setModel(stringItemList);
-		// list.setPreferredSize(new Dimension(800, 30 * stringItemList.size()));
-		list.revalidate();
-	}
 	
 	public void setGrocery(GroceryListView grocery) {
 		this.groceryView = grocery;

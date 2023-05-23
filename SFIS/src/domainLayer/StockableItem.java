@@ -7,6 +7,7 @@ public abstract class StockableItem {
 	public abstract void increment();
 	public abstract void decrement();
 	public abstract String getDescription();
+	public abstract String getShortDesc();
 	public abstract StockableItem copy();
 	public abstract StockableItem refillQuantity();
 	public abstract boolean stockWithinBounds();

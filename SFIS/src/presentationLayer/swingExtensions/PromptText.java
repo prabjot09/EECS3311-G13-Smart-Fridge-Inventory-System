@@ -1,5 +1,6 @@
 package presentationLayer.swingExtensions;
 
+import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -14,7 +15,8 @@ public class PromptText extends JTextField {
 
             @Override
             public void focusLost(FocusEvent e) {
-            	
+            	if (getText().equals(""))
+            		setText(promptedText);
             }
 
             @Override

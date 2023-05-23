@@ -72,4 +72,9 @@ public class ContinuousStockableItem extends StockableItem {
 		return this.getStock() <= MAXIMUM;
 	}
 
+	@Override
+	public String getShortDesc() {
+		return this.getStock() + "%";
+	}
+
 }

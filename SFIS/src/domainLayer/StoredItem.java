@@ -29,6 +29,11 @@ public abstract class StoredItem {
 		return desc;
 	}
 	
+	public String getShortDesc() {
+		String desc = this.foodDescription.getName() + " (" + this.stock.getShortDesc() + ")";
+		return desc;
+	}
+	
 	public boolean sameItemDescription(StoredItem item) {
 		return this.foodDescription.sameAs(item.getFoodItem());
 	}

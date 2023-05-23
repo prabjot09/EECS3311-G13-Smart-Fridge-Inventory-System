@@ -29,10 +29,10 @@ public class SettingsView extends AppFrameView implements ActionListener {
 	
 	private JButton backButton;
 	
-	private DropDown<String> expiryOptions;
+	private DropDown<String> expiryOptions, groceryOptions, favoritesOptions;
 	private JButton smartFeatureToggle;
 	private boolean smartFeatureOn;
-	private DropDown<String> groceryOptions;
+	
 	
 	
 	public SettingsView() {
@@ -105,7 +105,7 @@ public class SettingsView extends AppFrameView implements ActionListener {
 	    wrapperPanel = new CustomPanel(settingsPanel.getBackground(), new FlowLayout(FlowLayout.LEFT));
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 2, 0.9, 0, GridBagConstraints.HORIZONTAL);
 	    settingsPanel.add(wrapperPanel, c);
-	    JLabel groceryThresholdLabel = new JLabel("Automatic Grocery List Addition Threshold (%)");
+	    JLabel groceryThresholdLabel = new JLabel("Auto Grocery List Addition - Item Depletion Threshold (%)");
 	    groceryThresholdLabel.setForeground(Color.white);
 	    groceryThresholdLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    groceryThresholdLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -122,7 +122,27 @@ public class SettingsView extends AppFrameView implements ActionListener {
 	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH);
 	    wrapperPanel.add(groceryOptions, c);
 	    
-	    c = GridConstraintsSpec.stretchableFillConstraints(0, 3, 1, 1, GridBagConstraints.BOTH);
+	    wrapperPanel = new CustomPanel(settingsPanel.getBackground(), new FlowLayout(FlowLayout.LEFT));
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 3, 0.9, 0, GridBagConstraints.HORIZONTAL);
+	    settingsPanel.add(wrapperPanel, c);
+	    JLabel favoritesThresholdLabel = new JLabel("Grocery List Generation - Favorited Item Depletion Threshold (%)");
+	    favoritesThresholdLabel.setForeground(Color.white);
+	    favoritesThresholdLabel.setFont(new Font("Arial", Font.BOLD, 16));
+	    favoritesThresholdLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+	    wrapperPanel.add(favoritesThresholdLabel);
+	    
+	    wrapperPanel = new CustomPanel(settingsPanel.getBackground(), new GridBagLayout(), 20);
+	    c = GridConstraintsSpec.stretchableFillConstraints(1, 3, 0.1, 0, GridBagConstraints.HORIZONTAL);
+	    settingsPanel.add(wrapperPanel, c);
+	    String[] favoritesThresholdOptions = {"20", "25", "30", "35", "40", "45", "50", "55", "60"};
+	    favoritesOptions = new DropDown<>(favoritesThresholdOptions);
+	    favoritesOptions.setFont(new Font("Arial", Font.PLAIN, 16));
+	    favoritesOptions.addActionListener(this);
+	    favoritesOptions.setSelectedItem("" + App.getInstance().getSettings().getFavoritesListThreshold());
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH);
+	    wrapperPanel.add(favoritesOptions, c);
+	    
+	    c = GridConstraintsSpec.stretchableFillConstraints(0, 4, 1, 1, GridBagConstraints.BOTH);
 	    this.add(new CustomPanel(Color.black, null), c);
 	    
 	}
@@ -143,6 +163,10 @@ public class SettingsView extends AppFrameView implements ActionListener {
 		else if (e.getSource() == groceryOptions) {
 			int groceryThresholdValue = Integer.parseInt(groceryOptions.getInput());
 			App.getInstance().getSettings().setAddGroceryListThreshold(groceryThresholdValue);
+		}
+		else if (e.getSource() == favoritesOptions) {
+			int favoritesThresholdValue = Integer.parseInt(favoritesOptions.getInput());
+			App.getInstance().getSettings().setFavoritesListThreshold(favoritesThresholdValue);
 		}
 	}
 

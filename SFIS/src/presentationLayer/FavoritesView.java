@@ -1,13 +1,19 @@
 package presentationLayer;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,9 +29,12 @@ import appLayer.App;
 import domainLayer.DBProxy;
 import domainLayer.FavoritesList;
 import domainLayer.FoodItem.StockType;
+import domainLayer.FridgeItem;
 import presentationLayer.swingExtensions.CustomBoxPanel;
 import presentationLayer.swingExtensions.CustomButton;
 import presentationLayer.swingExtensions.CustomPanel;
+import presentationLayer.swingExtensions.CustomToggleButton;
+import presentationLayer.swingExtensions.GridConstraintsSpec;
 import domainLayer.Pair;
 import domainLayer.StockableItem;
 import domainLayer.StockableItemFactory;
@@ -33,52 +42,91 @@ import domainLayer.StoredItem;
 
 public class FavoritesView extends AppFrameView implements ActionListener, ListSelectionListener{
 	private CompressedListView fridgeItems;
-	private ExpressiveListView favoritesView;
+	private List<ButtonEmbeddedListView> favoritesViews;
 	
-	private JButton backButton;
-	private JButton addButton;
+	private JPanel fridgePanel, favoritesWidePanel, favoritesSmallPanel, inputPanel;
+	private JPanel viewPanel;
 	
-	private JPanel inputPanel;
+	private JButton backButton, addButton;
+	private CustomToggleButton modeButton;
+	
 	private JPanel quantityPanel;
 	private StockInputField quantityInput;
 	
 	public FavoritesView() {	
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new GridBagLayout());
+		this.favoritesViews = new ArrayList<>();
 		
 		titleBuilder();
 	    
-	    JPanel viewPanel = new CustomBoxPanel(Color.black, BoxLayout.X_AXIS, 10);
-	    this.add(viewPanel);
+	    viewPanel = new CustomPanel(Color.black, new GridBagLayout(), 20);
+	    this.add(viewPanel, GridConstraintsSpec.stretchableFillConstraints(0, 2, 1, 1, GridBagConstraints.BOTH));
 	    
-	    fridgeViewBuilder(viewPanel);
-	    
-	    favoritesViewBuilder(viewPanel);
-	    
+	    fridgeViewBuilder();
+	    favoritesSmallPanel = favoritesViewBuilder(1);
+	    favoritesWidePanel = favoritesViewBuilder(2);
 	    inputViewBuilder();
+	    
+	    buildViewMode();
 	}
 
 	
+	private void buildViewMode() {
+		int componentCount = viewPanel.getComponentCount();
+		for (int i = 0; i < componentCount; i++) {
+			viewPanel.remove(0);
+		}
+		
+		viewPanel.add(favoritesWidePanel, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH));
+		viewPanel.revalidate();	
+		viewPanel.repaint();
+	}
+	
+	private void buildEditMode() {
+		int componentCount = viewPanel.getComponentCount();
+		for (int i = 0; i < componentCount; i++) {
+			viewPanel.remove(0);
+		}
+		
+		viewPanel.add(fridgePanel, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 1, GridBagConstraints.BOTH));
+		viewPanel.add(favoritesSmallPanel, GridConstraintsSpec.stretchableFillConstraints(1, 0, 1, 1, GridBagConstraints.BOTH));
+		GridBagConstraints c = GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 0, GridBagConstraints.BOTH);
+		c.gridwidth = 2;
+		viewPanel.add(inputPanel, c);
+		viewPanel.revalidate();
+		viewPanel.repaint();
+	}
+
+
 	public void titleBuilder() {
-		JPanel titlePanel = new CustomPanel(Color.black, 10);
-		titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, titlePanel.getPreferredSize().height));
-	    this.add(titlePanel);
+		JPanel titlePanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER), 15);
+	    this.add(titlePanel, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.BOTH));
 	    
 	    JLabel titleLabel = new JLabel("Favorited Items");
 	    titleLabel.setForeground(Color.white);
 	    titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+	    titleLabel.setToolTipText("Use this list to set items you absolutely need in your fridge. "
+	    		+ "You can later use this list to help auto-generate a grocery list when you export the grocery list.");
 	    titlePanel.add(titleLabel);
 	    
-	    JPanel backPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
-	    backPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,20));
-	    this.add(backPanel);
+	    JPanel navPanel = new CustomPanel(Color.black, new BorderLayout());
+	    navPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 5, 20));
+	    this.add(navPanel, GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 0, GridBagConstraints.BOTH));
 	    backButton = new CustomButton("Back", this);
-	    backPanel.add(backButton);
+	    backButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+	    backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	    navPanel.add(backButton, BorderLayout.LINE_START);
+	    
+	    modeButton = new CustomToggleButton("Add New Items", "Leave Editing Mode", "Add New Items", this, 5);
+	    modeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	    modeButton.initToggle(true);
+	    navPanel.add(modeButton, BorderLayout.LINE_END);
+	    
 	}
 	
 	
-	public void fridgeViewBuilder(JPanel viewPanel) {
-		JPanel fridgePanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
-	    viewPanel.add(fridgePanel);
+	public void fridgeViewBuilder() {
+		fridgePanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
 	    
 	    JPanel labelWrap = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
 	    fridgePanel.add(labelWrap);
@@ -96,28 +144,32 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 	
 	
 	
-	public void favoritesViewBuilder(JPanel viewPanel) {
-		JPanel favoritesPanel = new CustomBoxPanel(Color.black, BoxLayout.Y_AXIS, 10);
-	    viewPanel.add(favoritesPanel);
+	public JPanel favoritesViewBuilder(int cols) {
+		JPanel favoritesPanel = new CustomPanel(Color.black, new GridBagLayout(), 10);
 	    
 	    JPanel labelWrap = new CustomPanel(Color.black, new FlowLayout(FlowLayout.LEFT));
-	    favoritesPanel.add(labelWrap);
+	    favoritesPanel.add(labelWrap, GridConstraintsSpec.stretchableFillConstraints(0, 0, 1, 0, GridBagConstraints.BOTH));
 	    
 	    JLabel favoritesLabel = new JLabel("Your Favorites List");
 	    favoritesLabel.setForeground(Color.white);
 	    favoritesLabel.setFont(new Font("Arial", Font.BOLD, 16));
 	    labelWrap.add(favoritesLabel);
 	    
-	    favoritesView = new ExpressiveListView(App.getInstance().getFavorites());
+	    JPanel favoritesWrap = new CustomPanel(Color.black, new BorderLayout(), 5);
+	    ButtonEmbeddedListView favoritesView = new ButtonEmbeddedListView(App.getInstance().getFavorites(), cols);
 	    favoritesView.removeGroceryLink();
-	    favoritesPanel.add(favoritesView);
+	    favoritesWrap.add(favoritesView);
+	    favoritesPanel.add(favoritesWrap, GridConstraintsSpec.stretchableFillConstraints(0, 1, 1, 1, GridBagConstraints.BOTH));
+	    
+	    favoritesViews.add(favoritesView);
+	    
+	    return favoritesPanel;
 	}
 	
 	
 	
 	public void inputViewBuilder() {
-		inputPanel = new CustomPanel(Color.black, 10);
-	    this.add(inputPanel);
+		inputPanel = new CustomPanel(Color.black, new FlowLayout(FlowLayout.CENTER));
 	    
 	    quantityPanel = new CustomPanel(Color.black, 10);
 	    
@@ -144,7 +196,19 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 		}
 		else if (e.getSource() == addButton) {
 			addHandler();
-		}		
+		}
+		else if (e.getSource() == modeButton) {
+			modeButton.toggle();
+			for (ListView view: favoritesViews) {
+				view.generateList(App.getInstance().getFavorites().getItems());
+				view.removeGroceryLink();
+			}
+			
+			if (modeButton.isOn())
+				this.buildViewMode();
+			else
+				this.buildEditMode();
+		}
 	}
 
 	@Override
@@ -175,7 +239,7 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 	}
 	
 	private void addHandler() {
-		StoredItem selectedItem = fridgeItems.getSelectedItem();
+		StoredItem selectedItem = (StoredItem) fridgeItems.getSelectedItem();
 		if (selectedItem == null) {
 			JOptionPane.showMessageDialog(this, "No item has been selected.", "Warning", JOptionPane.WARNING_MESSAGE);
 			return;
@@ -194,11 +258,18 @@ public class FavoritesView extends AppFrameView implements ActionListener, ListS
 		newItem.setStockableItem(stock);
 		
 		try {
+			FridgeItem fridgeItem = (FridgeItem) newItem;
+			fridgeItem.setExpDate(null);
+		} catch (Exception e) {}
+		
+		try {
 			FavoritesList favorites = App.getInstance().getFavorites();
 			favorites.add(newItem);
 			
-			favoritesView.generateList(favorites.getItems());
-			favoritesView.removeGroceryLink();
+			for (ListView view: favoritesViews) {
+				view.generateList(favorites.getItems());
+				view.removeGroceryLink();
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			return;

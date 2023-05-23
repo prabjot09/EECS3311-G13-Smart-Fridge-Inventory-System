@@ -77,15 +77,6 @@ public class ExpressiveListView extends JPanel implements ListView{
 		this.revalidate();
 	}
 	
-	public void addItem(StoredItem item) {
-		ExpressiveItemComponent itemView = new ExpressiveItemComponent(item, this);
-	
-		listView.add(itemView);
-		itemUIList.add(itemView);
-		
-		listView.revalidate();
-	}
-	
 	public void removeItem(ExpressiveItemComponent item) {
 		int confirm = JOptionPane.showConfirmDialog(AppWindow.getWindow(), 
                 "Are you sure you want to remove " + item.getItemObj().getFoodItem().getName(), 
