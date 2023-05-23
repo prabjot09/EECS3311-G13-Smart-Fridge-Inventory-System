@@ -3,8 +3,10 @@ package presentationLayer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,5 +87,36 @@ public class AppWindow extends JFrame{
 		for (AppFrameView frame: viewStack) {
 			frame.saveData();
 		}
+	}
+	
+	public void initPopup(JFrame popup) {
+		this.setEnabled(false);
+		popup.setAlwaysOnTop(true);
+		popup.setLocationRelativeTo(null);
+		popup.setVisible(true);	
+		this.addWindowListener(new WindowListener() {
+			public void windowOpened(WindowEvent e) { }
+			public void windowClosing(WindowEvent e) { }
+			public void windowClosed(WindowEvent e) { }
+			public void windowIconified(WindowEvent e) { }
+			public void windowDeiconified(WindowEvent e) { }
+			public void windowActivated(WindowEvent e) {
+				popup.setState(Frame.NORMAL);
+			}
+			public void windowDeactivated(WindowEvent e) { }
+		});
+		
+		popup.addWindowListener(new WindowListener() {
+			public void windowOpened(WindowEvent e) { }
+			public void windowClosing(WindowEvent e) { 
+				AppWindow.getWindow().setEnabled(true);
+			}
+			public void windowClosed(WindowEvent e) { }
+			public void windowIconified(WindowEvent e) { }
+			public void windowDeiconified(WindowEvent e) { }
+			public void windowActivated(WindowEvent e) { }
+			public void windowDeactivated(WindowEvent e) { }
+			
+		});
 	}
 }
